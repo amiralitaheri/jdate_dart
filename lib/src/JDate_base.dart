@@ -273,9 +273,7 @@ class JDate {
 //    }
 //    return gd.getTime();
 //    }
-  int now() {
-    return DateTime.now().millisecondsSinceEpoch;
-  }
+  int now() => DateTime.now().millisecondsSinceEpoch;
 
   var jalaliMonths = [
     {'long': 'فروردین', 'short': 'فر'},
