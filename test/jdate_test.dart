@@ -82,67 +82,55 @@ void main() {
   });
 
   group('gregorianToJalali', () {
-    JDate jDate;
-
-    setUp(() {
-      jDate = JDate();
-    });
-
     test('2012-6-18', () {
-      expect(jDate.gregorianToJalali(2012, 6, 18),
+      expect(JDate.gregorianToJalali(2012, 6, 18),
           {'year': 1391, 'month': 3, 'date': 29});
     });
 
     test('1998-6-18', () {
-      expect(jDate.gregorianToJalali(1998, 6, 18),
+      expect(JDate.gregorianToJalali(1998, 6, 18),
           {'year': 1377, 'month': 3, 'date': 28});
     });
 
     test('2020-7-16', () {
-      expect(jDate.gregorianToJalali(2020, 7, 16),
+      expect(JDate.gregorianToJalali(2020, 7, 16),
           {'year': 1399, 'month': 4, 'date': 26});
     });
 
     test('2020-2-20', () {
-      expect(jDate.gregorianToJalali(2020, 2, 20),
+      expect(JDate.gregorianToJalali(2020, 2, 20),
           {'year': 1398, 'month': 12, 'date': 1});
     });
 
     test('2222-2-22', () {
-      expect(jDate.gregorianToJalali(2222, 2, 22),
+      expect(JDate.gregorianToJalali(2222, 2, 22),
           {'year': 1600, 'month': 12, 'date': 3});
     });
   });
 
   group('jalaliToGregorian', () {
-    JDate jDate;
-
-    setUp(() {
-      jDate = JDate();
-    });
-
     test('1377-3-28', () {
-      expect(jDate.jalaliToGregorian(1377, 3, 28),
+      expect(JDate.jalaliToGregorian(1377, 3, 28),
           {'year': 1998, 'month': 6, 'date': 18});
     });
 
     test('1399-3-28', () {
-      expect(jDate.jalaliToGregorian(1399, 3, 28),
+      expect(JDate.jalaliToGregorian(1399, 3, 28),
           {'year': 2020, 'month': 6, 'date': 17});
     });
 
     test('1400-1-1', () {
-      expect(jDate.jalaliToGregorian(1400, 1, 1),
+      expect(JDate.jalaliToGregorian(1400, 1, 1),
           {'year': 2021, 'month': 3, 'date': 21});
     });
 
     test('1414-4-14', () {
-      expect(jDate.jalaliToGregorian(1414, 4, 14),
+      expect(JDate.jalaliToGregorian(1414, 4, 14),
           {'year': 2035, 'month': 7, 'date': 5});
     });
 
     test('1555-5-5', () {
-      expect(jDate.jalaliToGregorian(1555, 5, 5),
+      expect(JDate.jalaliToGregorian(1555, 5, 5),
           {'year': 2176, 'month': 7, 'date': 26});
     });
   });
