@@ -1,4 +1,4 @@
-//import 'package:JDate/JDate.dart';
+//import 'package:JDate/jdate_dart';
 //
 //void main() {
 //  var awesome = Awesome();

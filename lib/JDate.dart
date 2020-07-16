@@ -1,6 +1,4 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
-library JDate;
+/// Simple yet flexible Dart Jalali date and time for developers.
+library jdate;
 
-export 'src/JDate_base.dart';
+export 'src/jdate_base.dart';

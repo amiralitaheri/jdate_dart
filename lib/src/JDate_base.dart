@@ -10,7 +10,7 @@ class JDate {
           year = year is int ? year : int.parse(year);
           gregorian = DateTime(year);
           if (gregorian.millisecondsSinceEpoch < 0) {
-            var gd = jalali_to_gregorian(year, 1, date);
+            var gd = jalaliToGregorian(year, 1, date);
             gregorian = DateTime(gd['year'], gd['month'], gd['date'], hours, minutes, seconds, milliseconds);
           }
         } else {
@@ -25,7 +25,7 @@ class JDate {
       } else {
         gregorian = DateTime(year, month, date);
         if (gregorian.millisecondsSinceEpoch < 0) {
-          var gd = jalali_to_gregorian(year, month, date);
+          var gd = jalaliToGregorian(year, month, date);
           gregorian = DateTime(gd['year'], gd['month'], gd['date'], hours, minutes, seconds, milliseconds);
         }
       }
@@ -95,7 +95,7 @@ class JDate {
   int setDate(date) {
     if (date > 0 && date <= 31) {
       jalali['date'] = date;
-      var gd = jalali_to_gregorian(jalali['year'], jalali['month'], jalali['date']);
+      var gd = jalaliToGregorian(jalali['year'], jalali['month'], jalali['date']);
       gregorian =
           DateTime(gd['year'], gd['month'], gd['date'], gregorian.hour, gregorian.minute, gregorian.second, gregorian.millisecond, gregorian.microsecond);
       return gregorian.millisecondsSinceEpoch;
@@ -114,7 +114,7 @@ class JDate {
           throw 'Cannot parse date number';
         }
       }
-      var gd = jalali_to_gregorian(jalali['year'], jalali['month'], jalali['date']);
+      var gd = jalaliToGregorian(jalali['year'], jalali['month'], jalali['date']);
       gregorian =
           DateTime(gd['year'], gd['month'], gd['date'], gregorian.hour, gregorian.minute, gregorian.second, gregorian.millisecond, gregorian.microsecond);
       return gregorian.millisecondsSinceEpoch;
@@ -140,7 +140,7 @@ class JDate {
           throw 'Cannot parse date number';
         }
       }
-      var gd = jalali_to_gregorian(jalali['year'], jalali['month'], jalali['date']);
+      var gd = jalaliToGregorian(jalali['year'], jalali['month'], jalali['date']);
       gregorian =
           DateTime(gd['year'], gd['month'], gd['date'], gregorian.hour, gregorian.minute, gregorian.second, gregorian.millisecond, gregorian.microsecond);
       return gregorian.millisecondsSinceEpoch;
@@ -232,7 +232,7 @@ class JDate {
   }
 
   void setJalali() {
-    jalali = gregorian_to_jalali(gregorian.year, gregorian.month, gregorian.day);
+    jalali = gregorianToJalali(gregorian.year, gregorian.month, gregorian.day);
   }
 
   @override
@@ -308,7 +308,7 @@ class JDate {
   ],
       jalaliTRWeek = {0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 0};
 
-  Map jalali_to_gregorian(var jy, var jm, var jd) {
+  Map jalaliToGregorian(var jy, var jm, var jd) {
     jy = int.parse(trnumToEn(jy));
     jm = int.parse(trnumToEn(jm)) + 1;
     jd = int.parse(trnumToEn(jd));
@@ -332,9 +332,7 @@ class JDate {
 
     var i = 0;
     for (i; i < months.length; i++) {
-      if (gd <= months[i]) {
-        break;
-      }
+      if (gd <= months[i]) break;
       gd -= months[i];
     }
     var gm = i - 1;
@@ -342,7 +340,7 @@ class JDate {
     return {'year': gy, 'month': gm, 'date': gd};
   }
 
-  Map gregorian_to_jalali(var gy, var gm, var gd) {
+  Map gregorianToJalali(var gy, var gm, var gd) {
     gy = int.parse(trnumToEn(gy));
     gm = int.parse(trnumToEn(gm)) + 1;
     gd = int.parse(trnumToEn(gd));

@@ -1,4 +1,4 @@
-import 'package:JDate/JDate.dart';
+import 'package:jdate/jdate.dart';
 import 'package:test/test.dart';
 
 void main() {
