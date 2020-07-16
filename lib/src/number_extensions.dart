@@ -1,5 +1,12 @@
 extension PersianIntegerHelper on int {
-  String toPersianWords([counter = false]) {
+  /// Convert numbers to Persian Words
+  ///
+  /// ex: `919.toPersianWords()` => نهصد و نوزده
+  ///
+  /// you can also set [ordinal] parameter to `true`
+  ///
+  /// ex: `919.toPersianWords(true)` => نهصد و نوزدهم
+  String toPersianWords([ordinal = false]) {
     const yekan = [
       'صفر',
       'یک',
@@ -117,7 +124,7 @@ extension PersianIntegerHelper on int {
 
     result = result.trim();
 
-    if (!counter) {
+    if (!ordinal) {
       return result;
     } else {
       if (this == 1) {

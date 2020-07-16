@@ -1,6 +1,6 @@
-//todo: find faster code
 extension PersianStringHelper on String {
   /// Translate All Persian and Arabic number characters to English
+  ///
   /// ex: ۴ or ٤ => 4
   String numbersToEnglish() => replaceAll(RegExp(r'[۰٠]'), '0')
       .replaceAll(RegExp(r'[۱١]'), '1')
@@ -15,6 +15,7 @@ extension PersianStringHelper on String {
 
   //todo: add arabic to converter
   /// Translate All English number characters to Persian
+  ///
   /// ex: 1 => ۱
   String numbersToPersian() => replaceAll('0', '۰')
       .replaceAll('1', '۱')
