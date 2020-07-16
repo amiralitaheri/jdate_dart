@@ -415,48 +415,48 @@ class JDate {
     var gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
 
-    var j_day_no = 365 * jy + (jy / 33).floor() * 8 + ((jy % 33 + 3) / 4).floor();
+    var jDayNo = 365 * jy + (jy / 33).floor() * 8 + ((jy % 33 + 3) / 4).floor();
     for (var i = 0; i < jm; ++i) {
-      j_day_no += jDaysInMonth[i];
+      jDayNo += jDaysInMonth[i];
     }
 
-    j_day_no += jd;
+    jDayNo += jd;
 
-    var g_day_no = j_day_no + 79;
+    var gDayNo = jDayNo + 79;
 
-    var gy = 1600 + 400 * (g_day_no / 146097).floor();
-    g_day_no = g_day_no % 146097;
+    var gy = 1600 + 400 * (gDayNo / 146097).floor();
+    gDayNo = gDayNo % 146097;
 
     var leap = true;
-    if (g_day_no >= 36525) {
-      g_day_no--;
-      gy += 100 * (g_day_no / 36524).floor();
-      g_day_no = g_day_no % 36524;
+    if (gDayNo >= 36525) {
+      gDayNo--;
+      gy += 100 * (gDayNo / 36524).floor();
+      gDayNo = gDayNo % 36524;
 
-      if (g_day_no >= 365) {
-        g_day_no++;
+      if (gDayNo >= 365) {
+        gDayNo++;
       }
       else {
         leap = false;
       }
     }
 
-    gy += 4 * (g_day_no/ 1461).floor();
-    g_day_no %= 1461;
+    gy += 4 * (gDayNo/ 1461).floor();
+    gDayNo %= 1461;
 
-    if (g_day_no >= 366) {
+    if (gDayNo >= 366) {
       leap = false;
 
-      g_day_no--;
-      gy += (g_day_no / 365).floor();
-      g_day_no = g_day_no % 365;
+      gDayNo--;
+      gy += (gDayNo / 365).floor();
+      gDayNo = gDayNo % 365;
     }
     var i;
-    for (i = 0; g_day_no >= gDaysInMonth[i] + ((i == 1 && leap) ? 1 : 0); i++) {
-      g_day_no -= gDaysInMonth[i] + ((i == 1 && leap) ? 1 : 0);
+    for (i = 0; gDayNo >= gDaysInMonth[i] + ((i == 1 && leap) ? 1 : 0); i++) {
+      gDayNo -= gDaysInMonth[i] + ((i == 1 && leap) ? 1 : 0);
     }
     var gm = i + 1;
-    var gd = g_day_no + 1;
+    var gd = gDayNo + 1;
 
     return {'year': gy, 'month': gm, 'date': gd};
   }
