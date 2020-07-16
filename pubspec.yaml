@@ -2,7 +2,7 @@ name: jdate
 description: Simple yet flexible Dart Jalali date and time for developers.
 
 version: 0.1.0
-repository:
+repository: https://github.com/amiralitaheri/jdate_dart.git
 
 environment:
   sdk: '>=2.8.1 <3.0.0'
