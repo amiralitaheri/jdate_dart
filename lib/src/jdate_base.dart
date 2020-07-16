@@ -1,3 +1,5 @@
+import 'string_extensions.dart';
+
 class JDate {
   Map _jalali;
   DateTime _gregorian;
@@ -388,9 +390,9 @@ class JDate {
   /// Jalali to Gregorian Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
   Map jalaliToGregorian(var jy, var jm, var jd) {
-    jy = int.parse(translateNumbersToEnglish(jy)) - 979;
-    jm = int.parse(translateNumbersToEnglish(jm)) - 1;
-    jd = int.parse(translateNumbersToEnglish(jd)) - 1;
+    jy = int.parse(jy.toString().numbersToEnglish()) - 979;
+    jm = int.parse(jm.toString().numbersToEnglish()) - 1;
+    jd = int.parse(jd.toString().numbersToEnglish()) - 1;
     var gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
 
@@ -440,11 +442,11 @@ class JDate {
   }
 
   /// Gregorian to Jalali Conversion
-  /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
-  Map gregorianToJalali(var gy, var gm, var gd) {
-    gy = int.parse(translateNumbersToEnglish(gy)) - 1600;
-    gm = int.parse(translateNumbersToEnglish(gm)) - 1;
-    gd = int.parse(translateNumbersToEnglish(gd)) - 1;
+  // Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
+  Map gregorianToJalali(int gy, int gm, int gd) {
+    gy = int.parse(gy.toString().numbersToEnglish()) - 1600;
+    gm = int.parse(gm.toString().numbersToEnglish()) - 1;
+    gd = int.parse(gd.toString().numbersToEnglish()) - 1;
 
     var gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
@@ -600,32 +602,6 @@ class JDate {
       }
     }
   }
-
-  static String translateNumbersToPersian(var number) => number
-      .toString()
-      .replaceAll('0', '۰')
-      .replaceAll('1', '۱')
-      .replaceAll('2', '۲')
-      .replaceAll('3', '۳')
-      .replaceAll('4', '۴')
-      .replaceAll('5', '۵')
-      .replaceAll('6', '۶')
-      .replaceAll('7', '۷')
-      .replaceAll('8', '۸')
-      .replaceAll('9', '۹');
-
-  static String translateNumbersToEnglish(var number) => number
-      .toString()
-      .replaceAll('[۰٠]', '0')
-      .replaceAll(RegExp(r'[۱١]'), '1')
-      .replaceAll(RegExp(r'[۲٢]'), '2')
-      .replaceAll(RegExp(r'[۳٣]'), '3')
-      .replaceAll(RegExp(r'[۴٤]'), '4')
-      .replaceAll(RegExp(r'[۵٥]'), '5')
-      .replaceAll(RegExp(r'[۶٦]'), '6')
-      .replaceAll(RegExp(r'[۷٧]'), '7')
-      .replaceAll(RegExp(r'[۸٨]'), '8')
-      .replaceAll(RegExp(r'[۹٩]'), '9');
 
   String withZero(int num) =>
       (num < 10) ? '0' + num.toString() : num.toString();
