@@ -487,18 +487,3 @@ class JDate {
 
   String withZero(int num) => (num < 10) ? '0' + num.toString() : num.toString();
 }
-
-extension NumberParsing on String {
-  String cut(String left, String right, [bool withBoth = false]) {
-    var str = substring(toLowerCase().indexOf(left.toString().toLowerCase())).substring(left.toString().length);
-    var leftLen = str.substring(str.toLowerCase().indexOf(right.toString().toLowerCase())).toString().length;
-    leftLen = (leftLen != 0) ? -(leftLen) : str.toString().length;
-    str = str.substring(0, leftLen);
-
-    if (withBoth) {
-      str = left + str + right;
-    }
-
-    return str;
-  }
-}
