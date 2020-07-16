@@ -107,87 +107,57 @@ You can parse specified shamsi or gregorian date from valid date string to conve
 ## Get JDate Methods
 
 These methods can be used for getting information from a jalali date object:
-<table width="100%">
-    <thead>
-    <tr>
-        <td>Method</td>
-        <td>Description</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr><td>getDate()</td><td>Get the day as a number (1-31)</td></tr>
-    <tr><td>getDay()</td><td>Get the weekday as a number (0-6)</td></tr>
-    <tr><td>getFullYear()</td><td>Get the year as a four digit number (yyyy)</td></tr>
-    <tr><td>getShortYear()</td><td>Get the year as a two or three digit number (yy | yyy)</td></tr>
-    <tr><td>getHours()</td><td>Get the hour (0-23)</td></tr>
-    <tr><td>getMilliseconds()</td><td>Get the millisecond (0-999)</td></tr>
-    <tr><td>getMinutes()</td><td>Get the minute (0-59)</td></tr>
-    <tr><td>getMonth()</td><td>Get the month as a number (0-11)</td></tr>
-    <tr><td>getSeconds()</td><td>Get the second (0-59)</td></tr>
-    <tr><td>getTime()</td><td>Get the time (milliseconds)</td></tr>
-    <tr><td>getTimezone()</td><td>Difference to Greenwich time (GMT) in hours</td></tr>
-    <tr><td>getTimezoneOffset()</td><td>Difference between UTC and Local Time</td></tr>
-    <tr><td>isLeapYear()</td><td>Whether it’s a leap year (0-1)</td></tr>
-    </tbody>
-</table>
+
+Method|Description
+------|-----------
+getDate() | Get the day as a number (1-31)
+getDay() | Get the weekday as a number (0-6)
+getFullYear() | Get the year as a four digit number (yyyy)
+getShortYear() | Get the year as a two or three digit number (yy | yyy)
+getHours() | Get the hour (0-23)
+getMilliseconds() | Get the millisecond (0-999)
+getMinutes() | Get the minute (0-59)
+getMonth() | Get the month as a number (0-11)
+getSeconds() | Get the second (0-59)
+getTime() | Get the time (milliseconds)
+getTimezone() | Difference to Greenwich time (GMT) in hours
+getTimezoneOffset() |Difference between UTC and Local Time 
+isLeapYear() | Whether it’s a leap year (0-1)
 
 ## Set JDate Methods
 
 These methods can be used for set date values (years, months, days, hours, minutes, seconds, milliseconds) for a jalali date object:
 
-<table width="100%">
-    <thead>
-    <tr>
-        <td>Method</td>
-        <td>Description</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr><td>setDate(date)</td><td>Set the day as a number (1-31)</td></tr>
-    <tr><td>setMonth(month, date)</td><td>Set the month (0-11)</td></tr>
-    <tr><td>setFullYear(year, month, date)</td><td>Set the year (optionally month and day)</td></tr>
-    <tr><td>setHours(hours, min, sec, ms)</td><td>Set the hour (0-23)</td></tr>
-    <tr><td>setMilliseconds(ms)</td><td>Set the milliseconds (0-999)</td></tr>
-    <tr><td>setMinutes(min, sec, ms)</td><td>Set the minutes (0-59)</td></tr>
-    <tr><td>setSeconds(sec, ms)</td><td>Set the seconds (0-59)</td></tr>
-    <tr><td>setTime(ms)</td><td>Set the time (milliseconds)</td></tr>
-    </tbody>
-</table>
+Method|Description
+------|-----------
+setDate(date) | Set the day as a number (1-31)
+setMonth(month, date) | Set the month (0-11)
+setFullYear(year, month, date) | Set the year (optionally month and day)
+setHours(hours, min, sec, ms) | Set the hour (0-23)
+setMilliseconds(ms) | Set the milliseconds (0-999)
+setMinutes(min, sec, ms) | Set the minutes (0-59)
+setSeconds(sec, ms) | Set the seconds (0-59)
+setTime(ms) | Set the time (milliseconds)
+
 
 ## Static methods
 
 These methods can be used without creating an instance of the object:
 
-<table width="100%">
-    <thead>
-    <tr>
-        <td>Method</td>
-        <td>Description</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr><td>jalaliToGregorian(year, month, date)</td><td>Converts Jalali date to Gregorian and return the result as a map</td></tr>
-    <tr><td>gregorianToJalali(year, month, date)</td><td>Converts Gregorian date to Jalali and return the result as a map</td></tr>
-    <tr><td>numToPersianStr(number,[counter])</td><td>Returns number as Persian text</td></tr>
-    </tbody>
-</table>
+Method|Description
+------|-----------
+jalaliToGregorian(year, month, date) | Converts Jalali date to Gregorian and return the result as a map
+gregorianToJalali(year, month, date) | Converts Gregorian date to Jalali and return the result as a map
 
-## String extension methods
+## extension methods
 
-These methods can be used on String objects:
+These methods can be used on mentioned objects:
 
-<table width="100%">
-    <thead>
-    <tr>
-        <td>Method</td>
-        <td>Description</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr><td>String.numbersToEnglish()</td><td>Converts Persian digits in string to english digits</td></tr>
-    <tr><td>String.numbersToPersian()</td><td>Converts English digits in string to Persian digits</td></tr>
-    </tbody>
-</table>
+Method|Description
+------|-----------
+String.numbersToEnglish() | Converts Persian digits in string to english digits
+String.numbersToPersian() | Converts English digits in string to Persian digits
+Int.toPersianWords([ordinal = false]) | Returns number as Persian text
 
 ## License
 
