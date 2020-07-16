@@ -2,7 +2,7 @@ import 'number_extensions.dart';
 import 'string_extensions.dart';
 
 class JDate {
-  Map _jalali;
+  Map<String, int> _jalali;
   DateTime _gregorian;
 
   JDate(
@@ -294,7 +294,7 @@ class JDate {
                 ? (31 - ((_jalali['month'] + 1) / 6.5).floor()).toString()
                 : (leapYear + 29).toString())
         .replaceAll('u', _gregorian.millisecond.toString())
-        .replaceAll('v', numToPersianStr(jy))
+        .replaceAll('v', jy.toPersianWords())
         .replaceAll('w', jw.toString())
         .replaceAll('y', jy.toString())
         .replaceAll('A', (_gregorian.hour < 12) ? 'قبل از ظهر' : 'بعد از ظهر')
@@ -302,11 +302,11 @@ class JDate {
         .replaceAll('F', jalaliMonths[_jalali['month']]['long'])
         .replaceAll('G', _gregorian.hour.toString())
         .replaceAll('H', withZero(_gregorian.hour))
-        .replaceAll('J', numToPersianStr(_jalali['date']))
+        .replaceAll('J', _jalali['date'].toPersianWords())
         .replaceAll('L', leapYear.toString())
         .replaceAll('M', jalaliMonths[_jalali['month']]['short'])
         .replaceAll('O', jtz)
-        .replaceAll('V', numToPersianStr(_jalali['year']))
+        .replaceAll('V', _jalali['year'].toPersianWords())
         .replaceAll('Y', _jalali['year'].toString());
   }
 
@@ -439,7 +439,7 @@ class JDate {
 
   /// Gregorian to Jalali Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
-  static Map gregorianToJalali(int gy, int gm, int gd) {
+  static Map<String, int> gregorianToJalali(int gy, int gm, int gd) {
     gy = int.parse(gy.toString().numbersToEnglish()) - 1600;
     gm = int.parse(gm.toString().numbersToEnglish()) - 1;
     gd = int.parse(gd.toString().numbersToEnglish()) - 1;
