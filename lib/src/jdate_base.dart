@@ -413,7 +413,7 @@ class JDate {
 
   /// Jalali to Gregorian Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
-  Map jalaliToGregorian(var jy, var jm, var jd) {
+  static Map jalaliToGregorian(var jy, var jm, var jd) {
     jy = int.parse(jy.toString().numbersToEnglish()) - 979;
     jm = int.parse(jm.toString().numbersToEnglish()) - 1;
     jd = int.parse(jd.toString().numbersToEnglish()) - 1;
@@ -467,7 +467,7 @@ class JDate {
 
   /// Gregorian to Jalali Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
-  Map gregorianToJalali(int gy, int gm, int gd) {
+  static Map gregorianToJalali(int gy, int gm, int gd) {
     gy = int.parse(gy.toString().numbersToEnglish()) - 1600;
     gm = int.parse(gm.toString().numbersToEnglish()) - 1;
     gd = int.parse(gd.toString().numbersToEnglish()) - 1;
