@@ -33,55 +33,33 @@ class JDate {
     setJalali();
   }
 
-  int getDate() {
-    return jalali['date'];
-  }
+  int getDate() => jalali['date'];
 
-  int getDay() {
-    return gregorian.weekday == 6 ? 0 : gregorian.weekday + 1;
-  }
 
-  int getFullYear() {
-    return jalali['year'];
-  }
+  int getDay() => gregorian.weekday == 6 ? 0 : gregorian.weekday + 1;
 
-  int getShortYear() {
-    return (jalali['year'] >= 1300 && jalali['year'] < 1400)
-        ? int.parse(jalali['year'].toString().substring(2))
-        : int.parse(jalali['year'].toString().substring(1));
-  }
 
-  int getHour() {
-    return gregorian.hour;
-  }
+  int getFullYear() => jalali['year'];
 
-  int getMilliseconds() {
-    return gregorian.millisecond;
-  }
 
-  int getMinute() {
-    return gregorian.minute;
-  }
+  int getShortYear() =>
+      (jalali['year'] >= 1300 && jalali['year'] < 1400) ? int.parse(jalali['year'].toString().substring(2)) : int.parse(jalali['year'].toString().substring(1));
 
-  int getMonth() {
-    return jalali['month'];
-  }
+  int getHour() => gregorian.hour;
 
-  int getSeconds() {
-    return gregorian.second;
-  }
+  int getMilliseconds() => gregorian.millisecond;
 
-  int getTime() {
-    return gregorian.millisecondsSinceEpoch;
-  }
+  int getMinute() => gregorian.minute;
 
-  String getTimezone() {
-    return gregorian.toString().cut('GMT', ' ');
-  }
+  int getMonth() => jalali['month'];
 
-  int getTimezoneOffset() {
-    return gregorian.timeZoneOffset.inMinutes;
-  }
+  int getSeconds() => gregorian.second;
+
+  int getTime() => gregorian.millisecondsSinceEpoch;
+
+  String getTimezone() => gregorian.toString().cut('GMT', ' ');
+
+  int getTimezoneOffset() => gregorian.timeZoneOffset.inMinutes;
 
   int isLeapYear([var year]) {
     if (year == null) {
@@ -236,9 +214,7 @@ class JDate {
   }
 
   @override
-  String toString() {
-    return echo();
-  }
+  String toString() => echo();
 
 //  parse(String string) {
 //    string = trnumToEn(string);
