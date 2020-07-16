@@ -21,7 +21,7 @@ void main() {
 
     test('numbersToEnglish', () {
       expect(''.numbersToEnglish(), '');
-      expect('  '.numbersToEnglish(), "  ");
+      expect('  '.numbersToEnglish(), '  ');
 
       expect(firstFa.numbersToEnglish(), firstEn);
       expect(secondFa.numbersToEnglish(), secondEn);
@@ -38,7 +38,7 @@ void main() {
 
     test('numbersToPersian', () {
       expect(''.numbersToPersian(), '');
-      expect('  '.numbersToPersian(), "  ");
+      expect('  '.numbersToPersian(), '  ');
 
       expect(firstEn.numbersToPersian(), firstFa);
       expect(secondEn.numbersToPersian(), secondFa);
