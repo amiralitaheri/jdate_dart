@@ -26,7 +26,7 @@ void main() {
   //custom format
   print('\nCustom format');
   print(JDate().echo('l، d F V ساعت H:i:s'));
-  
+
   //useful extension
   print('\nExtensions');
   print('۱۲۳۴۵۶۷۸۹۰'.numbersToEnglish());

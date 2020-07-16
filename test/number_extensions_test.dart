@@ -133,7 +133,7 @@ void main() {
       expect(7.toPersianWords(true), 'هفتم');
       expect(8.toPersianWords(true), 'هشتم');
       expect(9.toPersianWords(true), 'نهم');
-  
+
       //two digits
       expect(10.toPersianWords(true), 'دهم');
       expect(11.toPersianWords(true), 'یازدهم');
@@ -145,7 +145,7 @@ void main() {
       expect(17.toPersianWords(true), 'هفدهم');
       expect(18.toPersianWords(true), 'هجدهم');
       expect(19.toPersianWords(true), 'نوزدهم');
-  
+
       expect(20.toPersianWords(true), 'بیستم');
       expect(30.toPersianWords(true), 'سی‌ام');
       expect(40.toPersianWords(true), 'چهلم');
@@ -154,7 +154,7 @@ void main() {
       expect(70.toPersianWords(true), 'هفتادم');
       expect(80.toPersianWords(true), 'هشتادم');
       expect(90.toPersianWords(true), 'نودم');
-  
+
       expect(21.toPersianWords(true), 'بیست و یکم');
       expect(32.toPersianWords(true), 'سی و دوم');
       expect(43.toPersianWords(true), 'چهل و سوم');
