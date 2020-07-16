@@ -40,7 +40,7 @@ You can creates a new jalali date object with a specified shamsi date and time.
 ## new JDate(...).echo
 
     var jd = JDate(2019, 4, 3, 10, 33, 30, 0);
-    print(jd.echo("l، d F Y ساعت H:i:s"));
+    print(jd.echo('l، d F Y ساعت H:i:s'));
     
     ~~>     جمعه، 13 اردیبهشت 1398 ساعت 10:33:30
 
@@ -90,11 +90,11 @@ You can creates a new jalali date object with a specified shamsi date and time.
 
 You can parse specified shamsi or gregorian date from valid date string to convert it to milliseconds.
 
-    JDate.parse("1399");                    ~~> 1584649800000 ~~> 1399/01/01 - 00:00:00
-    JDate.parse("1399/02");                 ~~> 1587324600000 ~~> 1399/02/01 - 00:00:00
-    JDate.parse("1399/02/13");              ~~> 1588361400000 ~~> 1399/02/13 - 00:00:00
-    JDate.parse("1399/02/13 03:14:30");     ~~> 1588373070000 ~~> 1399/02/13 - 03:14:30
-    JDate.parse("2019/05/03 01:02:03");     ~~> 1556829123000 ~~> 1398/02/13 - 01:02:03
+    JDate.parse('1399');                    ~~> 1584649800000 ~~> 1399/01/01 - 00:00:00
+    JDate.parse('1399/02');                 ~~> 1587324600000 ~~> 1399/02/01 - 00:00:00
+    JDate.parse('1399/02/13');              ~~> 1588361400000 ~~> 1399/02/13 - 00:00:00
+    JDate.parse('1399/02/13 03:14:30');     ~~> 1588373070000 ~~> 1399/02/13 - 03:14:30
+    JDate.parse('2019/05/03 01:02:03');     ~~> 1556829123000 ~~> 1398/02/13 - 01:02:03
 
 
 ## Get JDate Methods
@@ -153,3 +153,4 @@ JDate.js is available under the [MIT license](https://opensource.org/licenses/MI
 
 ## CopyRight notice
 This library written based on [JDate.js](https://github.com/moghaddam24/JDate.js) by [Reza Moghaddam](https://github.com/moghaddam24).  
+Date Conversion methods based on Roozbeh Pournader and Mohammad Toossi work
