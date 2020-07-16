@@ -284,9 +284,9 @@ class JDate {
   /// Jalali to Gregorian Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
   Map jalaliToGregorian(var jy, var jm, var jd) {
-    jy = int.parse(trnumToEn(jy)) - 979;
-    jm = int.parse(trnumToEn(jm)) - 1;
-    jd = int.parse(trnumToEn(jd)) - 1;
+    jy = int.parse(translateNumbersToEnglish(jy)) - 979;
+    jm = int.parse(translateNumbersToEnglish(jm)) - 1;
+    jd = int.parse(translateNumbersToEnglish(jd)) - 1;
     var gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
 
@@ -338,9 +338,9 @@ class JDate {
   /// Gregorian to Jalali Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
   Map gregorianToJalali(var gy, var gm, var gd) {
-    gy = int.parse(trnumToEn(gy)) - 1600;
-    gm = int.parse(trnumToEn(gm)) - 1;
-    gd = int.parse(trnumToEn(gd)) - 1;
+    gy = int.parse(translateNumbersToEnglish(gy)) - 1600;
+    gm = int.parse(translateNumbersToEnglish(gm)) - 1;
+    gd = int.parse(translateNumbersToEnglish(gd)) - 1;
 
     var gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
@@ -375,7 +375,7 @@ class JDate {
     return {'year': jy, 'month': jm, 'date': jd};
   }
 
-  String numToPersianStr(var number, [counter = false]) {
+  static String numToPersianStr(var number, [counter = false]) {
     number = (number is String) ? int.parse(number) : number;
     var yekan = ['صفر', 'یک', 'دو', 'سه', 'چهار', 'پنج', 'شش', 'هفت', 'هشت', 'نه'],
         dahgan = ['', '', 'بیست', 'سی', 'چهل', 'پنجاه', 'شصت', 'هفتاد', 'هشتاد', 'نود'],
@@ -387,7 +387,7 @@ class JDate {
 
     if (number == 0) return 'صفر';
     if (number.toString().length <= 3) {
-      var stotal = '', d12 = number % 100, d3 = (number / 100).floor();
+      var d12 = number % 100, d3 = (number / 100).floor();
 
       if (d3 != 0) {
         stotal = sadgan[d3] + ' و ';
@@ -409,8 +409,7 @@ class JDate {
         stotal = stotal.substring(0, stotal.length - 3);
       }
     } else {
-      var pad = chunkArray(number.toString().split(''), 3);
-      var padLen = pad[pad.length - 1].length;
+      var padLen = number.toString().length % 3;
       switch (padLen) {
         case 1:
           padLen = 2;
@@ -424,12 +423,12 @@ class JDate {
       number = number.toString().padLeft(number.toString().length + padLen, '0');
       var L = (number.toString().length / 3 - 1).floor(), b;
       for (var i = 0; i <= L; i++) {
-        b = int.parse(number.toString().substring(i * 3, min((i + 1) * 3, number.toString().length)));
+        b = int.parse(number.toString().substring(i * 3, (i + 1) * 3));
         if (b != 0) {
           stotal = stotal + numToPersianStr(b) + ' ' + basegan[L - i] + ' و ';
         }
       }
-//      stotal = stotal.substring(0, -4);
+      stotal = stotal.substring(0,stotal.length-4);
     }
 
     stotal = stotal.trim();
@@ -439,27 +438,17 @@ class JDate {
     } else {
       if (number == 1) {
         return 'اول';
-      } else if (number.toString().substring(-1) == 3 && number.toString().substring(-2) != 'ده') {
+      } else if (stotal.substring(stotal.length-2,stotal.length) == 'سه') {
         return stotal.toString().substring(0, -1) + 'وم';
-      } else if (number.toString().substring(-2) == 30) {
-        return stotal + ' ام';
+      } else if (stotal.substring(stotal.length-2,stotal.length) == 'سی' || stotal.substring(stotal.length-2,stotal.length) == 'ده') {
+        return stotal + '‌ام';
       } else {
         return stotal + 'م';
       }
     }
   }
 
-  List chunkArray(List myArray, int chunk_size) {
-    var tempArray = [];
-
-    for (var index = 0; index < myArray.length; index += chunk_size) {
-      tempArray.add(myArray.sublist(index, min(index + chunk_size, myArray.length - 1)));
-    }
-
-    return tempArray;
-  }
-
-  String trnumToFa(number) => number
+  static String translateNumbersToPersian(var number) => number
       .toString()
       .replaceAll('0', '۰')
       .replaceAll('1', '۱')
@@ -472,7 +461,7 @@ class JDate {
       .replaceAll('8', '۸')
       .replaceAll('9', '۹');
 
-  String trnumToEn(var number) => number
+  static String translateNumbersToEnglish(var number) => number
       .toString()
       .replaceAll('[۰٠]', '0')
       .replaceAll(RegExp(r'[۱١]'), '1')
