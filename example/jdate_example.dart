@@ -26,12 +26,10 @@ void main() {
   //custom format
   print('\nCustom format');
   print(JDate().echo('l، d F V ساعت H:i:s'));
-
-  //useful static methods
-  print('\nStatic methods');
-  print(JDate.numToPersianStr(60, true));
-
+  
   //useful extension
+  print('\nExtensions');
   print('۱۲۳۴۵۶۷۸۹۰'.numbersToEnglish());
   print(JDate().toString().numbersToPersian());
+  print(60000000.toPersianWords(false));
 }
