@@ -2,13 +2,13 @@
     <img src="https://github.com/moghaddam24/JDate.js/blob/master/examples/logo.png?raw=true" alt="logo"><br/>
     Simple yet flexible Dart Jalali date and time for developers
 </p>
-
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/amiralitaheri/jdate_dart/Dart%20CI)
-![Pub Version](https://img.shields.io/pub/v/jdate)
-![GitHub issues](https://img.shields.io/github/issues/amiralitaheri/jdate_dart)
-![GitHub top language](https://img.shields.io/github/languages/top/amiralitaheri/jdate_dart)
-![GitHub](https://img.shields.io/github/license/amiralitaheri/jdate_dart)
-
+<p align="center">
+    <img src="https://img.shields.io/github/workflow/status/amiralitaheri/jdate_dart/Dart%20CI" alt="CI"/>
+    <img src="https://img.shields.io/pub/v/jdate" alt="version"/>
+    <img src="https://img.shields.io/github/issues/amiralitaheri/jdate_dart" alt="issues"/>
+    <img src="https://img.shields.io/github/languages/top/amiralitaheri/jdate_dart" alt="language"/>
+    <img src="https://img.shields.io/github/license/amiralitaheri/jdate_dart" alt="licence"/>
+</p>
 ## new JDate()
 
 new JDate() creates a new jalali date object with the current date and time:
