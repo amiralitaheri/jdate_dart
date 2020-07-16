@@ -193,6 +193,6 @@ These methods can be used on String objects:
 
 JDate.js is available under the [MIT license](https://opensource.org/licenses/MIT).
 
-## CopyRight notice
+## Copyright Notice
 This library written based on [JDate.js](https://github.com/moghaddam24/JDate.js) by [Reza Moghaddam](https://github.com/moghaddam24).  
 Date Conversion methods based on Roozbeh Pournader and Mohammad Toossi work
