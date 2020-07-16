@@ -35,12 +35,9 @@ class JDate {
 
   int getDate() => jalali['date'];
 
-
   int getDay() => gregorian.weekday == 6 ? 0 : gregorian.weekday + 1;
 
-
   int getFullYear() => jalali['year'];
-
 
   int getShortYear() =>
       (jalali['year'] >= 1300 && jalali['year'] < 1400) ? int.parse(jalali['year'].toString().substring(2)) : int.parse(jalali['year'].toString().substring(1));
@@ -177,16 +174,16 @@ class JDate {
 
     format = format.replace('a', (gregorian.hour < 12) ? 'ق.ظ' : 'ب.ظ');
     format = format.replace('b', (jalali['month'] + 1) / 3.1).floor();
-    format = format.replace('d', withZiro(jalali['date']));
+    format = format.replace('d', withZero(jalali['date']));
     format = format.replace('f', jalaliSeasons[((jalali['month'] + 1) / 3.1).floor()]['long']);
     format = format.replace('g', gregorian.hour <= 12 ? gregorian.hour : gregorian.hour - 12);
-    format = format.replace('h', gregorian.hour <= 12 ? withZiro(gregorian.hour) : withZiro(gregorian.hour - 12));
-    format = format.replace('i', withZiro(gregorian.minute));
+    format = format.replace('h', gregorian.hour <= 12 ? withZero(gregorian.hour) : withZero(gregorian.hour - 12));
+    format = format.replace('i', withZero(gregorian.minute));
     format = format.replace('j', jalali['date']);
     format = format.replace('l', jalaliWeeks[jw]['long']);
-    format = format.replace('m', withZiro(jalali['month'] + 1));
+    format = format.replace('m', withZero(jalali['month'] + 1));
     format = format.replace('n', jalali['month'] + 1);
-    format = format.replace('s', withZiro(gregorian.second));
+    format = format.replace('s', withZero(gregorian.second));
     format = format.replace('t', ((jalali['month'] + 1) != 12) ? (31 - ((jalali['month'] + 1) / 6.5).floor()) : (leapYear + 29));
     format = format.replace('u', gregorian.millisecond);
     format = format.replace('v', numToPersianStr(jy));
@@ -197,7 +194,7 @@ class JDate {
     format = format.replace('D', jalaliWeeks[jw]['short']);
     format = format.replace('F', jalaliMonths[jalali['month']]['long']);
     format = format.replace('G', gregorian.hour);
-    format = format.replace('H', withZiro(gregorian.hour));
+    format = format.replace('H', withZero(gregorian.hour));
     format = format.replace('J', numToPersianStr(jalali['date']));
     format = format.replace('L', leapYear);
     format = format.replace('M', jalaliMonths[jalali['month']]['short']);
@@ -438,37 +435,33 @@ class JDate {
     return tempArray;
   }
 
-  String trnumToFa(number) {
-    return number
-        .toString()
-        .replaceAll('0', '۰')
-        .replaceAll('1', '۱')
-        .replaceAll('2', '۲')
-        .replaceAll('3', '۳')
-        .replaceAll('4', '۴')
-        .replaceAll('5', '۵')
-        .replaceAll('6', '۶')
-        .replaceAll('7', '۷')
-        .replaceAll('8', '۸')
-        .replaceAll('9', '۹');
-  }
+  String trnumToFa(number) => number
+      .toString()
+      .replaceAll('0', '۰')
+      .replaceAll('1', '۱')
+      .replaceAll('2', '۲')
+      .replaceAll('3', '۳')
+      .replaceAll('4', '۴')
+      .replaceAll('5', '۵')
+      .replaceAll('6', '۶')
+      .replaceAll('7', '۷')
+      .replaceAll('8', '۸')
+      .replaceAll('9', '۹');
 
-  String trnumToEn(var number) {
-    return number
-        .toString()
-        .replaceAll('[۰٠]', '0')
-        .replaceAll(RegExp(r'[۱١]'), '1')
-        .replaceAll(RegExp(r'[۲٢]'), '2')
-        .replaceAll(RegExp(r'[۳٣]'), '3')
-        .replaceAll(RegExp(r'[۴٤]'), '4')
-        .replaceAll(RegExp(r'[۵٥]'), '5')
-        .replaceAll(RegExp(r'[۶٦]'), '6')
-        .replaceAll(RegExp(r'[۷٧]'), '7')
-        .replaceAll(RegExp(r'[۸٨]'), '8')
-        .replaceAll(RegExp(r'[۹٩]'), '9');
-  }
+  String trnumToEn(var number) => number
+      .toString()
+      .replaceAll('[۰٠]', '0')
+      .replaceAll(RegExp(r'[۱١]'), '1')
+      .replaceAll(RegExp(r'[۲٢]'), '2')
+      .replaceAll(RegExp(r'[۳٣]'), '3')
+      .replaceAll(RegExp(r'[۴٤]'), '4')
+      .replaceAll(RegExp(r'[۵٥]'), '5')
+      .replaceAll(RegExp(r'[۶٦]'), '6')
+      .replaceAll(RegExp(r'[۷٧]'), '7')
+      .replaceAll(RegExp(r'[۸٨]'), '8')
+      .replaceAll(RegExp(r'[۹٩]'), '9');
 
-  String withZiro(int num) => (num < 10) ? '0' + num.toString() : num.toString();
+  String withZero(int num) => (num < 10) ? '0' + num.toString() : num.toString();
 }
 
 extension NumberParsing on String {
