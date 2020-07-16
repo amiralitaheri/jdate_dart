@@ -1,6 +1,5 @@
 extension PersianIntegerHelper on int {
   String toPersianWords([counter = false]) {
-    dynamic number = this;
     const yekan = [
       'صفر',
       'یک',
@@ -62,9 +61,9 @@ extension PersianIntegerHelper on int {
 
     var result = '';
 
-    if (number == 0) return 'صفر';
-    if (number.toString().length <= 3) {
-      var d12 = number % 100, d3 = (number / 100).floor();
+    if (this == 0) return 'صفر';
+    if (toString().length <= 3) {
+      var d12 = this % 100, d3 = (this / 100).floor();
 
       if (d3 != 0) {
         result = sadgan[d3] + ' و ';
@@ -86,8 +85,8 @@ extension PersianIntegerHelper on int {
         result = result.substring(0, result.length - 3);
       }
     } else {
-      var padLen = number.toString().length % 3;
-      switch (padLen) {
+      var padLen;
+      switch (toString().length % 3) {
         case 1:
           padLen = 2;
           break;
@@ -97,13 +96,12 @@ extension PersianIntegerHelper on int {
         default:
           padLen = 0;
       }
-      number =
-          number.toString().padLeft(number.toString().length + padLen, '0');
-      final L = (number.toString().length / 3 - 1).floor();
+      var numStr = toString().padLeft(toString().length + padLen, '0');
+      final L = (numStr.length / 3 - 1).floor();
       int b;
       var threeZero = false;
       for (var i = 0; i <= L; i++) {
-        b = int.parse(number.toString().substring(i * 3, (i + 1) * 3));
+        b = int.parse(numStr.substring(i * 3, (i + 1) * 3));
         if (b != 0) {
           result += b.toPersianWords() + ' ' + basegan[L - i] + ' و ';
           threeZero = false;
@@ -122,12 +120,11 @@ extension PersianIntegerHelper on int {
     if (!counter) {
       return result;
     } else {
-      if (number == 1) {
+      if (this == 1) {
         return 'اول';
       } else if (result.substring(result.length - 2, result.length) == 'سه') {
-        return result.toString().substring(0, -1) + 'وم';
-      } else if (result.substring(result.length - 2, result.length) == 'سی' ||
-          result.substring(result.length - 2, result.length) == 'ده') {
+        return result.substring(0, result.length - 1) + 'وم';
+      } else if (result.substring(result.length - 2, result.length) == 'سی') {
         return result + '‌ام';
       } else {
         return result + 'م';

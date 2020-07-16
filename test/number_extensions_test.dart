@@ -121,5 +121,83 @@ void main() {
       expect(10110110110.toPersianWords(),
           'ده میلیارد و یکصد و ده میلیون و یکصد و ده هزار و یکصد و ده');
     });
+
+    test('toPersianWords(true)', () {
+      //one digits
+      expect(1.toPersianWords(true), 'اول');
+      expect(2.toPersianWords(true), 'دوم');
+      expect(3.toPersianWords(true), 'سوم');
+      expect(4.toPersianWords(true), 'چهارم');
+      expect(5.toPersianWords(true), 'پنجم');
+      expect(6.toPersianWords(true), 'ششم');
+      expect(7.toPersianWords(true), 'هفتم');
+      expect(8.toPersianWords(true), 'هشتم');
+      expect(9.toPersianWords(true), 'نهم');
+  
+      //two digits
+      expect(10.toPersianWords(true), 'دهم');
+      expect(11.toPersianWords(true), 'یازدهم');
+      expect(12.toPersianWords(true), 'دوازدهم');
+      expect(13.toPersianWords(true), 'سیزدهم');
+      expect(14.toPersianWords(true), 'چهاردهم');
+      expect(15.toPersianWords(true), 'پانزدهم');
+      expect(16.toPersianWords(true), 'شانزدهم');
+      expect(17.toPersianWords(true), 'هفدهم');
+      expect(18.toPersianWords(true), 'هجدهم');
+      expect(19.toPersianWords(true), 'نوزدهم');
+  
+      expect(20.toPersianWords(true), 'بیستم');
+      expect(30.toPersianWords(true), 'سی‌ام');
+      expect(40.toPersianWords(true), 'چهلم');
+      expect(50.toPersianWords(true), 'پنجاهم');
+      expect(60.toPersianWords(true), 'شصتم');
+      expect(70.toPersianWords(true), 'هفتادم');
+      expect(80.toPersianWords(true), 'هشتادم');
+      expect(90.toPersianWords(true), 'نودم');
+  
+      expect(21.toPersianWords(true), 'بیست و یکم');
+      expect(32.toPersianWords(true), 'سی و دوم');
+      expect(43.toPersianWords(true), 'چهل و سوم');
+      expect(54.toPersianWords(true), 'پنجاه و چهارم');
+      expect(65.toPersianWords(true), 'شصت و پنجم');
+      expect(76.toPersianWords(true), 'هفتاد و ششم');
+      expect(87.toPersianWords(true), 'هشتاد و هفتم');
+      expect(98.toPersianWords(true), 'نود و هشتم');
+      expect(99.toPersianWords(true), 'نود و نهم');
+
+      //three digits
+      expect(100.toPersianWords(true), 'یکصدم');
+      expect(200.toPersianWords(true), 'دویستم');
+      expect(300.toPersianWords(true), 'سیصدم');
+      expect(400.toPersianWords(true), 'چهارصدم');
+      expect(500.toPersianWords(true), 'پانصدم');
+      expect(600.toPersianWords(true), 'ششصدم');
+      expect(700.toPersianWords(true), 'هفتصدم');
+      expect(800.toPersianWords(true), 'هشتصدم');
+      expect(900.toPersianWords(true), 'نهصدم');
+
+      expect(919.toPersianWords(true), 'نهصد و نوزدهم');
+      expect(828.toPersianWords(true), 'هشتصد و بیست و هشتم');
+      expect(737.toPersianWords(true), 'هفتصد و سی و هفتم');
+      expect(146.toPersianWords(true), 'یکصد و چهل و ششم');
+      expect(255.toPersianWords(true), 'دویست و پنجاه و پنجم');
+      expect(366.toPersianWords(true), 'سیصد و شصت و ششم');
+      expect(474.toPersianWords(true), 'چهارصد و هفتاد و چهارم');
+      expect(583.toPersianWords(true), 'پانصد و هشتاد و سوم');
+      expect(692.toPersianWords(true), 'ششصد و نود و دوم');
+      expect(791.toPersianWords(true), 'هفتصد و نود و یکم');
+
+      //four digits
+      expect(1000.toPersianWords(true), 'یک هزارم');
+      expect(2000.toPersianWords(true), 'دو هزارم');
+      expect(3000.toPersianWords(true), 'سه هزارم');
+      expect(3010.toPersianWords(true), 'سه هزار و دهم');
+      expect(4110.toPersianWords(true), 'چهار هزار و یکصد و دهم');
+      expect(5215.toPersianWords(true), 'پنج هزار و دویست و پانزدهم');
+      expect(6755.toPersianWords(true), 'شش هزار و هفتصد و پنجاه و پنجم');
+      expect(7108.toPersianWords(true), 'هفت هزار و یکصد و هشتم');
+      expect(8001.toPersianWords(true), 'هشت هزار و یکم');
+      expect(9011.toPersianWords(true), 'نه هزار و یازدهم');
+    });
   });
 }

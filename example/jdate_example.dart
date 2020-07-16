@@ -31,5 +31,6 @@ void main() {
   print('\nExtensions');
   print('۱۲۳۴۵۶۷۸۹۰'.numbersToEnglish());
   print(JDate().toString().numbersToPersian());
-  print(60000000.toPersianWords(false));
+  print(60000000.toPersianWords());
+  print(60000000.toPersianWords(true));
 }
