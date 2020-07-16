@@ -340,25 +340,44 @@ class JDate {
     return {'year': gy, 'month': gm, 'date': gd};
   }
 
+  /// Gregorian to Jalali Conversion
+  /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
   Map gregorianToJalali(var gy, var gm, var gd) {
-    gy = int.parse(trnumToEn(gy));
-    gm = int.parse(trnumToEn(gm)) + 1;
-    gd = int.parse(trnumToEn(gd));
+    gy = int.parse(trnumToEn(gy)) - 1600;
+    gm = int.parse(trnumToEn(gm)) - 1;
+    gd = int.parse(trnumToEn(gd)) - 1;
 
-    var g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-    var jy = (gy <= 1600) ? 0 : 979;
-    gy -= (gy <= 1600) ? 621 : 1600;
-    var gy2 = (gm > 2) ? (gy + 1) : gy;
-    var days = (365 * gy) + ((gy2 + 3) / 4).floor() - ((gy2 + 99) / 100).floor() + ((gy2 + 399) / 400).floor() - 80 + gd + g_d_m[gm - 1];
-    jy += 33 * (days / 12053).floor();
-    days %= 12053;
-    jy += 4 * (days / 1461).floor();
-    days %= 1461;
-    jy += ((days - 1) / 365).floor();
-    if (days > 365) days = (days - 1) % 365;
-    var jm = (days < 186) ? 1 + (days / 31).floor() : 7 + ((days - 186) / 30).floor();
-    var jd = 1 + ((days < 186) ? (days % 31) : ((days - 186) % 30));
-    return {'year': jy, 'month': --jm, 'date': jd};
+    var gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
+
+    var gDayNo = 365 * gy + ((gy + 3) / 4).floor() - ((gy + 99) / 100).floor() + ((gy + 399) / 400).floor();
+
+    for (var i = 0; i < gm; ++i) {
+      gDayNo += gDaysInMonth[i];
+    }
+    if (gm > 1 && ((gy % 4 == 0 && gy % 100 != 0) || (gy % 400 == 0))) gDayNo++;
+    gDayNo += gd;
+
+    var jDayNo = gDayNo - 79;
+
+    var jNp = (jDayNo / 12053).floor();
+    jDayNo = jDayNo % 12053;
+
+    var jy = 979 + 33 * jNp + 4 * (jDayNo / 1461).floor();
+
+    jDayNo %= 1461;
+
+    if (jDayNo >= 366) {
+      jy += ((jDayNo - 1) / 365).floor();
+      jDayNo = (jDayNo - 1) % 365;
+    }
+    var i = 0;
+    for (i; i < 11 && jDayNo >= jDaysInMonth[i]; ++i) {
+      jDayNo -= jDaysInMonth[i];
+    }
+    var jm = i + 1;
+    var jd = jDayNo + 1;
+    return {'year': jy, 'month': jm, 'date': jd};
   }
 
   String numToPersianStr(var number, [counter = false]) {
