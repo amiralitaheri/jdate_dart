@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 
 void main() {
   // http://www.saitak.com/number for convert tests
-  group('Extension Test', () {
+  group('String Extension Test', () {
     final firstEn = '1234567891234567899876543210';
     final secondEn = '1-2-3-4-5-6-7-8-9-10-15-20-25-100-564';
     final thirdEn = '1234567890';
