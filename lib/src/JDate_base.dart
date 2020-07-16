@@ -6,12 +6,21 @@ class JDate {
     gregorian = DateTime.now();
     if (year != null) {
       if (month == null) {
-        if (year.toString().length <= 4) {
+        if (year
+            .toString()
+            .length <= 4) {
           year = year is int ? year : int.parse(year);
           gregorian = DateTime(year);
           if (gregorian.millisecondsSinceEpoch < 0) {
             var gd = jalaliToGregorian(year, 1, date);
-            gregorian = DateTime(gd['year'], gd['month'], gd['date'], hours, minutes, seconds, milliseconds);
+            gregorian = DateTime(
+                gd['year'],
+                gd['month'],
+                gd['date'],
+                hours,
+                minutes,
+                seconds,
+                milliseconds);
           }
         } else {
           gregorian = DateTime.tryParse(year.toString());
@@ -26,7 +35,14 @@ class JDate {
         gregorian = DateTime(year, month, date);
         if (gregorian.millisecondsSinceEpoch < 0) {
           var gd = jalaliToGregorian(year, month, date);
-          gregorian = DateTime(gd['year'], gd['month'], gd['date'], hours, minutes, seconds, milliseconds);
+          gregorian = DateTime(
+              gd['year'],
+              gd['month'],
+              gd['date'],
+              hours,
+              minutes,
+              seconds,
+              milliseconds);
         }
       }
     }
@@ -72,7 +88,15 @@ class JDate {
       jalali['date'] = date;
       var gd = jalaliToGregorian(jalali['year'], jalali['month'], jalali['date']);
       gregorian =
-          DateTime(gd['year'], gd['month'], gd['date'], gregorian.hour, gregorian.minute, gregorian.second, gregorian.millisecond, gregorian.microsecond);
+          DateTime(
+              gd['year'],
+              gd['month'],
+              gd['date'],
+              gregorian.hour,
+              gregorian.minute,
+              gregorian.second,
+              gregorian.millisecond,
+              gregorian.microsecond);
       return gregorian.millisecondsSinceEpoch;
     } else {
       throw 'Cannot parse date number';
@@ -91,7 +115,15 @@ class JDate {
       }
       var gd = jalaliToGregorian(jalali['year'], jalali['month'], jalali['date']);
       gregorian =
-          DateTime(gd['year'], gd['month'], gd['date'], gregorian.hour, gregorian.minute, gregorian.second, gregorian.millisecond, gregorian.microsecond);
+          DateTime(
+              gd['year'],
+              gd['month'],
+              gd['date'],
+              gregorian.hour,
+              gregorian.minute,
+              gregorian.second,
+              gregorian.millisecond,
+              gregorian.microsecond);
       return gregorian.millisecondsSinceEpoch;
     } else {
       throw 'Cannot parse month number';
@@ -117,7 +149,15 @@ class JDate {
       }
       var gd = jalaliToGregorian(jalali['year'], jalali['month'], jalali['date']);
       gregorian =
-          DateTime(gd['year'], gd['month'], gd['date'], gregorian.hour, gregorian.minute, gregorian.second, gregorian.millisecond, gregorian.microsecond);
+          DateTime(
+              gd['year'],
+              gd['month'],
+              gd['date'],
+              gregorian.hour,
+              gregorian.minute,
+              gregorian.second,
+              gregorian.millisecond,
+              gregorian.microsecond);
       return gregorian.millisecondsSinceEpoch;
     } else {
       throw 'Cannot parse year number';
@@ -126,39 +166,119 @@ class JDate {
 
   int setHours(hours, [min, sec, ms]) {
     if (hours != null && min != null && sec != null && ms != null) {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, hours, min, sec, ms, gregorian.microsecond);
+      gregorian = DateTime(
+          gregorian.year,
+          gregorian.month,
+          gregorian.day,
+          hours,
+          min,
+          sec,
+          ms,
+          gregorian.microsecond);
     } else if (hours != null && min != null && sec != null) {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, hours, min, sec, gregorian.millisecond, gregorian.microsecond);
+      gregorian = DateTime(
+          gregorian.year,
+          gregorian.month,
+          gregorian.day,
+          hours,
+          min,
+          sec,
+          gregorian.millisecond,
+          gregorian.microsecond);
     } else if (hours != null && min != null) {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, hours, min, gregorian.second, gregorian.millisecond, gregorian.microsecond);
+      gregorian = DateTime(
+          gregorian.year,
+          gregorian.month,
+          gregorian.day,
+          hours,
+          min,
+          gregorian.second,
+          gregorian.millisecond,
+          gregorian.microsecond);
     } else {
       gregorian =
-          DateTime(gregorian.year, gregorian.month, gregorian.day, hours, gregorian.minute, gregorian.second, gregorian.millisecond, gregorian.microsecond);
+          DateTime(
+              gregorian.year,
+              gregorian.month,
+              gregorian.day,
+              hours,
+              gregorian.minute,
+              gregorian.second,
+              gregorian.millisecond,
+              gregorian.microsecond);
     }
     return gregorian.millisecondsSinceEpoch;
   }
 
   int setMilliseconds(ms) {
-    gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, gregorian.hour, gregorian.minute, gregorian.second, ms, gregorian.microsecond);
+    gregorian = DateTime(
+        gregorian.year,
+        gregorian.month,
+        gregorian.day,
+        gregorian.hour,
+        gregorian.minute,
+        gregorian.second,
+        ms,
+        gregorian.microsecond);
     return gregorian.millisecondsSinceEpoch;
   }
 
   int setMinutes(min, [sec, ms]) {
     if (min != null && sec != null && ms != null) {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, gregorian.hour, min, sec, ms, gregorian.microsecond);
+      gregorian = DateTime(
+          gregorian.year,
+          gregorian.month,
+          gregorian.day,
+          gregorian.hour,
+          min,
+          sec,
+          ms,
+          gregorian.microsecond);
     } else if (min != null && sec != null) {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, gregorian.hour, min, sec, gregorian.millisecond, gregorian.microsecond);
+      gregorian = DateTime(
+          gregorian.year,
+          gregorian.month,
+          gregorian.day,
+          gregorian.hour,
+          min,
+          sec,
+          gregorian.millisecond,
+          gregorian.microsecond);
     } else {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, gregorian.hour, min, gregorian.second, gregorian.millisecond, gregorian.microsecond);
+      gregorian = DateTime(
+          gregorian.year,
+          gregorian.month,
+          gregorian.day,
+          gregorian.hour,
+          min,
+          gregorian.second,
+          gregorian.millisecond,
+          gregorian.microsecond);
     }
     return gregorian.millisecondsSinceEpoch;
   }
 
   int setSeconds(sec, [ms]) {
     if (sec != null && ms != null) {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, gregorian.hour, gregorian.minute, sec, ms, gregorian.microsecond);
+      gregorian = DateTime(
+          gregorian.year,
+          gregorian.month,
+          gregorian.day,
+          gregorian.hour,
+          gregorian.minute,
+          sec,
+          ms,
+          gregorian.microsecond);
     } else {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, gregorian.hour, gregorian.minute, sec, gregorian.millisecond, gregorian.microsecond);
+      gregorian = DateTime(
+          gregorian.year,
+          gregorian.month,
+          gregorian.day,
+          gregorian.hour,
+          gregorian.minute,
+          sec,
+          gregorian.millisecond,
+          gregorian.microsecond);
     }
     return gregorian.millisecondsSinceEpoch;
   }
@@ -170,7 +290,10 @@ class JDate {
   }
 
   String echo([format = 'l، d F Y ساعت H:i:s']) {
-    var leapYear = isLeapYear(), jw = getDay(), jy = getShortYear(), jtz = getTimezone();
+    var leapYear = isLeapYear(),
+        jw = getDay(),
+        jy = getShortYear(),
+        jtz = getTimezone();
 
     format = format.replace('a', (gregorian.hour < 12) ? 'ق.ظ' : 'ب.ظ');
     format = format.replace('b', (jalali['month'] + 1) / 3.1).floor();
@@ -246,7 +369,10 @@ class JDate {
 //    }
 //    return gd.getTime();
 //    }
-  int now() => DateTime.now().millisecondsSinceEpoch;
+  int now() =>
+      DateTime
+          .now()
+          .millisecondsSinceEpoch;
 
   var jalaliMonths = [
     {'long': 'فروردین', 'short': 'فر'},
@@ -263,50 +389,74 @@ class JDate {
     {'long': 'اسفند', 'short': 'اس‍'}
   ],
       jalaliSeasons = [
-    {'long': 'بهار', 'short': 'به‍'},
-    {'long': 'تابستان', 'short': 'تا'},
-    {'long': 'پاییز', 'short': 'پا'},
-    {'long': 'زمستان', 'short': 'زم‍'}
-  ],
+        {'long': 'بهار', 'short': 'به‍'},
+        {'long': 'تابستان', 'short': 'تا'},
+        {'long': 'پاییز', 'short': 'پا'},
+        {'long': 'زمستان', 'short': 'زم‍'}
+      ],
       jalaliWeeks = [
-    {'long': 'شنبه', 'short': 'شن‍'},
-    {'long': 'یکشنبه', 'short': 'یک'},
-    {'long': 'دوشنبه', 'short': 'دو'},
-    {'long': 'سه‌شنبه', 'short': 'سه'},
-    {'long': 'چهارشنبه', 'short': 'چه‍'},
-    {'long': 'پنج‌شنبه', 'short': 'پن‍'},
-    {'long': 'جمعه', 'short': 'جم‍'}
-  ],
+        {'long': 'شنبه', 'short': 'شن‍'},
+        {'long': 'یکشنبه', 'short': 'یک'},
+        {'long': 'دوشنبه', 'short': 'دو'},
+        {'long': 'سه‌شنبه', 'short': 'سه'},
+        {'long': 'چهارشنبه', 'short': 'چه‍'},
+        {'long': 'پنج‌شنبه', 'short': 'پن‍'},
+        {'long': 'جمعه', 'short': 'جم‍'}
+      ],
       jalaliTRWeek = {0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 0};
 
+
+  /// Jalali to Gregorian Conversion
+  /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
   Map jalaliToGregorian(var jy, var jm, var jd) {
-    jy = int.parse(trnumToEn(jy));
-    jm = int.parse(trnumToEn(jm)) + 1;
-    jd = int.parse(trnumToEn(jd));
-    var gy = (jy <= 979) ? 621 : 1600;
-    jy -= (jy <= 979) ? 0 : 979;
-    var days = (365 * jy) + ((jy / 33).floor() * 8) + (((jy % 33) + 3) / 4).floor() + 78 + jd + ((jm < 7) ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);
-    gy += 400 * (days / 146097).floor();
-    days %= 146097;
+    jy = int.parse(trnumToEn(jy)) - 979;
+    jm = int.parse(trnumToEn(jm)) - 1;
+    jd = int.parse(trnumToEn(jd)) - 1;
+    var gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
 
-    if (days > 36524) {
-      gy += 100 * (--days / 36524).floor();
-      days %= 36524;
-      if (days >= 365) days++;
+    var j_day_no = 365 * jy + (jy / 33).floor() * 8 + ((jy % 33 + 3) / 4).floor();
+    for (var i = 0; i < jm; ++i) {
+      j_day_no += jDaysInMonth[i];
     }
-    gy += 4 * ((days) / 1461).floor();
-    days %= 1461;
-    gy += ((days - 1) / 365).floor();
-    if (days > 365) days = (days - 1) % 365;
-    var gd = days + 1;
-    var months = [0, 31, ((gy % 4 == 0 && gy % 100 != 0) || (gy % 400 == 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-    var i = 0;
-    for (i; i < months.length; i++) {
-      if (gd <= months[i]) break;
-      gd -= months[i];
+    j_day_no += jd;
+
+    var g_day_no = j_day_no + 79;
+
+    var gy = 1600 + 400 * (g_day_no / 146097).floor();
+    g_day_no = g_day_no % 146097;
+
+    var leap = true;
+    if (g_day_no >= 36525) {
+      g_day_no--;
+      gy += 100 * (g_day_no / 36524).floor();
+      g_day_no = g_day_no % 36524;
+
+      if (g_day_no >= 365) {
+        g_day_no++;
+      }
+      else {
+        leap = false;
+      }
     }
-    var gm = i - 1;
+
+    gy += 4 * (g_day_no/ 1461).floor();
+    g_day_no %= 1461;
+
+    if (g_day_no >= 366) {
+      leap = false;
+
+      g_day_no--;
+      gy += (g_day_no / 365).floor();
+      g_day_no = g_day_no % 365;
+    }
+    var i;
+    for (i = 0; g_day_no >= gDaysInMonth[i] + ((i == 1 && leap) ? 1 : 0); i++) {
+      g_day_no -= gDaysInMonth[i] + ((i == 1 && leap) ? 1 : 0);
+    }
+    var gm = i + 1;
+    var gd = g_day_no + 1;
 
     return {'year': gy, 'month': gm, 'date': gd};
   }
@@ -362,8 +512,12 @@ class JDate {
     var stotal = '';
 
     if (number == 0) return 'صفر';
-    if (number.toString().length <= 3) {
-      var stotal = '', d12 = number % 100, d3 = number / 100;
+    if (number
+        .toString()
+        .length <= 3) {
+      var stotal = '',
+          d12 = number % 100,
+          d3 = number / 100;
 
       if (d3 != 0) {
         stotal = sadgan[d3] + ' و ';
@@ -397,8 +551,13 @@ class JDate {
         default:
           padLen = 0;
       }
-      number = number.toString().padLeft(number.toString().length + padLen, '0');
-      var L = (number.toString().length / 3 - 1).floor(), b;
+      number = number.toString().padLeft(number
+          .toString()
+          .length + padLen, '0');
+      var L = (number
+          .toString()
+          .length / 3 - 1).floor(),
+          b;
       for (var i = 0; i <= L; i++) {
         b = int.parse(number.toString().substring(i * 3, 3));
         if (b != 0) {
@@ -435,40 +594,49 @@ class JDate {
     return tempArray;
   }
 
-  String trnumToFa(number) => number
-      .toString()
-      .replaceAll('0', '۰')
-      .replaceAll('1', '۱')
-      .replaceAll('2', '۲')
-      .replaceAll('3', '۳')
-      .replaceAll('4', '۴')
-      .replaceAll('5', '۵')
-      .replaceAll('6', '۶')
-      .replaceAll('7', '۷')
-      .replaceAll('8', '۸')
-      .replaceAll('9', '۹');
+  String trnumToFa(number) =>
+      number
+          .toString()
+          .replaceAll('0', '۰')
+          .replaceAll('1', '۱')
+          .replaceAll('2', '۲')
+          .replaceAll('3', '۳')
+          .replaceAll('4', '۴')
+          .replaceAll('5', '۵')
+          .replaceAll('6', '۶')
+          .replaceAll('7', '۷')
+          .replaceAll('8', '۸')
+          .replaceAll('9', '۹');
 
-  String trnumToEn(var number) => number
-      .toString()
-      .replaceAll('[۰٠]', '0')
-      .replaceAll(RegExp(r'[۱١]'), '1')
-      .replaceAll(RegExp(r'[۲٢]'), '2')
-      .replaceAll(RegExp(r'[۳٣]'), '3')
-      .replaceAll(RegExp(r'[۴٤]'), '4')
-      .replaceAll(RegExp(r'[۵٥]'), '5')
-      .replaceAll(RegExp(r'[۶٦]'), '6')
-      .replaceAll(RegExp(r'[۷٧]'), '7')
-      .replaceAll(RegExp(r'[۸٨]'), '8')
-      .replaceAll(RegExp(r'[۹٩]'), '9');
+  String trnumToEn(var number) =>
+      number
+          .toString()
+          .replaceAll('[۰٠]', '0')
+          .replaceAll(RegExp(r'[۱١]'), '1')
+          .replaceAll(RegExp(r'[۲٢]'), '2')
+          .replaceAll(RegExp(r'[۳٣]'), '3')
+          .replaceAll(RegExp(r'[۴٤]'), '4')
+          .replaceAll(RegExp(r'[۵٥]'), '5')
+          .replaceAll(RegExp(r'[۶٦]'), '6')
+          .replaceAll(RegExp(r'[۷٧]'), '7')
+          .replaceAll(RegExp(r'[۸٨]'), '8')
+          .replaceAll(RegExp(r'[۹٩]'), '9');
 
   String withZero(int num) => (num < 10) ? '0' + num.toString() : num.toString();
 }
 
 extension NumberParsing on String {
   String cut(String left, String right, [bool withBoth = false]) {
-    var str = substring(toLowerCase().indexOf(left.toString().toLowerCase())).substring(left.toString().length);
-    var leftLen = str.substring(str.toLowerCase().indexOf(right.toString().toLowerCase())).toString().length;
-    leftLen = (leftLen != 0) ? -(leftLen) : str.toString().length;
+    var str = substring(toLowerCase().indexOf(left.toString().toLowerCase())).substring(left
+        .toString()
+        .length);
+    var leftLen = str
+        .substring(str.toLowerCase().indexOf(right.toString().toLowerCase()))
+        .toString()
+        .length;
+    leftLen = (leftLen != 0) ? -(leftLen) : str
+        .toString()
+        .length;
     str = str.substring(0, leftLen);
 
     if (withBoth) {
