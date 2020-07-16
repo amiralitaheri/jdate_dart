@@ -1,68 +1,66 @@
-import 'dart:math';
-
 class JDate {
-  Map jalali;
-  DateTime gregorian;
+  Map _jalali;
+  DateTime _gregorian;
 
   JDate([var year, var month, var date = 1, var hours = 0, var minutes = 0, var seconds = 0, var milliseconds = 0]) {
-    gregorian = DateTime.now();
+    _gregorian = DateTime.now();
     if (year != null) {
       if (month == null) {
         if (year.toString().length <= 4) {
           year = year is int ? year : int.parse(year);
-          gregorian = DateTime(year);
-          if (gregorian.millisecondsSinceEpoch < 0) {
+          _gregorian = DateTime(year);
+          if (_gregorian.millisecondsSinceEpoch < 0) {
             var gd = jalaliToGregorian(year, 1, date);
-            gregorian = DateTime(gd['year'], gd['month'], gd['date'], hours, minutes, seconds, milliseconds);
+            _gregorian = DateTime(gd['year'], gd['month'], gd['date'], hours, minutes, seconds, milliseconds);
           }
         } else {
-          gregorian = DateTime.tryParse(year.toString());
-          if (gregorian?.millisecondsSinceEpoch == null || gregorian.millisecondsSinceEpoch < 0) {
+          _gregorian = DateTime.tryParse(year.toString());
+          if (_gregorian?.millisecondsSinceEpoch == null || _gregorian.millisecondsSinceEpoch < 0) {
 //            gregorian = DateTime(parse(year));
-            if (gregorian?.millisecondsSinceEpoch == null || gregorian.millisecondsSinceEpoch < 0) {
+            if (_gregorian?.millisecondsSinceEpoch == null || _gregorian.millisecondsSinceEpoch < 0) {
               throw 'Cannot parse date string';
             }
           }
         }
       } else {
-        gregorian = DateTime(year, month, date, hours, minutes, seconds, milliseconds);
-        if (gregorian.millisecondsSinceEpoch < 0) {
+        _gregorian = DateTime(year, month, date, hours, minutes, seconds, milliseconds);
+        if (_gregorian.millisecondsSinceEpoch < 0) {
           var gd = jalaliToGregorian(year, month, date);
-          gregorian = DateTime(gd['year'], gd['month'], gd['date'], hours, minutes, seconds, milliseconds);
+          _gregorian = DateTime(gd['year'], gd['month'], gd['date'], hours, minutes, seconds, milliseconds);
         }
       }
     }
     setJalali();
   }
 
-  int getDate() => jalali['date'];
+  int getDate() => _jalali['date'];
 
-  int getDay() => gregorian.weekday - 1 % 7;
+  int getDay() => _gregorian.weekday - 1 % 7;
 
-  int getFullYear() => jalali['year'];
+  int getFullYear() => _jalali['year'];
 
   int getShortYear() =>
-      (jalali['year'] >= 1300 && jalali['year'] < 1400) ? int.parse(jalali['year'].toString().substring(2)) : int.parse(jalali['year'].toString().substring(1));
+      (_jalali['year'] >= 1300 && _jalali['year'] < 1400) ? int.parse(_jalali['year'].toString().substring(2)) : int.parse(_jalali['year'].toString().substring(1));
 
-  int getHour() => gregorian.hour;
+  int getHour() => _gregorian.hour;
 
-  int getMilliseconds() => gregorian.millisecond;
+  int getMilliseconds() => _gregorian.millisecond;
 
-  int getMinute() => gregorian.minute;
+  int getMinute() => _gregorian.minute;
 
-  int getMonth() => jalali['month'];
+  int getMonth() => _jalali['month'];
 
-  int getSeconds() => gregorian.second;
+  int getSeconds() => _gregorian.second;
 
-  int getTime() => gregorian.millisecondsSinceEpoch;
+  int getTime() => _gregorian.millisecondsSinceEpoch;
 
-  String getTimezone() => gregorian.timeZoneName;
+  String getTimezone() => _gregorian.timeZoneName;
 
-  int getTimezoneOffset() => gregorian.timeZoneOffset.inMinutes;
+  int getTimezoneOffset() => _gregorian.timeZoneOffset.inMinutes;
 
   int isLeapYear([var year]) {
     if (year == null) {
-      return isLeapYear(jalali['year']);
+      return isLeapYear(_jalali['year']);
     } else {
       year = (year is int) ? year : int.parse(year);
       return (year % 33 % 4 - 1 == (year % 33 * .05).floor()) ? 1 : 0;
@@ -71,11 +69,11 @@ class JDate {
 
   int setDate(date) {
     if (date > 0 && date <= 31) {
-      jalali['date'] = date;
-      var gd = jalaliToGregorian(jalali['year'], jalali['month'], jalali['date']);
-      gregorian =
-          DateTime(gd['year'], gd['month'], gd['date'], gregorian.hour, gregorian.minute, gregorian.second, gregorian.millisecond, gregorian.microsecond);
-      return gregorian.millisecondsSinceEpoch;
+      _jalali['date'] = date;
+      var gd = jalaliToGregorian(_jalali['year'], _jalali['month'], _jalali['date']);
+      _gregorian =
+          DateTime(gd['year'], gd['month'], gd['date'], _gregorian.hour, _gregorian.minute, _gregorian.second, _gregorian.millisecond, _gregorian.microsecond);
+      return _gregorian.millisecondsSinceEpoch;
     } else {
       throw 'Cannot parse date number';
     }
@@ -83,18 +81,18 @@ class JDate {
 
   int setMonth(month, date) {
     if (month >= 0 && month <= 11) {
-      jalali['month'] = month;
+      _jalali['month'] = month;
       if (date != null) {
         if (date > 0 && date <= 31) {
-          jalali['date'] = date;
+          _jalali['date'] = date;
         } else {
           throw 'Cannot parse date number';
         }
       }
-      var gd = jalaliToGregorian(jalali['year'], jalali['month'], jalali['date']);
-      gregorian =
-          DateTime(gd['year'], gd['month'], gd['date'], gregorian.hour, gregorian.minute, gregorian.second, gregorian.millisecond, gregorian.microsecond);
-      return gregorian.millisecondsSinceEpoch;
+      var gd = jalaliToGregorian(_jalali['year'], _jalali['month'], _jalali['date']);
+      _gregorian =
+          DateTime(gd['year'], gd['month'], gd['date'], _gregorian.hour, _gregorian.minute, _gregorian.second, _gregorian.millisecond, _gregorian.microsecond);
+      return _gregorian.millisecondsSinceEpoch;
     } else {
       throw 'Cannot parse month number';
     }
@@ -102,25 +100,25 @@ class JDate {
 
   int setFullYear(year, month, date) {
     if (year >= 1000 && year <= 9999) {
-      jalali['year'] = year;
+      _jalali['year'] = year;
       if (month != null) {
         if (month >= 0 && month <= 11) {
-          jalali['month'] = month;
+          _jalali['month'] = month;
         } else {
           throw 'Cannot parse month number';
         }
       }
       if (date != null) {
         if (date > 0 && date <= 31) {
-          jalali['date'] = date;
+          _jalali['date'] = date;
         } else {
           throw 'Cannot parse date number';
         }
       }
-      var gd = jalaliToGregorian(jalali['year'], jalali['month'], jalali['date']);
-      gregorian =
-          DateTime(gd['year'], gd['month'], gd['date'], gregorian.hour, gregorian.minute, gregorian.second, gregorian.millisecond, gregorian.microsecond);
-      return gregorian.millisecondsSinceEpoch;
+      var gd = jalaliToGregorian(_jalali['year'], _jalali['month'], _jalali['date']);
+      _gregorian =
+          DateTime(gd['year'], gd['month'], gd['date'], _gregorian.hour, _gregorian.minute, _gregorian.second, _gregorian.millisecond, _gregorian.microsecond);
+      return _gregorian.millisecondsSinceEpoch;
     } else {
       throw 'Cannot parse year number';
     }
@@ -128,88 +126,88 @@ class JDate {
 
   int setHours(hours, [min, sec, ms]) {
     if (hours != null && min != null && sec != null && ms != null) {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, hours, min, sec, ms, gregorian.microsecond);
+      _gregorian = DateTime(_gregorian.year, _gregorian.month, _gregorian.day, hours, min, sec, ms, _gregorian.microsecond);
     } else if (hours != null && min != null && sec != null) {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, hours, min, sec, gregorian.millisecond, gregorian.microsecond);
+      _gregorian = DateTime(_gregorian.year, _gregorian.month, _gregorian.day, hours, min, sec, _gregorian.millisecond, _gregorian.microsecond);
     } else if (hours != null && min != null) {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, hours, min, gregorian.second, gregorian.millisecond, gregorian.microsecond);
+      _gregorian = DateTime(_gregorian.year, _gregorian.month, _gregorian.day, hours, min, _gregorian.second, _gregorian.millisecond, _gregorian.microsecond);
     } else {
-      gregorian =
-          DateTime(gregorian.year, gregorian.month, gregorian.day, hours, gregorian.minute, gregorian.second, gregorian.millisecond, gregorian.microsecond);
+      _gregorian =
+          DateTime(_gregorian.year, _gregorian.month, _gregorian.day, hours, _gregorian.minute, _gregorian.second, _gregorian.millisecond, _gregorian.microsecond);
     }
-    return gregorian.millisecondsSinceEpoch;
+    return _gregorian.millisecondsSinceEpoch;
   }
 
   int setMilliseconds(ms) {
-    gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, gregorian.hour, gregorian.minute, gregorian.second, ms, gregorian.microsecond);
-    return gregorian.millisecondsSinceEpoch;
+    _gregorian = DateTime(_gregorian.year, _gregorian.month, _gregorian.day, _gregorian.hour, _gregorian.minute, _gregorian.second, ms, _gregorian.microsecond);
+    return _gregorian.millisecondsSinceEpoch;
   }
 
   int setMinutes(min, [sec, ms]) {
     if (min != null && sec != null && ms != null) {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, gregorian.hour, min, sec, ms, gregorian.microsecond);
+      _gregorian = DateTime(_gregorian.year, _gregorian.month, _gregorian.day, _gregorian.hour, min, sec, ms, _gregorian.microsecond);
     } else if (min != null && sec != null) {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, gregorian.hour, min, sec, gregorian.millisecond, gregorian.microsecond);
+      _gregorian = DateTime(_gregorian.year, _gregorian.month, _gregorian.day, _gregorian.hour, min, sec, _gregorian.millisecond, _gregorian.microsecond);
     } else {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, gregorian.hour, min, gregorian.second, gregorian.millisecond, gregorian.microsecond);
+      _gregorian = DateTime(_gregorian.year, _gregorian.month, _gregorian.day, _gregorian.hour, min, _gregorian.second, _gregorian.millisecond, _gregorian.microsecond);
     }
-    return gregorian.millisecondsSinceEpoch;
+    return _gregorian.millisecondsSinceEpoch;
   }
 
   int setSeconds(sec, [ms]) {
     if (sec != null && ms != null) {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, gregorian.hour, gregorian.minute, sec, ms, gregorian.microsecond);
+      _gregorian = DateTime(_gregorian.year, _gregorian.month, _gregorian.day, _gregorian.hour, _gregorian.minute, sec, ms, _gregorian.microsecond);
     } else {
-      gregorian = DateTime(gregorian.year, gregorian.month, gregorian.day, gregorian.hour, gregorian.minute, sec, gregorian.millisecond, gregorian.microsecond);
+      _gregorian = DateTime(_gregorian.year, _gregorian.month, _gregorian.day, _gregorian.hour, _gregorian.minute, sec, _gregorian.millisecond, _gregorian.microsecond);
     }
-    return gregorian.millisecondsSinceEpoch;
+    return _gregorian.millisecondsSinceEpoch;
   }
 
   int setTime(ms) {
-    gregorian = DateTime.fromMillisecondsSinceEpoch(ms);
+    _gregorian = DateTime.fromMillisecondsSinceEpoch(ms);
     setJalali();
-    return gregorian.millisecondsSinceEpoch;
+    return _gregorian.millisecondsSinceEpoch;
   }
 
   String echo([format = 'l، d F Y ساعت H:i:s']) {
     var leapYear = isLeapYear(), jw = getDay(), jy = getShortYear(), jtz = getTimezone();
 
-    format = format.replaceAll('a', (gregorian.hour < 12) ? 'ق.ظ' : 'ب.ظ');
-    format = format.replaceAll('b', ((jalali['month'] + 1) / 3.1).floor().toString());
-    format = format.replaceAll('d', withZero(jalali['date']));
-    format = format.replaceAll('f', jalaliSeasons[((jalali['month'] + 1) / 3.1).floor()]['long']);
-    format = format.replaceAll('g', gregorian.hour <= 12 ? gregorian.hour.toString() : (gregorian.hour - 12).toString());
-    format = format.replaceAll('h', gregorian.hour <= 12 ? withZero(gregorian.hour) : withZero(gregorian.hour - 12));
-    format = format.replaceAll('i', withZero(gregorian.minute));
-    format = format.replaceAll('j', jalali['date'].toString());
+    format = format.replaceAll('a', (_gregorian.hour < 12) ? 'ق.ظ' : 'ب.ظ');
+    format = format.replaceAll('b', ((_jalali['month'] + 1) / 3.1).floor().toString());
+    format = format.replaceAll('d', withZero(_jalali['date']));
+    format = format.replaceAll('f', jalaliSeasons[((_jalali['month'] + 1) / 3.1).floor()]['long']);
+    format = format.replaceAll('g', _gregorian.hour <= 12 ? _gregorian.hour.toString() : (_gregorian.hour - 12).toString());
+    format = format.replaceAll('h', _gregorian.hour <= 12 ? withZero(_gregorian.hour) : withZero(_gregorian.hour - 12));
+    format = format.replaceAll('i', withZero(_gregorian.minute));
+    format = format.replaceAll('j', _jalali['date'].toString());
     format = format.replaceAll('l', jalaliWeeks[jw]['long']);
-    format = format.replaceAll('m', withZero(jalali['month'] + 1));
-    format = format.replaceAll('n', (jalali['month'] + 1).toString());
-    format = format.replaceAll('s', withZero(gregorian.second));
-    format = format.replaceAll('t', ((jalali['month'] + 1) != 12) ? (31 - ((jalali['month'] + 1) / 6.5).floor()).toString() : (leapYear + 29).toString());
-    format = format.replaceAll('u', gregorian.millisecond.toString());
+    format = format.replaceAll('m', withZero(_jalali['month'] + 1));
+    format = format.replaceAll('n', (_jalali['month'] + 1).toString());
+    format = format.replaceAll('s', withZero(_gregorian.second));
+    format = format.replaceAll('t', ((_jalali['month'] + 1) != 12) ? (31 - ((_jalali['month'] + 1) / 6.5).floor()).toString() : (leapYear + 29).toString());
+    format = format.replaceAll('u', _gregorian.millisecond.toString());
     format = format.replaceAll('v', numToPersianStr(jy));
     format = format.replaceAll('w', jw.toString());
     format = format.replaceAll('y', jy.toString());
 
-    format = format.replaceAll('A', (gregorian.hour < 12) ? 'قبل از ظهر' : 'بعد از ظهر');
+    format = format.replaceAll('A', (_gregorian.hour < 12) ? 'قبل از ظهر' : 'بعد از ظهر');
     format = format.replaceAll('D', jalaliWeeks[jw]['short']);
-    format = format.replaceAll('F', jalaliMonths[jalali['month']]['long']);
-    format = format.replaceAll('G', gregorian.hour.toString());
-    format = format.replaceAll('H', withZero(gregorian.hour));
-    format = format.replaceAll('J', numToPersianStr(jalali['date']));
+    format = format.replaceAll('F', jalaliMonths[_jalali['month']]['long']);
+    format = format.replaceAll('G', _gregorian.hour.toString());
+    format = format.replaceAll('H', withZero(_gregorian.hour));
+    format = format.replaceAll('J', numToPersianStr(_jalali['date']));
     format = format.replaceAll('L', leapYear.toString());
-    format = format.replaceAll('M', jalaliMonths[jalali['month']]['short']);
+    format = format.replaceAll('M', jalaliMonths[_jalali['month']]['short']);
     format = format.replaceAll('O', jtz);
 
-    format = format.replaceAll('V', numToPersianStr(jalali['year']));
-    format = format.replaceAll('Y', jalali['year'].toString());
+    format = format.replaceAll('V', numToPersianStr(_jalali['year']));
+    format = format.replaceAll('Y', _jalali['year'].toString());
 
     return format;
   }
 
   void setJalali() {
-    jalali = gregorianToJalali(gregorian.year, gregorian.month, gregorian.day);
+    _jalali = gregorianToJalali(_gregorian.year, _gregorian.month, _gregorian.day);
   }
 
   @override
@@ -278,8 +276,7 @@ class JDate {
     {'long': 'چهارشنبه', 'short': 'چه‍'},
     {'long': 'پنج‌شنبه', 'short': 'پن‍'},
     {'long': 'جمعه', 'short': 'جم‍'}
-  ],
-      jalaliTRWeek = {0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 0};
+  ];
 
   /// Jalali to Gregorian Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
