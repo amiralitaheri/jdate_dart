@@ -58,11 +58,11 @@ void main() {
       jDate = JDate(1377, 3, 27);
     });
 
-    test('1998-6-18 test', () {
+    test('1377-3-27 test', () {
       expect(jDate.getFullYear(), 1377);
       expect(jDate.getMonth(), 3);
-      expect(jDate.getDate(), 28);
-      expect(jDate.getDay(), 5);
+      expect(jDate.getDate(), 27);
+      expect(jDate.getDay(), 4);
     });
   });
 
