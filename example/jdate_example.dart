@@ -30,8 +30,8 @@ void main() {
   //useful static methods
   print('\nStatic methods');
   print(JDate.numToPersianStr(60, true));
-  print(JDate.gregorianToJalali(2020,7,16));
-  print(JDate.jalaliToGregorian(1399,4,26));
+  print(JDate.gregorianToJalali(2020, 7, 16));
+  print(JDate.jalaliToGregorian(1399, 4, 26));
 
   //useful extension
   print('\nExtension methods');
