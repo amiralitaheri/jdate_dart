@@ -29,6 +29,6 @@ void main() {
 
   //useful static methods
   print('\nStatic methods');
-  print(JDate.numToPersianStr(60,true));
+  print(JDate.numToPersianStr(60, true));
   print(JDate.translateNumbersToPersian(JDate()));
 }
