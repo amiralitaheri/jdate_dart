@@ -1,6 +1,5 @@
-//import 'package:JDate/jdate_dart';
-//
-//void main() {
-//  var awesome = Awesome();
-//  print('awesome: ${awesome.isAwesome}');
-//}
+import 'package:jdate/jdate.dart';
+
+void main() {
+  print(JDate());
+}
