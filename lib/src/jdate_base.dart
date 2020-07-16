@@ -266,53 +266,48 @@ class JDate {
         jy = getShortYear(),
         jtz = getTimezone();
 
-    format = format.replaceAll('a', (_gregorian.hour < 12) ? 'ق.ظ' : 'ب.ظ');
-    format = format.replaceAll(
-        'b', ((_jalali['month'] + 1) / 3.1).floor().toString());
-    format = format.replaceAll('d', withZero(_jalali['date']));
-    format = format.replaceAll(
-        'f', jalaliSeasons[((_jalali['month'] + 1) / 3.1).floor()]['long']);
-    format = format.replaceAll(
-        'g',
-        _gregorian.hour <= 12
-            ? _gregorian.hour.toString()
-            : (_gregorian.hour - 12).toString());
-    format = format.replaceAll(
-        'h',
-        _gregorian.hour <= 12
-            ? withZero(_gregorian.hour)
-            : withZero(_gregorian.hour - 12));
-    format = format.replaceAll('i', withZero(_gregorian.minute));
-    format = format.replaceAll('j', _jalali['date'].toString());
-    format = format.replaceAll('l', jalaliWeeks[jw]['long']);
-    format = format.replaceAll('m', withZero(_jalali['month'] + 1));
-    format = format.replaceAll('n', (_jalali['month'] + 1).toString());
-    format = format.replaceAll('s', withZero(_gregorian.second));
-    format = format.replaceAll(
-        't',
-        ((_jalali['month'] + 1) != 12)
-            ? (31 - ((_jalali['month'] + 1) / 6.5).floor()).toString()
-            : (leapYear + 29).toString());
-    format = format.replaceAll('u', _gregorian.millisecond.toString());
-    format = format.replaceAll('v', jy.toPersianWords());
-    format = format.replaceAll('w', jw.toString());
-    format = format.replaceAll('y', jy.toString());
-
-    format = format.replaceAll(
-        'A', (_gregorian.hour < 12) ? 'قبل از ظهر' : 'بعد از ظهر');
-    format = format.replaceAll('D', jalaliWeeks[jw]['short']);
-    format = format.replaceAll('F', jalaliMonths[_jalali['month']]['long']);
-    format = format.replaceAll('G', _gregorian.hour.toString());
-    format = format.replaceAll('H', withZero(_gregorian.hour));
-    format = format.replaceAll('J', (_jalali['date'] as int).toPersianWords());
-    format = format.replaceAll('L', leapYear.toString());
-    format = format.replaceAll('M', jalaliMonths[_jalali['month']]['short']);
-    format = format.replaceAll('O', jtz);
-
-    format = format.replaceAll('V', (_jalali['year'] as int).toPersianWords());
-    format = format.replaceAll('Y', _jalali['year'].toString());
-
-    return format;
+    return format
+        .replaceAll('a', (_gregorian.hour < 12) ? 'ق.ظ' : 'ب.ظ')
+        .replaceAll('b', ((_jalali['month'] + 1) / 3.1).floor().toString())
+        .replaceAll('d', withZero(_jalali['date']))
+        .replaceAll(
+            'f', jalaliSeasons[((_jalali['month'] + 1) / 3.1).floor()]['long'])
+        .replaceAll(
+            'g',
+            _gregorian.hour <= 12
+                ? _gregorian.hour.toString()
+                : (_gregorian.hour - 12).toString())
+        .replaceAll(
+            'h',
+            _gregorian.hour <= 12
+                ? withZero(_gregorian.hour)
+                : withZero(_gregorian.hour - 12))
+        .replaceAll('i', withZero(_gregorian.minute))
+        .replaceAll('j', _jalali['date'].toString())
+        .replaceAll('l', jalaliWeeks[jw]['long'])
+        .replaceAll('m', withZero(_jalali['month'] + 1))
+        .replaceAll('n', (_jalali['month'] + 1).toString())
+        .replaceAll('s', withZero(_gregorian.second))
+        .replaceAll(
+            't',
+            ((_jalali['month'] + 1) != 12)
+                ? (31 - ((_jalali['month'] + 1) / 6.5).floor()).toString()
+                : (leapYear + 29).toString())
+        .replaceAll('u', _gregorian.millisecond.toString())
+        .replaceAll('v', numToPersianStr(jy))
+        .replaceAll('w', jw.toString())
+        .replaceAll('y', jy.toString())
+        .replaceAll('A', (_gregorian.hour < 12) ? 'قبل از ظهر' : 'بعد از ظهر')
+        .replaceAll('D', jalaliWeeks[jw]['short'])
+        .replaceAll('F', jalaliMonths[_jalali['month']]['long'])
+        .replaceAll('G', _gregorian.hour.toString())
+        .replaceAll('H', withZero(_gregorian.hour))
+        .replaceAll('J', numToPersianStr(_jalali['date']))
+        .replaceAll('L', leapYear.toString())
+        .replaceAll('M', jalaliMonths[_jalali['month']]['short'])
+        .replaceAll('O', jtz)
+        .replaceAll('V', numToPersianStr(_jalali['year']))
+        .replaceAll('Y', _jalali['year'].toString());
   }
 
   void setJalali() {
@@ -390,7 +385,7 @@ class JDate {
 
   /// Jalali to Gregorian Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
-  Map jalaliToGregorian(var jy, var jm, var jd) {
+  static Map jalaliToGregorian(var jy, var jm, var jd) {
     jy = int.parse(jy.toString().numbersToEnglish()) - 979;
     jm = int.parse(jm.toString().numbersToEnglish()) - 1;
     jd = int.parse(jd.toString().numbersToEnglish()) - 1;
@@ -443,8 +438,8 @@ class JDate {
   }
 
   /// Gregorian to Jalali Conversion
-  // Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
-  Map gregorianToJalali(int gy, int gm, int gd) {
+  /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
+  static Map gregorianToJalali(int gy, int gm, int gd) {
     gy = int.parse(gy.toString().numbersToEnglish()) - 1600;
     gm = int.parse(gm.toString().numbersToEnglish()) - 1;
     gd = int.parse(gd.toString().numbersToEnglish()) - 1;

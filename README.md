@@ -154,10 +154,45 @@ These methods can be used for set date values (years, months, days, hours, minut
     </tbody>
 </table>
 
+## Static methods
+
+These methods can be used without creating an instance of the object:
+
+<table width="100%">
+    <thead>
+    <tr>
+        <td>Method</td>
+        <td>Description</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr><td>jalaliToGregorian(year, month, date)</td><td>Converts Jalali date to Gregorian and return the result as a map</td></tr>
+    <tr><td>gregorianToJalali(year, month, date)</td><td>Converts Gregorian date to Jalali and return the result as a map</td></tr>
+    <tr><td>numToPersianStr(number,[counter])</td><td>Returns number as Persian text</td></tr>
+    </tbody>
+</table>
+
+## String extension methods
+
+These methods can be used on String objects:
+
+<table width="100%">
+    <thead>
+    <tr>
+        <td>Method</td>
+        <td>Description</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr><td>String.numbersToEnglish()</td><td>Converts Persian digits in string to english digits</td></tr>
+    <tr><td>String.numbersToPersian()</td><td>Converts English digits in string to Persian digits</td></tr>
+    </tbody>
+</table>
+
 ## License
 
 JDate.js is available under the [MIT license](https://opensource.org/licenses/MIT).
 
-## CopyRight notice
+## Copyright Notice
 This library written based on [JDate.js](https://github.com/moghaddam24/JDate.js) by [Reza Moghaddam](https://github.com/moghaddam24).  
 Date Conversion methods based on Roozbeh Pournader and Mohammad Toossi work

@@ -27,8 +27,13 @@ void main() {
   print('\nCustom format');
   print(JDate().echo('l، d F V ساعت H:i:s'));
 
+  //useful static methods
+  print('\nStatic methods');
+  print(JDate.gregorianToJalali(2020, 7, 16));
+  print(JDate.jalaliToGregorian(1399, 4, 26));
+
   //useful extension
-  print('\nExtensions');
+  print('\nExtension methods');
   print('۱۲۳۴۵۶۷۸۹۰'.numbersToEnglish());
   print(JDate().toString().numbersToPersian());
   print(60000000.toPersianWords());
