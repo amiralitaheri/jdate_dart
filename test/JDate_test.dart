@@ -47,7 +47,7 @@ void main() {
       expect(jDate.getFullYear(), 1377);
       expect(jDate.getMonth(), 3);
       expect(jDate.getDate(), 28);
-      expect(jDate.getDay(), 5);
+      expect(jDate.getDay(), 3);
     });
   });
 
@@ -62,7 +62,7 @@ void main() {
       expect(jDate.getFullYear(), 1377);
       expect(jDate.getMonth(), 3);
       expect(jDate.getDate(), 27);
-      expect(jDate.getDay(), 4);
+      expect(jDate.getDay(), 2);
     });
   });
 
@@ -77,7 +77,7 @@ void main() {
       expect(jDate.getFullYear(), 1390);
       expect(jDate.getMonth(), 12);
       expect(jDate.getDate(), 8);
-      expect(jDate.getDay(), 2);
+      expect(jDate.getDay(), 0);
     });
   });
 
@@ -134,6 +134,29 @@ void main() {
 
     test('1555-5-5', () {
       expect(jDate.jalaliToGregorian(1555, 5, 5), {'year': 2176, 'month': 7, 'date': 26});
+    });
+  });
+
+  group('withzero function', () {
+    JDate jDate;
+
+    setUp(() {
+      jDate = JDate();
+    });
+
+    test('1', () {
+      expect(jDate.withZero(1), '01');
+    });
+
+    test('9', () {
+      expect(jDate.withZero(9), '09');
+    });
+
+    test('10', () {
+      expect(jDate.withZero(10), '10');
+    });
+    test('100', () {
+      expect(jDate.withZero(100), '100');
     });
   });
 }

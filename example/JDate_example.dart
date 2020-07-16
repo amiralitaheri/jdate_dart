@@ -23,8 +23,7 @@ void main() {
   print(JDate(1399, 4, 15, 20, 25, 30));
   print(JDate(1399, 4, 15, 20, 25, 30, 650));
 
-
-
+  //custom format
   print('\nCustom format');
   print(JDate().echo('l، d F V ساعت H:i:s'));
 
