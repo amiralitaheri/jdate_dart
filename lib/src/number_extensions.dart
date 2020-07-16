@@ -49,7 +49,16 @@ extension PersianIntegerHelper on int {
       'هشتصد',
       'نهصد'
     ];
-    const basegan = ['', 'هزار', 'میلیون', 'میلیارد', 'تریلیون'];
+    const basegan = [
+      '',
+      'هزار',
+      'میلیون',
+      'میلیارد',
+      'بیلیون',
+      'بیلیارد',
+      'تریلیون',
+      'تریلیارد'
+    ];
 
     var result = '';
 
@@ -92,13 +101,20 @@ extension PersianIntegerHelper on int {
           number.toString().padLeft(number.toString().length + padLen, '0');
       final L = (number.toString().length / 3 - 1).floor();
       int b;
+      var threeZero = false;
       for (var i = 0; i <= L; i++) {
         b = int.parse(number.toString().substring(i * 3, (i + 1) * 3));
         if (b != 0) {
-          result = result + b.toPersianWords() + ' ' + basegan[L - i] + ' و ';
+          result += b.toPersianWords() + ' ' + basegan[L - i] + ' و ';
+          threeZero = false;
+        } else if (b == 0 && i > 0) {
+          threeZero = true;
         }
       }
-      result = result.substring(0, result.length - 4);
+      result = result.substring(
+        0,
+        threeZero ? result.length - 3 : result.length - 4,
+      );
     }
 
     result = result.trim();
