@@ -4,61 +4,61 @@ import 'package:test/test.dart';
 void main() {
   group('Now constructor', () {
     test('Second test', () {
-      expect(JDate.now().getSeconds(), DateTime.now().second);
+      expect(JDate.now().second, DateTime.now().second);
     });
     test('Minute test', () {
-      expect(JDate.now().getMinute(), DateTime.now().minute);
+      expect(JDate.now().minute, DateTime.now().minute);
     });
     test('Hour test', () {
-      expect(JDate.now().getHour(), DateTime.now().hour);
+      expect(JDate.now().hour, DateTime.now().hour);
     });
   });
 
   group('Constructor with Gregorian Year', () {
     test('Year 1998 test', () {
-      expect(JDate(1998).getFullYear(), 1376);
+      expect(JDate(1998).year, 1376);
     });
     test('Year 2020 test', () {
-      expect(JDate(2020).getFullYear(), 1398);
+      expect(JDate(2020).year, 1398);
     });
   });
 
   group('Constructor with Jalali Year', () {
     test('Year 1377 test', () {
-      expect(JDate(1377).getFullYear(), 1377);
+      expect(JDate(1377).year, 1377);
     });
     test('Year 1399 test', () {
-      expect(JDate(1399).getFullYear(), 1399);
+      expect(JDate(1399).year, 1399);
     });
   });
 
   group('Constructor with full Gregorian date', () {
     test('1998-6-18 test', () {
       var jDate = JDate(1998, 6, 18);
-      expect(jDate.getFullYear(), 1377);
-      expect(jDate.getMonth(), 3);
-      expect(jDate.getDate(), 28);
-      expect(jDate.getDay(), 3);
+      expect(jDate.year, 1377);
+      expect(jDate.month, 3);
+      expect(jDate.day, 28);
+      expect(jDate.weekDay, 3);
     });
   });
 
   group('Constructor with full Jalali date', () {
     test('1377-3-27 test', () {
       var jDate = JDate(1377, 3, 27);
-      expect(jDate.getFullYear(), 1377);
-      expect(jDate.getMonth(), 3);
-      expect(jDate.getDate(), 27);
-      expect(jDate.getDay(), 2);
+      expect(jDate.year, 1377);
+      expect(jDate.month, 3);
+      expect(jDate.day, 27);
+      expect(jDate.weekDay, 2);
     });
   });
 
-  group('Constructor with String', () {
+  group('parse', () {
     test('2012-02-27 13:27:00 test', () {
-      var jDate = JDate('2012-02-27 13:27:00');
-      expect(jDate.getFullYear(), 1390);
-      expect(jDate.getMonth(), 12);
-      expect(jDate.getDate(), 8);
-      expect(jDate.getDay(), 0);
+      var jDate = JDate.parse('2012-02-27 13:27:00');
+      expect(jDate.year, 1390);
+      expect(jDate.month, 12);
+      expect(jDate.day, 8);
+      expect(jDate.weekDay, 0);
     });
   });
 
@@ -73,7 +73,7 @@ void main() {
       test('${date[0]}-${date[1]}-${date[2]}', () {
         expect(
           JDate.gregorianToJalali(date[0], date[1], date[2]),
-          {'year': date[3], 'month': date[4], 'date': date[5]},
+          {'year': date[3], 'month': date[4], 'day': date[5]},
         );
       });
     });
@@ -90,7 +90,7 @@ void main() {
       test('${date[0]}-${date[1]}-${date[2]}', () {
         expect(
           JDate.jalaliToGregorian(date[0], date[1], date[2]),
-          {'year': date[3], 'month': date[4], 'date': date[5]},
+          {'year': date[3], 'month': date[4], 'day': date[5]},
         );
       });
     });
@@ -230,7 +230,7 @@ void main() {
       test('${date[0]}-${date[1]}-${date[2]}', () {
         expect(
           JDate.gregorianToHijri(date[0], date[1], date[2]),
-          {'year': date[3], 'month': date[4], 'date': date[5]},
+          {'year': date[3], 'month': date[4], 'day': date[5]},
         );
       });
     });
