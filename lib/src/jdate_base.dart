@@ -16,6 +16,7 @@ class JDate {
   Duration _timeZoneOffset;
   String _timeZoneName;
   int _weekDay;
+  bool _isUtc;
 
   int get microsecondsSinceEpoch => _microsecondsSinceEpoch;
 
@@ -43,6 +44,8 @@ class JDate {
 
   String get timeZoneName => _timeZoneName;
 
+  bool get isUtc => _isUtc;
+
   JDate(
     int year, [
     int month = 1,
@@ -67,6 +70,71 @@ class JDate {
   ]) : this._internal(year, month, day, hour, minute, second, millisecond,
             microsecond, true);
 
+  JDate changeTo({
+    int year,
+    int month,
+    int day,
+    int hour,
+    int minute,
+    int second,
+    int millisecond,
+    int microsecond,
+    bool isUtc,
+  }) {
+    JDate._internal(
+      year ?? _year,
+      month ?? _month,
+      day ?? _day,
+      hour ?? _hour,
+      minute ?? _minute,
+      second ?? _second,
+      millisecond ?? _millisecond,
+      microsecond ?? _microsecond,
+      isUtc ?? _isUtc,
+    );
+    return this;
+  }
+
+  JDate.fromDateTime(DateTime date) {
+    var jalali = gregorianToJalali(date.year, date.month, date.day);
+    JDate._internal(
+      jalali['year'],
+      jalali['month'],
+      jalali['day'],
+      date.hour,
+      date.minute,
+      date.second,
+      date.millisecond,
+      date.microsecond,
+      date.isUtc,
+    );
+  }
+
+  JDate.fromMicrosecondsSinceEpoch(int microsecondsSinceEpoch) {
+    var gregorian = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch);
+    JDate.fromDateTime(gregorian);
+  }
+
+  JDate.fromMillisecondsSinceEpoch(int millisecondsSinceEpoch) {
+    var gregorian = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
+    JDate.fromDateTime(gregorian);
+  }
+
+  JDate.now() : this.fromDateTime(DateTime.now());
+
+  JDate.parse(String string) {
+    string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
+    var date = DateTime.tryParse(string);
+    if (date == null) {
+      throw 'Can\'t parse string';
+    }
+    var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
+    var greg = DateTime(gdt['year'], gdt['month'], gdt['day'], date.hour,
+            date.minute, date.second, date.millisecond);
+    JDate.fromDateTime(greg);
+  }
+
+
   JDate._internal(
     int year,
     int month,
@@ -87,46 +155,26 @@ class JDate {
     _second = second;
     _millisecond = millisecond;
     _microsecond = microsecond;
+    _isUtc = isUtc;
 
     //convert jalali to gregorian to get other parameters
     var greg = jalaliToGregorian(year, month, day);
-    var gregorian = DateTime(greg['year'], greg['month'], greg['day'], _hour,
-        _minute, _second, _millisecond, _microsecond);
-    
+    DateTime gregorian;
+    if (_isUtc) {
+      gregorian = DateTime.utc(greg['year'], greg['month'], greg['day'], _hour,
+          _minute, _second, _millisecond, _microsecond);
+    } else {
+      gregorian = DateTime(greg['year'], greg['month'], greg['day'], _hour,
+          _minute, _second, _millisecond, _microsecond);
+    }
+
     _timeZoneName = gregorian.timeZoneName;
     _timeZoneOffset = gregorian.timeZoneOffset;
     _weekDay = gregorian.weekday - 1 % 7;
     _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
     _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
   }
-
-  JDate.fromMicrosecondsSinceEpoch(int microsecondsSinceEpoch) {
-    var gregorian = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch);
-    _setFromGregorian(gregorian);
-  }
-
-  JDate.fromMillisecondsSinceEpoch(int millisecondsSinceEpoch) {
-    var gregorian = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
-    _setFromGregorian(gregorian);
-  }
-
-  JDate.now() {
-    var gregorian = DateTime.now();
-    _setFromGregorian(gregorian);
-  }
-
-  JDate.parse(String string) {
-    string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
-    var date = DateTime.tryParse(string);
-    if (date == null) {
-      throw 'Can\'t parse string';
-    }
-    var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
-    var greg = DateTime(gdt['year'], gdt['month'], gdt['day'], date.hour,
-        date.minute, date.second, date.millisecond);
-    _setFromGregorian(greg);
-  }
-
+  
   int getShortYear() {
     if (_year >= 1300 && _year < 1400) {
       return int.parse(_year.toString().substring(2));
@@ -197,26 +245,6 @@ class JDate {
         .replaceAll('O', jtz)
         .replaceAll('V', _year.toPersianWords())
         .replaceAll('Y', _year.toString());
-  }
-
-  void _setFromGregorian(DateTime gregorian) {
-    _microsecond = gregorian.microsecond;
-    _millisecond = gregorian.millisecond;
-    _second = gregorian.second;
-    _minute = gregorian.minute;
-    _hour = gregorian.hour;
-    _weekDay = gregorian.weekday - 1 % 7;
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-
-    _timeZoneName = gregorian.timeZoneName;
-    _timeZoneOffset = gregorian.timeZoneOffset;
-
-    var jalali =
-        gregorianToJalali(gregorian.year, gregorian.month, gregorian.day);
-    _year = jalali['year'];
-    _month = jalali['month'];
-    _day = jalali['day'];
   }
 
   @override

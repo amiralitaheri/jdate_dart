@@ -55,4 +55,7 @@ void main() {
   print(JDate.parse('۱۳۹۹/۰۹/۰۹'));
   print(JDate.parse('1399/02/13'));
   print(JDate.parse('1399/02/13 03:14:30'));
+  
+  //change date
+  print(JDate.now().changeTo(year: 1357, second: 10));
 }
