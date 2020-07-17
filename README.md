@@ -139,6 +139,10 @@ Method|Description
 ------|-----------
 jalaliToGregorian(year, month, date) | Converts Jalali date to Gregorian and return the result as a map
 gregorianToJalali(year, month, date) | Converts Gregorian date to Jalali and return the result as a map
+hijriToGregorian(year, month, date) | Converts Hijri date to Gregorian and return the result as a map
+gregorianToHijri(year, month, date) | Converts Gregorian date to Hijri and return the result as a map
+jalaliToHijri(year, month, date) | Converts Jalali date to Hijri and return the result as a map
+hijriToJalali(year, month, date) | Converts Hijri date to Jalali and return the result as a map
 
 ## extension methods
 
