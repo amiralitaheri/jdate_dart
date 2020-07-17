@@ -165,4 +165,4 @@ jdate_dart is available under the [BSD 3 Clause license](https://opensource.org/
 
 ## Copyright Notice
 The initial version of this library had been written based on [JDate.js](https://github.com/moghaddam24/JDate.js) by [Reza Moghaddam](https://github.com/moghaddam24).  
-Date Conversion methods based on Roozbeh Pournader and Mohammad Toossi work
+Date Conversion methods written based on Roozbeh Pournader and Mohammad Toossi work
