@@ -540,8 +540,9 @@ class JDate {
     }
     if (date.millisecondsSinceEpoch < 0) {
       var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
-      JDate(gdt['year'], gdt['month'], gdt['day'], date.hour, date.minute,
-          date.second, date.millisecond);
+      var greg = DateTime(gdt['year'], gdt['month'], gdt['day'], date.hour,
+          date.minute, date.second, date.millisecond);
+      _setFromGregorian(greg);
     }
   }
 
