@@ -2,19 +2,13 @@ import 'package:jdate/jdate.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Empty constructor', () {
-    JDate jDate;
-
-    setUp(() {
-      jDate = JDate();
-    });
-
+  group('Now constructor', () {
     test('Minute test', () {
-      expect(jDate.getMinute(), DateTime.now().minute);
+      expect(JDate.now().getMinute(), DateTime.now().minute);
     });
 
     test('Hour test', () {
-      expect(jDate.getHour(), DateTime.now().hour);
+      expect(JDate.now().getHour(), DateTime.now().hour);
     });
   });
 

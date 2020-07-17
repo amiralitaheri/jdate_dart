@@ -3,7 +3,6 @@ import 'package:jdate/jdate.dart';
 void main() {
   // gregorian date constructor
   print('\nGregorian date constructor');
-  print(JDate());
   print(JDate(2020));
   print(JDate(2020, 7));
   print(JDate(2020, 7, 16));
@@ -14,7 +13,7 @@ void main() {
 
   // jalali date constructor
   print('\nJalali date constructor');
-  print(JDate());
+  print(JDate.now());
   print(JDate(1399));
   print(JDate(1399, 4));
   print(JDate(1399, 4, 15));
@@ -25,7 +24,7 @@ void main() {
 
   //custom format
   print('\nCustom format');
-  print(JDate().echo('l، d F V ساعت H:i:s'));
+  print(JDate.now().echo('l، d F V ساعت H:i:s'));
 
   //useful static methods
   print('\nStatic methods');
@@ -39,7 +38,7 @@ void main() {
   //useful extension
   print('\nExtension methods');
   print('۱۲۳۴۵۶۷۸۹۰'.numbersToEnglish());
-  print(JDate().toString().numbersToPersian());
+  print(JDate.now().toString().numbersToPersian());
   print(60000000.toPersianWords());
   print(60000000.toPersianWords(true));
 
