@@ -3,10 +3,12 @@ import 'package:test/test.dart';
 
 void main() {
   group('Now constructor', () {
+    test('Second test', () {
+      expect(JDate.now().getSeconds(), DateTime.now().second);
+    });
     test('Minute test', () {
       expect(JDate.now().getMinute(), DateTime.now().minute);
     });
-
     test('Hour test', () {
       expect(JDate.now().getHour(), DateTime.now().hour);
     });
@@ -31,13 +33,8 @@ void main() {
   });
 
   group('Constructor with full Gregorian date', () {
-    JDate jDate;
-
-    setUp(() {
-      jDate = JDate(1998, 6, 18);
-    });
-
     test('1998-6-18 test', () {
+      var jDate = JDate(1998, 6, 18);
       expect(jDate.getFullYear(), 1377);
       expect(jDate.getMonth(), 3);
       expect(jDate.getDate(), 28);
@@ -46,13 +43,8 @@ void main() {
   });
 
   group('Constructor with full Jalali date', () {
-    JDate jDate;
-
-    setUp(() {
-      jDate = JDate(1377, 3, 27);
-    });
-
     test('1377-3-27 test', () {
+      var jDate = JDate(1377, 3, 27);
       expect(jDate.getFullYear(), 1377);
       expect(jDate.getMonth(), 3);
       expect(jDate.getDate(), 27);
@@ -61,13 +53,8 @@ void main() {
   });
 
   group('Constructor with String', () {
-    JDate jDate;
-
-    setUp(() {
-      jDate = JDate('2012-02-27 13:27:00');
-    });
-
     test('2012-02-27 13:27:00 test', () {
+      var jDate = JDate('2012-02-27 13:27:00');
       expect(jDate.getFullYear(), 1390);
       expect(jDate.getMonth(), 12);
       expect(jDate.getDate(), 8);
