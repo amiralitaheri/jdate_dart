@@ -278,11 +278,11 @@ class JDate {
 
     return format
         .replaceAll('a', (_gregorian.hour < 12) ? 'ق.ظ' : 'ب.ظ')
-        .replaceAll('b', ((_jalali['month'] + 1) / 3.1).floor().toString())
+        .replaceAll('b', ((_jalali['month']) / 3.1).floor().toString())
         .replaceAll('d', _withZero(_jalali['date']))
         .replaceAll(
           'f',
-          _jalaliSeasons[((_jalali['month'] + 1) / 3.1).floor()]['long'],
+          _jalaliSeasons[((_jalali['month']) / 3.1).floor()]['long'],
         )
         .replaceAll(
           'g',
@@ -299,13 +299,13 @@ class JDate {
         .replaceAll('i', _withZero(_gregorian.minute))
         .replaceAll('j', _jalali['date'].toString())
         .replaceAll('l', _jalaliWeeks[jw]['long'])
-        .replaceAll('m', _withZero(_jalali['month'] + 1))
+        .replaceAll('m', _withZero(_jalali['month']))
         .replaceAll('n', (_jalali['month'] + 1).toString())
         .replaceAll('s', _withZero(_gregorian.second))
         .replaceAll(
           't',
-          (_jalali['month'] + 1) != 12
-              ? (31 - ((_jalali['month'] + 1) / 6.5).floor()).toString()
+          (_jalali['month']) != 12
+              ? (31 - ((_jalali['month']) / 6.5).floor()).toString()
               : (leapYear ? 1 : 0 + 29).toString(),
         )
         .replaceAll('u', _gregorian.millisecond.toString())
@@ -314,12 +314,12 @@ class JDate {
         .replaceAll('y', jy.toString())
         .replaceAll('A', (_gregorian.hour < 12) ? 'قبل از ظهر' : 'بعد از ظهر')
         .replaceAll('D', _jalaliWeeks[jw]['short'])
-        .replaceAll('F', _jalaliMonths[_jalali['month']]['long'])
+        .replaceAll('F', _jalaliMonths[_jalali['month'] - 1]['long'])
         .replaceAll('G', _gregorian.hour.toString())
         .replaceAll('H', _withZero(_gregorian.hour))
         .replaceAll('J', _jalali['date'].toPersianWords())
         .replaceAll('L', leapYear.toString())
-        .replaceAll('M', _jalaliMonths[_jalali['month']]['short'])
+        .replaceAll('M', _jalaliMonths[_jalali['month'] - 1]['short'])
         .replaceAll('O', jtz)
         .replaceAll('V', _jalali['year'].toPersianWords())
         .replaceAll('Y', _jalali['year'].toString());
@@ -336,39 +336,23 @@ class JDate {
   @override
   String toString() => echo();
 
-//  parse(String string) {
-//    string = trnumToEn(string);
-//    var dateTime = Date.parse(string);
-//    if (Number.isNaN(dateTime)) {
-//      return NaN;
-//    } else if (dateTime > 0) {
-//      return dateTime;
-//    } else {
-//      var match =
-//    /^(\d|\d\d|\d\d\d\d)(?:([-\/])(\d{1,2})(?:\2(\d|\d\d|\d\d\d\d))?)?(([ T])(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d+))?)?(Z|([+-])(\d{2})(?::?(\d{2}))?)?)?$/.exec(string);
-//    if (!match) return NaN;
-//    var date = [];
-//    date.separator = match[2];
-//    date.delimiter = match[6];
-//    date.year = +match[1];
-//    date.month = +(match[3])-1 || 0;
-//    date.date = +match[4] || 1;
-//    date.hours = +match[7] || 0;
-//    date.minutes = +match[8] || 0;
-//    date.seconds = +match[9] || 0;
-//    date.milliSeconds = +('0.' + (match[10] || '0')) * 1000;
-//    date.isISO = ( separator != '/') && (match[6] != ' ');
-//    date.timeZone = match[11];
-//    date.isNonLocal =  isISO && ( timeZone || !match[5]);
-//    date.timeZoneOffset = (match[12] == '-' ? -1 : 1) * ((+match[13] || 0) * 60 + (+match[14] || 0));
-//
-//    var gdt = jalali_to_gregorian(date.year, date.month, date.date);
-//    var gd = new Date(gdt.year, gdt.month, gdt.date, date.hours, date.minutes, date.seconds, date.milliSeconds);
-//    if (date.isNonLocal) {
-//    gd.setUTCMinutes(gd.getUTCMinutes() - gd.getTimezoneOffset() + date.timeZoneOffset);
-//    }
-//    return gd.getTime();
-//    }
+  static JDate parse(String string) {
+    string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
+    var date = DateTime.tryParse(string);
+    if (date == null) {
+      return null;
+    }
+    if (date.millisecondsSinceEpoch > 0) {
+      return JDate(string);
+    }
+    if (date.millisecondsSinceEpoch < 0) {
+      var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
+      return JDate(gdt['year'], gdt['month'], gdt['date'], date.hour,
+          date.minute, date.second, date.millisecond);
+    }
+    return null;
+  }
+
   int now() => DateTime.now().millisecondsSinceEpoch;
 
   static const _jalaliMonths = [

@@ -38,4 +38,15 @@ void main() {
   print(JDate().toString().numbersToPersian());
   print(60000000.toPersianWords());
   print(60000000.toPersianWords(true));
+
+  //parse
+  print('\nParse');
+  print(JDate.parse('2012/02/27 13:27:00'));
+  print(JDate.parse('2012-02-27 13:27:00'));
+  print(JDate.parse('1399/09/09 13:27:00'));
+  print(JDate.parse('1399-09-09 13:27:00'));
+  print(JDate.parse('۱۳۹۹/۰۹/۰۹'));
+  print(JDate.parse('1399/02/13'));
+  print(JDate.parse('1399/02/13 03:14:30'));
+  print(JDate.parse('2019/05/03 01:02:03'));
 }

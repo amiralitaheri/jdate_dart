@@ -51,57 +51,47 @@ You can creates a new jalali date object with a specified shamsi date and time.
     
     ~~>     جمعه، 13 اردیبهشت 1398 ساعت 10:33:30
 
-<table width="100%">
-    <thead>
-    <tr>
-        <td width="72">Character</td>
-        <td>Description</td>
-        <td>Range</td>
-        <td>Example</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr><td>a</td><td>Before noon and afternoon</td><td>ق.ظ - ب.ظ</td><td>ق.ظ</td></tr>
-    <tr><td>b</td><td>Numeric representation of a season, without leading zeros</td><td>0-3</td><td>1</td></tr>
-    <tr><td>d</td><td>Day of the month, 2 digits with leading zeros</td><td>01-31</td><td>13</td></tr>
-    <tr><td>f</td><td>Season name</td><td>بهار-زمستان</td><td>بهار</td></tr>
-    <tr><td>g</td><td>12-hour format of an hour without leading zeros</td><td>0-12</td><td>11</td></tr>
-    <tr><td>h</td><td>12-hour format of an hour with leading zeros</td><td>00-12</td><td>03</td></tr>
-    <tr><td>i</td><td>Minutes with leading zeros</td><td>00-59</td><td>13</td></tr>
-    <tr><td>j</td><td>Day of the month without leading zeros</td><td>1-31</td><td>4</td></tr>
-    <tr><td>l</td><td>A full textual representation of the day of the week</td><td>شنبه-جمعه</td><td>یکشنبه</td></tr>
-    <tr><td>m</td><td>Numeric representation of a month, with leading zeros</td><td>01-12</td><td>02</td></tr>
-    <tr><td>n</td><td>Numeric representation of a month, without leading zeros</td><td>1-12</td><td>2</td></tr>
-    <tr><td>s</td><td>Seconds, with leading zeros</td><td>00-59</td><td>03</td></tr>
-    <tr><td>t</td><td>Number of days in the given month</td><td>0-31</td><td>28</td></tr>
-    <tr><td>u</td><td>Millisecond</td><td>000000</td><td>28</td></tr>
-    <tr><td>v</td><td>Short year display in letters</td><td>یک-نهصد و نود و نه</td><td>نود و هشت | چهارصد و دو</td></tr>
-    <tr><td>w</td><td>Numeric representation of the day of the week</td><td>0-6</td><td>6</td></tr>
-    <tr><td>y</td><td>A two or three digit representation of a year</td><td>1-999</td><td>98 | 402</td></tr>
-    <tr><td>A</td><td>Before noon and afternoon</td><td>بعد از ظهر - قبل از ظهر</td><td>قبل از ظهر</td></tr>
-    <tr><td>D</td><td>Persian ordinal suffix for the day of the month, 2 characters</td><td>شن‍ - جم‍</td><td>سه</td></tr>
-    <tr><td>F</td><td>A full textual representation of a month</td><td>فروردین - اسفند</td><td>اردیبهشت</td></tr>
-    <tr><td>G</td><td>24-hour format of an hour without leading zeros</td><td>0-24</td><td>3</td></tr>
-    <tr><td>H</td><td>24-hour format of an hour with leading zeros</td><td>00-24</td><td>03</td></tr>
-    <tr><td>J</td><td>Day of the month</td><td>یک-سی و یک</td><td>سیزده</td></tr>
-    <tr><td>L</td><td>Whether it’s a leap year</td><td>0-1</td><td>1</td></tr>
-    <tr><td>M</td><td>A short textual representation of a month, two letters</td><td>فر-اس‍</td><td>ار</td></tr>
-    <tr><td>O</td><td>Difference to Greenwich time (GMT) in hours</td><td>-1200 - +1400</td><td>+0330</td></tr>
-    <tr><td>V</td><td>Full year display in letters</td><td>صفر-...</td><td>یک هزار و سیصد و نود و هشت</td></tr>
-    <tr><td>Y</td><td>A full numeric representation of a year, 4 digits</td><td>0-...</td><td>1398</td></tr>
-    </tbody>
-</table>
+Method|Description|Range|Example
+------|-----------|-----|-------
+a |  Before noon and afternoon |  ق.ظ - ب.ظ |  ق.ظ | 
+b |  Numeric representation of a season, without leading zeros |  0-3 |  1 | 
+d |  Day of the month, 2 digits with leading zeros |  01-31 |  13 | 
+f |  Season name |  بهار-زمستان |  بهار | 
+g |  12-hour format of an hour without leading zeros |  0-12 |  11 | 
+h |  12-hour format of an hour with leading zeros |  00-12 |  03 | 
+i |  Minutes with leading zeros |  00-59 |  13 | 
+j |  Day of the month without leading zeros |  1-31 |  4 | 
+l |  A full textual representation of the day of the week |  شنبه-جمعه |  یکشنبه | 
+m |  Numeric representation of a month, with leading zeros |  01-12 |  02 | 
+n |  Numeric representation of a month, without leading zeros |  1-12 |  2 | 
+s |  Seconds, with leading zeros |  00-59 |  03 | 
+t |  Number of days in the given month |  0-31 |  28 | 
+u |  Millisecond |  000000 |  28 | 
+v |  Short year display in letters |  یک-نهصد و نود و نه |  نود و هشت | چهارصد و دو | 
+w |  Numeric representation of the day of the week |  0-6 |  6 | 
+y |  A two or three digit representation of a year |  1-999 |  98 | 402 | 
+A |  Before noon and afternoon |  بعد از ظهر - قبل از ظهر |  قبل از ظهر | 
+D |  Persian ordinal suffix for the day of the month, 2 characters |  شن‍ - جم‍ |  سه | 
+F |  A full textual representation of a month |  فروردین - اسفند |  اردیبهشت | 
+G |  24-hour format of an hour without leading zeros |  0-24 |  3 | 
+H |  24-hour format of an hour with leading zeros |  00-24 |  03 | 
+J |  Day of the month |  یک-سی و یک |  سیزده | 
+L |  Whether it’s a leap year |  0-1 |  1 | 
+M |  A short textual representation of a month, two letters |  فر-اس‍ |  ار | 
+O |  Difference to Greenwich time (GMT) in hours |  -1200 - +1400 |  +0330 | 
+V |  Full year display in letters |  صفر-... |  یک هزار و سیصد و نود و هشت | 
+Y |  A full numeric representation of a year, 4 digits |  0-... |  1398 | 
+    
 
 
 ## JDate.parse(...)
 
-You can parse specified shamsi or gregorian date from valid date string to convert it to milliseconds.
+You can parse specified shamsi or gregorian date from valid date string to convert it to JDate object.
 
-    JDate.parse('1399');                    ~~> 1584649800000 ~~> 1399/01/01 - 00:00:00
-    JDate.parse('1399/02');                 ~~> 1587324600000 ~~> 1399/02/01 - 00:00:00
-    JDate.parse('1399/02/13');              ~~> 1588361400000 ~~> 1399/02/13 - 00:00:00
-    JDate.parse('1399/02/13 03:14:30');     ~~> 1588373070000 ~~> 1399/02/13 - 03:14:30
-    JDate.parse('2019/05/03 01:02:03');     ~~> 1556829123000 ~~> 1398/02/13 - 01:02:03
+    print(JDate.parse('۱۳۹۹/۰۹/۰۹'));              ~~> جمعه، 09 آذر 1399 ساعت 00:00:00
+    print(JDate.parse('1399/02/13'));              ~~> پنج‌شنبه، 13 اردیبهشت 1399 ساعت 00:00:00
+    print(JDate.parse('1399/02/13 03:14:30'));     ~~> پنج‌شنبه، 13 اردیبهشت 1399 ساعت 03:14:30
+    print(JDate.parse('2019/05/03 01:02:03'));     ~~> چهارشنبه، 13 اردیبهشت 1398 ساعت 01:02:03
 
 
 ## Get JDate Methods
