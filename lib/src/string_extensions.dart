@@ -1,7 +1,10 @@
 extension PersianStringHelper on String {
-  /// Translate All Persian and Arabic number characters to English
-  ///
-  /// ex: ۴ or ٤ => 4
+  // Translate All Persian and Arabic number characters to English
+  //
+  // ex:
+  // ```dart
+  // ۴ or ٤ => 4
+  // ```
   String numbersToEnglish() => replaceAll(RegExp(r'[۰٠]'), '0')
       .replaceAll(RegExp(r'[۱١]'), '1')
       .replaceAll(RegExp(r'[۲٢]'), '2')
@@ -14,9 +17,11 @@ extension PersianStringHelper on String {
       .replaceAll(RegExp(r'[۹٩]'), '9');
 
   //todo: add arabic to converter
-  /// Translate All English number characters to Persian
-  ///
-  /// ex: 1 => ۱
+  // Translate All English number characters to Persian
+  //
+  // ex: ```dart
+  // 1 => ۱
+  // ```
   String numbersToPersian() => replaceAll('0', '۰')
       .replaceAll('1', '۱')
       .replaceAll('2', '۲')

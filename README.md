@@ -152,7 +152,7 @@ Method|Description
 ------|-----------
 String.numbersToEnglish() | Converts Persian digits in string to english digits
 String.numbersToPersian() | Converts English digits in string to Persian digits
-Int.toPersianWords([ordinal = false]) | Returns number as Persian text
+Int.toPersianWords(bool ordinal) | Returns number as Persian text
 
 ## License
 

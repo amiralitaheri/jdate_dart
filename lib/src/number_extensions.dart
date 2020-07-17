@@ -1,11 +1,16 @@
 extension PersianIntegerHelper on int {
-  /// Convert numbers to Persian Words
-  ///
-  /// ex: `919.toPersianWords()` => نهصد و نوزده
-  ///
-  /// you can also set [ordinal] parameter to `true`
-  ///
-  /// ex: `919.toPersianWords(true)` => نهصد و نوزدهم
+  // Convert numbers to Persian Words
+  //
+  // ex:
+  // ```dart
+  // 919.toPersianWords() == نهصد و نوزده
+  //```
+  // you can also set [ordinal] parameter to `true`
+  //
+  // ex:
+  // ```dart
+  // 919.toPersianWords(true)` == نهصد و نوزدهم
+  // ```
   String toPersianWords([ordinal = false]) {
     const yekan = [
       'صفر',
