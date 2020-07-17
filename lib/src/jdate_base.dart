@@ -174,6 +174,17 @@ class JDate {
     int microsecond,
     bool isUtc,
   ) {
+    //check boundaries
+    assert(month <= 12 && month >= 1, 'Month is in range of 1-12');
+    assert(day <= 31 && day >= 1, 'Day is in range of 1-31');
+    assert(hour <= 23 && hour >= 0, 'Hour is in range of 0-23');
+    assert(minute <= 59 && minute >= 0, 'Minute is in range of 0-59');
+    assert(second <= 59 && second >= 0, 'Second is in range of 0-59');
+    assert(millisecond <= 999 && millisecond >= 0,
+        'Millisecond is in range of 0-999');
+    assert(microsecond <= 999 && microsecond >= 0,
+        'Microsecond is in range of 0-999');
+
     //initialize parameters
     _year = year;
     _month = month;
