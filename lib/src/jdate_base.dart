@@ -1,3 +1,4 @@
+import 'consts.dart';
 import 'number_extensions.dart';
 import 'string_extensions.dart';
 
@@ -485,4 +486,89 @@ class JDate {
 
   static String _withZero(int num) =>
       (num < 10) ? '0' + num.toString() : num.toString();
+
+  static Map hijriToGregorian(int hy, int hm, int hd) {
+    var i = ((hy - 1) * 12) + 1 + (hm - 1) - 16260;
+    var julianDate = hd + _ummalquraDataIndex(i - 1) - 1 + 2400000;
+    var z = (julianDate + 0.5).floor();
+    var a = ((z - 1867216.25) / 36524.25).floor();
+    a = z + 1 + a - (a / 4).floor();
+    var b = a + 1524;
+    var c = ((b - 122.1) / 365.25).floor();
+    var d = (365.25 * c).floor();
+    var e = ((b - d) / 30.6001).floor();
+    var day = b - d - (e * 30.6001).floor();
+    var month = e - (e > 13.5 ? 13 : 1);
+    var year = c - (month > 2.5 ? 4716 : 4715);
+    if (year <= 0) {
+      year--;
+    }
+    return {'year': year, 'month': month, 'date': day};
+  }
+
+  static int _ummalquraDataIndex(int index) {
+    if (index < 0 || index >= ummAlquraDateArray.length) {
+      throw ArgumentError(
+          "Valid date should be between 1356 AH (14 March 1937 CE) to 1500 AH (16 November 2077 CE)");
+    }
+    return ummAlquraDateArray[index];
+  }
+
+  static Map gregorianToHijri(int year, int month, int day) {
+    //This code the modified version of R.H. van Gent Code, it can be found at http://www.staff.science.uu.nl/~gent0113/islam/ummalqura.htm
+    var m = month;
+    var y = year;
+
+    // append January and February to the previous year (i.e. regard March as
+    // the first month of the year in order to simplify leapday corrections)
+    if (m < 3) {
+      y -= 1;
+      m += 12;
+    }
+
+    // determine offset between Julian and Gregorian calendar
+    var a = (y / 100).floor();
+    var jgc = a - (a / 4.0).floor() - 2;
+
+    // compute Chronological Julian Day Number (CJDN)
+    var cjdn = (365.25 * (y + 4716)).floor() +
+        (30.6001 * (m + 1)).floor() +
+        day -
+        jgc -
+        1524;
+
+    a = ((cjdn - 1867216.25) / 36524.25).floor();
+    jgc = a - (a / 4.0).floor() + 1;
+    var b = cjdn + jgc + 1524;
+    var c = ((b - 122.1) / 365.25).floor();
+    var d = (365.25 * c).floor();
+    month = ((b - d) / 30.6001).floor();
+    day = (b - d) - (30.6001 * month).floor();
+
+    if (month > 13) {
+      c += 1;
+      month -= 12;
+    }
+
+    month -= 1;
+    year = c - 4716;
+
+    // compute Modified Chronological Julian Day Number (MCJDN)
+    var mcjdn = cjdn - 2400000;
+
+    // the MCJDN's of the start of the lunations in the Umm al-Qura calendar are stored in 'islamcalendar_dat.js'
+    var i;
+    for (i = 0; i < ummAlquraDateArray.length; i++) {
+      if (_ummalquraDataIndex(i) > mcjdn) break;
+    }
+
+    // compute and output the Umm al-Qura calendar date
+    var iln = i + 16260;
+    var ii = ((iln - 1) / 12).floor();
+    var iy = ii + 1;
+    var im = iln - 12 * ii;
+    var id = mcjdn - _ummalquraDataIndex(i - 1) + 1;
+
+    return {'year': iy, 'month': im, 'date': id};
+  }
 }
