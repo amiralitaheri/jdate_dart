@@ -33,6 +33,8 @@ void main() {
   print(JDate.jalaliToGregorian(1399, 4, 26));
   print(JDate.gregorianToHijri(2020, 7, 16));
   print(JDate.hijriToGregorian(1441, 11, 25));
+  print(JDate.hijriToJalali(1441, 11, 25));
+  print(JDate.jalaliToHijri(1399, 6, 6));
 
   //useful extension
   print('\nExtension methods');
