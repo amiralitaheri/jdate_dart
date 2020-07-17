@@ -55,8 +55,19 @@ class JDate {
     int second = 0,
     int millisecond = 0,
     int microsecond = 0,
-  ]) : this._internal(year, month, day, hour, minute, second, millisecond,
-            microsecond, false);
+  ]) {
+    _internal(
+      year,
+      month,
+      day,
+      hour,
+      minute,
+      second,
+      millisecond,
+      microsecond,
+      false,
+    );
+  }
 
   JDate.utc(
     int year, [
@@ -67,8 +78,19 @@ class JDate {
     int second = 0,
     int millisecond = 0,
     int microsecond = 0,
-  ]) : this._internal(year, month, day, hour, minute, second, millisecond,
-            microsecond, true);
+  ]) {
+    _internal(
+      year,
+      month,
+      day,
+      hour,
+      minute,
+      second,
+      millisecond,
+      microsecond,
+      true,
+    );
+  }
 
   JDate changeTo({
     int year,
@@ -81,7 +103,7 @@ class JDate {
     int microsecond,
     bool isUtc,
   }) {
-    JDate._internal(
+    _internal(
       year ?? _year,
       month ?? _month,
       day ?? _day,
@@ -97,7 +119,7 @@ class JDate {
 
   JDate.fromDateTime(DateTime date) {
     var jalali = gregorianToJalali(date.year, date.month, date.day);
-    JDate._internal(
+    _internal(
       jalali['year'],
       jalali['month'],
       jalali['day'],
@@ -128,14 +150,20 @@ class JDate {
     if (date == null) {
       throw 'Can\'t parse string';
     }
-    var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
-    var greg = DateTime(gdt['year'], gdt['month'], gdt['day'], date.hour,
-            date.minute, date.second, date.millisecond);
-    JDate.fromDateTime(greg);
+    _internal(
+      date.year,
+      date.month,
+      date.day,
+      date.hour,
+      date.minute,
+      date.second,
+      date.millisecond,
+      date.microsecond,
+      date.isUtc,
+    );
   }
 
-
-  JDate._internal(
+  void _internal(
     int year,
     int month,
     int day,
@@ -174,7 +202,7 @@ class JDate {
     _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
     _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
   }
-  
+
   int getShortYear() {
     if (_year >= 1300 && _year < 1400) {
       return int.parse(_year.toString().substring(2));

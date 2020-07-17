@@ -58,4 +58,5 @@ void main() {
   
   //change date
   print(JDate.now().changeTo(year: 1357, second: 10));
+  print(JDate.now().changeTo(minute: 35, second: 10));
 }
