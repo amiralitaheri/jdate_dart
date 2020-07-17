@@ -501,7 +501,7 @@ class JDate {
   static int _ummalquraDataIndex(int index) {
     if (index < 0 || index >= ummAlquraDateArray.length) {
       throw ArgumentError(
-          "Valid date should be between 1356 AH (14 March 1937 CE) to 1500 AH (16 November 2077 CE)");
+          'Valid date should be between 1356 AH (14 March 1937 CE) to 1500 AH (16 November 2077 CE)');
     }
     return ummAlquraDateArray[index];
   }
