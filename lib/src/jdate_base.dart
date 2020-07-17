@@ -276,7 +276,7 @@ class JDate {
     var month = getMonth();
     if (month <= 6) {
       return 31;
-    } else if (month == 12){
+    } else if (month == 12) {
       return isLeapYear() ? 30 : 29;
     } else {
       return 30;
