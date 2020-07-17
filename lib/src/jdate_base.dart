@@ -1,3 +1,5 @@
+import 'package:jdate/jdate.dart';
+
 import 'consts.dart';
 import 'number_extensions.dart';
 import 'string_extensions.dart';
@@ -6,8 +8,8 @@ class JDate {
   Map<String, int> _jalali;
   DateTime _gregorian;
 
-  JDate([
-    var year,
+  JDate(
+    var year, [
     int month,
     int date = 1,
     int hours = 0,
@@ -16,46 +18,12 @@ class JDate {
     int milliseconds = 0,
   ]) {
     _gregorian = DateTime.now();
-    if (year != null) {
-      if (month == null) {
-        if (year.toString().length <= 4) {
-          year = year is int ? year : int.parse(year);
-          _gregorian = DateTime(year);
-          if (_gregorian.millisecondsSinceEpoch < 0) {
-            var gd = jalaliToGregorian(year, 1, date);
-            _gregorian = DateTime(
-              gd['year'],
-              gd['month'],
-              gd['date'],
-              hours,
-              minutes,
-              seconds,
-              milliseconds,
-            );
-          }
-        } else {
-          _gregorian = DateTime.tryParse(year.toString());
-          if (_gregorian?.millisecondsSinceEpoch == null ||
-              _gregorian.millisecondsSinceEpoch < 0) {
-//            gregorian = DateTime(parse(year));
-            if (_gregorian?.millisecondsSinceEpoch == null ||
-                _gregorian.millisecondsSinceEpoch < 0) {
-              throw 'Cannot parse date string';
-            }
-          }
-        }
-      } else {
-        _gregorian = DateTime(
-          year,
-          month,
-          date,
-          hours,
-          minutes,
-          seconds,
-          milliseconds,
-        );
+    if (month == null) {
+      if (year.toString().length <= 4) {
+        year = year is int ? year : int.parse(year);
+        _gregorian = DateTime(year);
         if (_gregorian.millisecondsSinceEpoch < 0) {
-          var gd = jalaliToGregorian(year, month, date);
+          var gd = jalaliToGregorian(year, 1, date);
           _gregorian = DateTime(
             gd['year'],
             gd['month'],
@@ -66,9 +34,46 @@ class JDate {
             milliseconds,
           );
         }
+      } else {
+        _gregorian = DateTime.tryParse(year.toString());
+        if (_gregorian?.millisecondsSinceEpoch == null ||
+            _gregorian.millisecondsSinceEpoch < 0) {
+//            gregorian = DateTime(parse(year));
+          if (_gregorian?.millisecondsSinceEpoch == null ||
+              _gregorian.millisecondsSinceEpoch < 0) {
+            throw 'Cannot parse date string';
+          }
+        }
+      }
+    } else {
+      _gregorian = DateTime(
+        year,
+        month,
+        date,
+        hours,
+        minutes,
+        seconds,
+        milliseconds,
+      );
+      if (_gregorian.millisecondsSinceEpoch < 0) {
+        var gd = jalaliToGregorian(year, month, date);
+        _gregorian = DateTime(
+          gd['year'],
+          gd['month'],
+          gd['date'],
+          hours,
+          minutes,
+          seconds,
+          milliseconds,
+        );
       }
     }
-    setJalali();
+    _setJalali();
+  }
+
+  JDate.now() {
+    _gregorian = DateTime.now();
+    _setJalali();
   }
 
   int getDate() => _jalali['date'];
@@ -267,7 +272,7 @@ class JDate {
 
   int setTime(int ms) {
     _gregorian = DateTime.fromMillisecondsSinceEpoch(ms);
-    setJalali();
+    _setJalali();
     return _gregorian.millisecondsSinceEpoch;
   }
 
@@ -338,7 +343,7 @@ class JDate {
         .replaceAll('Y', _jalali['year'].toString());
   }
 
-  void setJalali() {
+  void _setJalali() {
     _jalali = gregorianToJalali(
       _gregorian.year,
       _gregorian.month,
@@ -365,8 +370,6 @@ class JDate {
     }
     return null;
   }
-
-  int now() => DateTime.now().millisecondsSinceEpoch;
 
   static const _jalaliMonths = [
     {'long': 'فروردین', 'short': 'فر'},
@@ -594,4 +597,7 @@ class JDate {
     return gregorianToHijri(
         gregorian['year'], gregorian['month'], gregorian['date']);
   }
+
+  // todo: JDate.fromGregorian();
+  // todo: JDate.fromHijri();
 }
