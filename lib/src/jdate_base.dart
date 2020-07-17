@@ -1,5 +1,3 @@
-import 'package:jdate/jdate.dart';
-
 import 'consts.dart';
 import 'number_extensions.dart';
 import 'string_extensions.dart';
