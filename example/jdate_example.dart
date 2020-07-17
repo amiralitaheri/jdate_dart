@@ -39,5 +39,11 @@ void main() {
   print(60000000.toPersianWords());
   print(60000000.toPersianWords(true));
 
+  //parse
+  print('\nParse');
   print(JDate.parse('2012/02/27 13:27:00'));
+  print(JDate.parse('2012-02-27 13:27:00'));
+  print(JDate.parse('1399/09/09 13:27:00'));
+  print(JDate.parse('1399-09-09 13:27:00'));
+  print(JDate.parse('۱۳۹۹/۰۹/۰۹'));
 }
