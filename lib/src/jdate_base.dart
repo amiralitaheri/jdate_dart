@@ -389,8 +389,8 @@ class JDate {
     jy = int.parse(jy.toString().numbersToEnglish()) - 979;
     jm = int.parse(jm.toString().numbersToEnglish()) - 1;
     jd = int.parse(jd.toString().numbersToEnglish()) - 1;
-    var gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    var jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
+    const gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
 
     var jDayNo = 365 * jy + (jy / 33).floor() * 8 + ((jy % 33 + 3) / 4).floor();
     for (var i = 0; i < jm; ++i) {
@@ -444,8 +444,8 @@ class JDate {
     gm = int.parse(gm.toString().numbersToEnglish()) - 1;
     gd = int.parse(gd.toString().numbersToEnglish()) - 1;
 
-    var gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    var jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
+    const gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
 
     var gDayNo = 365 * gy +
         ((gy + 3) / 4).floor() -
