@@ -95,13 +95,12 @@ You can creates a new jalali date object with a specified shamsi date and time.
 
 ## JDate.parse(...)
 
-You can parse specified shamsi or gregorian date from valid date string to convert it to milliseconds.
+You can parse specified shamsi or gregorian date from valid date string to convert it to JDate object.
 
-    JDate.parse('1399');                    ~~> 1584649800000 ~~> 1399/01/01 - 00:00:00
-    JDate.parse('1399/02');                 ~~> 1587324600000 ~~> 1399/02/01 - 00:00:00
-    JDate.parse('1399/02/13');              ~~> 1588361400000 ~~> 1399/02/13 - 00:00:00
-    JDate.parse('1399/02/13 03:14:30');     ~~> 1588373070000 ~~> 1399/02/13 - 03:14:30
-    JDate.parse('2019/05/03 01:02:03');     ~~> 1556829123000 ~~> 1398/02/13 - 01:02:03
+    print(JDate.parse('۱۳۹۹/۰۹/۰۹'));              ~~> جمعه، 09 آذر 1399 ساعت 00:00:00
+    print(JDate.parse('1399/02/13'));              ~~> پنج‌شنبه، 13 اردیبهشت 1399 ساعت 00:00:00
+    print(JDate.parse('1399/02/13 03:14:30'));     ~~> پنج‌شنبه، 13 اردیبهشت 1399 ساعت 03:14:30
+    print(JDate.parse('2019/05/03 01:02:03'));     ~~> چهارشنبه، 13 اردیبهشت 1398 ساعت 01:02:03
 
 
 ## Get JDate Methods

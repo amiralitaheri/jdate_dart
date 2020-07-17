@@ -46,4 +46,7 @@ void main() {
   print(JDate.parse('1399/09/09 13:27:00'));
   print(JDate.parse('1399-09-09 13:27:00'));
   print(JDate.parse('۱۳۹۹/۰۹/۰۹'));
+  print(JDate.parse('1399/02/13'));
+  print(JDate.parse('1399/02/13 03:14:30'));
+  print(JDate.parse('2019/05/03 01:02:03'));
 }
