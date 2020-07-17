@@ -313,39 +313,23 @@ class JDate {
   @override
   String toString() => echo();
 
-//  parse(String string) {
-//    string = trnumToEn(string);
-//    var dateTime = Date.parse(string);
-//    if (Number.isNaN(dateTime)) {
-//      return NaN;
-//    } else if (dateTime > 0) {
-//      return dateTime;
-//    } else {
-//      var match =
-//    /^(\d|\d\d|\d\d\d\d)(?:([-\/])(\d{1,2})(?:\2(\d|\d\d|\d\d\d\d))?)?(([ T])(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d+))?)?(Z|([+-])(\d{2})(?::?(\d{2}))?)?)?$/.exec(string);
-//    if (!match) return NaN;
-//    var date = [];
-//    date.separator = match[2];
-//    date.delimiter = match[6];
-//    date.year = +match[1];
-//    date.month = +(match[3])-1 || 0;
-//    date.date = +match[4] || 1;
-//    date.hours = +match[7] || 0;
-//    date.minutes = +match[8] || 0;
-//    date.seconds = +match[9] || 0;
-//    date.milliSeconds = +('0.' + (match[10] || '0')) * 1000;
-//    date.isISO = ( separator != '/') && (match[6] != ' ');
-//    date.timeZone = match[11];
-//    date.isNonLocal =  isISO && ( timeZone || !match[5]);
-//    date.timeZoneOffset = (match[12] == '-' ? -1 : 1) * ((+match[13] || 0) * 60 + (+match[14] || 0));
-//
-//    var gdt = jalali_to_gregorian(date.year, date.month, date.date);
-//    var gd = new Date(gdt.year, gdt.month, gdt.date, date.hours, date.minutes, date.seconds, date.milliSeconds);
-//    if (date.isNonLocal) {
-//    gd.setUTCMinutes(gd.getUTCMinutes() - gd.getTimezoneOffset() + date.timeZoneOffset);
-//    }
-//    return gd.getTime();
-//    }
+  static JDate parse(String string) {
+    string = string.numbersToEnglish();
+    var date = DateTime.tryParse(string);
+    if (date == null) {
+      return null;
+    }
+    if (date.millisecondsSinceEpoch > 0) {
+      return JDate(string);
+    }
+    if (date.millisecondsSinceEpoch < 0) {
+      var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
+      return JDate(gdt['year'], gdt['month'], gdt['date'], date.hour,
+          date.minute, date.second, date.millisecond);
+    }
+    return null;
+  }
+
   int now() => DateTime.now().millisecondsSinceEpoch;
 
   static const _jalaliMonths = [
