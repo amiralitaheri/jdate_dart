@@ -38,4 +38,6 @@ void main() {
   print(JDate().toString().numbersToPersian());
   print(60000000.toPersianWords());
   print(60000000.toPersianWords(true));
+
+  print(JDate.parse('2012/02/27 13:27:00'));
 }

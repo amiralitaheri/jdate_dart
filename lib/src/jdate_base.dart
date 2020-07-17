@@ -263,10 +263,10 @@ class JDate {
 
     return format
         .replaceAll('a', (_gregorian.hour < 12) ? 'ق.ظ' : 'ب.ظ')
-        .replaceAll('b', ((_jalali['month'] + 1) / 3.1).floor().toString())
+        .replaceAll('b', ((_jalali['month']) / 3.1).floor().toString())
         .replaceAll('d', withZero(_jalali['date']))
         .replaceAll(
-            'f', _jalaliSeasons[((_jalali['month'] + 1) / 3.1).floor()]['long'])
+            'f', _jalaliSeasons[((_jalali['month']) / 3.1).floor()]['long'])
         .replaceAll(
             'g',
             _gregorian.hour <= 12
@@ -280,7 +280,7 @@ class JDate {
         .replaceAll('i', withZero(_gregorian.minute))
         .replaceAll('j', _jalali['date'].toString())
         .replaceAll('l', _jalaliWeeks[jw]['long'])
-        .replaceAll('m', withZero(_jalali['month'] + 1))
+        .replaceAll('m', withZero(_jalali['month']))
         .replaceAll('n', (_jalali['month'] + 1).toString())
         .replaceAll('s', withZero(_gregorian.second))
         .replaceAll(
@@ -294,12 +294,12 @@ class JDate {
         .replaceAll('y', jy.toString())
         .replaceAll('A', (_gregorian.hour < 12) ? 'قبل از ظهر' : 'بعد از ظهر')
         .replaceAll('D', _jalaliWeeks[jw]['short'])
-        .replaceAll('F', _jalaliMonths[_jalali['month']]['long'])
+        .replaceAll('F', _jalaliMonths[_jalali['month'] - 1]['long'])
         .replaceAll('G', _gregorian.hour.toString())
         .replaceAll('H', withZero(_gregorian.hour))
         .replaceAll('J', _jalali['date'].toPersianWords())
         .replaceAll('L', leapYear.toString())
-        .replaceAll('M', _jalaliMonths[_jalali['month']]['short'])
+        .replaceAll('M', _jalaliMonths[_jalali['month'] - 1]['short'])
         .replaceAll('O', jtz)
         .replaceAll('V', _jalali['year'].toPersianWords())
         .replaceAll('Y', _jalali['year'].toString());
@@ -314,7 +314,7 @@ class JDate {
   String toString() => echo();
 
   static JDate parse(String string) {
-    string = string.numbersToEnglish();
+    string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
     var date = DateTime.tryParse(string);
     if (date == null) {
       return null;
