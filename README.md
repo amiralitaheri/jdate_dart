@@ -18,7 +18,7 @@ new JDate() creates a new jalali date object with the current date and time:
     print(jd);
     
     ~~>    پنج‌شنبه، 15 اسفند 1398 ساعت 20:44:58
-    
+
 ## new JDate(year, month, ...)
 
 new JDate(year, month, ...) creates a new jalali date object with a specified date and time.
@@ -81,7 +81,7 @@ M |  A short textual representation of a month, two letters |  فر-اس‍ |  �
 O |  Difference to Greenwich time (GMT) in hours |  -1200 - +1400 |  +0330 | 
 V |  Full year display in letters |  صفر-... |  یک هزار و سیصد و نود و هشت | 
 Y |  A full numeric representation of a year, 4 digits |  0-... |  1398 | 
-    
+
 
 
 ## JDate.parse(...)
@@ -103,7 +103,7 @@ Method|Description
 getDate() | Get the day as a number (1-31)
 getDay() | Get the weekday as a number (0-6)
 getFullYear() | Get the year as a four digit number (yyyy)
-getShortYear() | Get the year as a two or three digit number (yy | yyy)
+getShortYear() | Get the year as a two or three digit number (yy \| yyy)
 getHours() | Get the hour (0-23)
 getMilliseconds() | Get the millisecond (0-999)
 getMinutes() | Get the minute (0-59)
@@ -112,7 +112,8 @@ getSeconds() | Get the second (0-59)
 getTime() | Get the time (milliseconds)
 getTimezone() | Difference to Greenwich time (GMT) in hours
 getTimezoneOffset() |Difference between UTC and Local Time 
-isLeapYear() | Whether it’s a leap year (0-1)
+isLeapYear() | Whether it’s a leap year (true \| false) 
+getMonthLength() | Get number of days in that month (29 \| 30 \| 31)
 
 ## Set JDate Methods
 

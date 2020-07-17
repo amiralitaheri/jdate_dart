@@ -204,6 +204,9 @@ void main() {
         expect(JDate(1397, i + 1).getMonthLength(), months[i]);
       });
     }
+    test('Month 12 Leap', () {
+      expect(JDate(1399, 12).getMonthLength(), 30);
+    });
   });
 
   //todo: uncomment when هجری implemented :)

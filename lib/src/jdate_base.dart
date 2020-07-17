@@ -270,6 +270,7 @@ class JDate {
     return _gregorian.millisecondsSinceEpoch;
   }
 
+  /// returns number of days in that month
   int getMonthLength() {
     var month = getMonth();
     if (month <= 6) {
