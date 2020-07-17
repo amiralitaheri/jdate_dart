@@ -97,9 +97,8 @@ class JDate {
 
   int getTimezoneOffset() => _gregorian.timeZoneOffset.inMinutes;
 
-  int isLeapYear([int year]) => (year == null)
-      ? isLeapYear(_jalali['year'])
-      : (year % 33 % 4 - 1 == (year % 33 * .05).floor()) ? 1 : 0;
+  bool isLeapYear() =>
+      _jalali['year'] % 33 % 4 - 1 == (_jalali['year'] % 33 * .05).floor();
 
   int setDate(int date) {
     if (date > 0 && date <= 31) {
@@ -273,10 +272,10 @@ class JDate {
   }
 
   String echo([String format = 'l، d F Y ساعت H:i:s']) {
-    var leapYear = isLeapYear(),
-        jw = getDay(),
-        jy = getShortYear(),
-        jtz = getTimezone();
+    var leapYear = isLeapYear();
+    var jw = getDay();
+    var jy = getShortYear();
+    var jtz = getTimezone();
 
     return format
         .replaceAll('a', (_gregorian.hour < 12) ? 'ق.ظ' : 'ب.ظ')
@@ -308,7 +307,7 @@ class JDate {
           't',
           (_jalali['month']) != 12
               ? (31 - ((_jalali['month']) / 6.5).floor()).toString()
-              : (leapYear + 29).toString(),
+              : (leapYear ? 1 : 0 + 29).toString(),
         )
         .replaceAll('u', _gregorian.millisecond.toString())
         .replaceAll('v', jy.toPersianWords())
