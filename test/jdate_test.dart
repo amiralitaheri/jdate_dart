@@ -136,25 +136,19 @@ void main() {
   });
 
   group('withzero function', () {
-    JDate jDate;
-
-    setUp(() {
-      jDate = JDate();
-    });
-
     test('1', () {
-      expect(jDate.withZero(1), '01');
+      expect(JDate.withZero(1), '01');
     });
 
     test('9', () {
-      expect(jDate.withZero(9), '09');
+      expect(JDate.withZero(9), '09');
     });
 
     test('10', () {
-      expect(jDate.withZero(10), '10');
+      expect(JDate.withZero(10), '10');
     });
     test('100', () {
-      expect(jDate.withZero(100), '100');
+      expect(JDate.withZero(100), '100');
     });
   });
 }

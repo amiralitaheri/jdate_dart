@@ -7,12 +7,12 @@ class JDate {
 
   JDate(
       [var year,
-      var month,
-      var date = 1,
-      var hours = 0,
-      var minutes = 0,
-      var seconds = 0,
-      var milliseconds = 0]) {
+      int month,
+      int date = 1,
+      int hours = 0,
+      int minutes = 0,
+      int seconds = 0,
+      int milliseconds = 0]) {
     _gregorian = DateTime.now();
     if (year != null) {
       if (month == null) {
@@ -74,16 +74,11 @@ class JDate {
 
   int getTimezoneOffset() => _gregorian.timeZoneOffset.inMinutes;
 
-  int isLeapYear([var year]) {
-    if (year == null) {
-      return isLeapYear(_jalali['year']);
-    } else {
-      year = (year is int) ? year : int.parse(year);
-      return (year % 33 % 4 - 1 == (year % 33 * .05).floor()) ? 1 : 0;
-    }
-  }
+  int isLeapYear([int year]) => (year == null)
+      ? isLeapYear(_jalali['year'])
+      : (year % 33 % 4 - 1 == (year % 33 * .05).floor()) ? 1 : 0;
 
-  int setDate(date) {
+  int setDate(int date) {
     if (date > 0 && date <= 31) {
       _jalali['date'] = date;
       var gd =
@@ -103,14 +98,14 @@ class JDate {
     }
   }
 
-  int setMonth(month, date) {
+  int setMonth(int month, int date) {
     if (month >= 0 && month <= 11) {
       _jalali['month'] = month;
       if (date != null) {
         if (date > 0 && date <= 31) {
           _jalali['date'] = date;
         } else {
-          throw 'Cannot parse date number';
+          throw 'Date number out of range';
         }
       }
       var gd =
@@ -126,25 +121,25 @@ class JDate {
           _gregorian.microsecond);
       return _gregorian.millisecondsSinceEpoch;
     } else {
-      throw 'Cannot parse month number';
+      throw 'Month number out of range';
     }
   }
 
-  int setFullYear(year, month, date) {
+  int setFullYear(int year, int month, int date) {
     if (year >= 1000 && year <= 9999) {
       _jalali['year'] = year;
       if (month != null) {
         if (month >= 0 && month <= 11) {
           _jalali['month'] = month;
         } else {
-          throw 'Cannot parse month number';
+          throw 'Month number out of range';
         }
       }
       if (date != null) {
         if (date > 0 && date <= 31) {
           _jalali['date'] = date;
         } else {
-          throw 'Cannot parse date number';
+          throw 'Date number out of range';
         }
       }
       var gd =
@@ -160,11 +155,11 @@ class JDate {
           _gregorian.microsecond);
       return _gregorian.millisecondsSinceEpoch;
     } else {
-      throw 'Cannot parse year number';
+      throw 'Year number out of range';
     }
   }
 
-  int setHours(hours, [min, sec, ms]) {
+  int setHours(int hours, [int min, int sec, int ms]) {
     if (hours != null && min != null && sec != null && ms != null) {
       _gregorian = DateTime(_gregorian.year, _gregorian.month, _gregorian.day,
           hours, min, sec, ms, _gregorian.microsecond);
@@ -195,7 +190,7 @@ class JDate {
     return _gregorian.millisecondsSinceEpoch;
   }
 
-  int setMilliseconds(ms) {
+  int setMilliseconds(int ms) {
     _gregorian = DateTime(
         _gregorian.year,
         _gregorian.month,
@@ -208,7 +203,7 @@ class JDate {
     return _gregorian.millisecondsSinceEpoch;
   }
 
-  int setMinutes(min, [sec, ms]) {
+  int setMinutes(int min, [int sec, int ms]) {
     if (min != null && sec != null && ms != null) {
       _gregorian = DateTime(_gregorian.year, _gregorian.month, _gregorian.day,
           _gregorian.hour, min, sec, ms, _gregorian.microsecond);
@@ -236,7 +231,7 @@ class JDate {
     return _gregorian.millisecondsSinceEpoch;
   }
 
-  int setSeconds(sec, [ms]) {
+  int setSeconds(int sec, [int ms]) {
     if (sec != null && ms != null) {
       _gregorian = DateTime(_gregorian.year, _gregorian.month, _gregorian.day,
           _gregorian.hour, _gregorian.minute, sec, ms, _gregorian.microsecond);
@@ -254,13 +249,13 @@ class JDate {
     return _gregorian.millisecondsSinceEpoch;
   }
 
-  int setTime(ms) {
+  int setTime(int ms) {
     _gregorian = DateTime.fromMillisecondsSinceEpoch(ms);
     setJalali();
     return _gregorian.millisecondsSinceEpoch;
   }
 
-  String echo([format = 'l، d F Y ساعت H:i:s']) {
+  String echo([String format = 'l، d F Y ساعت H:i:s']) {
     var leapYear = isLeapYear(),
         jw = getDay(),
         jy = getShortYear(),
@@ -271,7 +266,7 @@ class JDate {
         .replaceAll('b', ((_jalali['month'] + 1) / 3.1).floor().toString())
         .replaceAll('d', withZero(_jalali['date']))
         .replaceAll(
-            'f', jalaliSeasons[((_jalali['month'] + 1) / 3.1).floor()]['long'])
+            'f', _jalaliSeasons[((_jalali['month'] + 1) / 3.1).floor()]['long'])
         .replaceAll(
             'g',
             _gregorian.hour <= 12
@@ -284,7 +279,7 @@ class JDate {
                 : withZero(_gregorian.hour - 12))
         .replaceAll('i', withZero(_gregorian.minute))
         .replaceAll('j', _jalali['date'].toString())
-        .replaceAll('l', jalaliWeeks[jw]['long'])
+        .replaceAll('l', _jalaliWeeks[jw]['long'])
         .replaceAll('m', withZero(_jalali['month'] + 1))
         .replaceAll('n', (_jalali['month'] + 1).toString())
         .replaceAll('s', withZero(_gregorian.second))
@@ -298,13 +293,13 @@ class JDate {
         .replaceAll('w', jw.toString())
         .replaceAll('y', jy.toString())
         .replaceAll('A', (_gregorian.hour < 12) ? 'قبل از ظهر' : 'بعد از ظهر')
-        .replaceAll('D', jalaliWeeks[jw]['short'])
-        .replaceAll('F', jalaliMonths[_jalali['month']]['long'])
+        .replaceAll('D', _jalaliWeeks[jw]['short'])
+        .replaceAll('F', _jalaliMonths[_jalali['month']]['long'])
         .replaceAll('G', _gregorian.hour.toString())
         .replaceAll('H', withZero(_gregorian.hour))
         .replaceAll('J', _jalali['date'].toPersianWords())
         .replaceAll('L', leapYear.toString())
-        .replaceAll('M', jalaliMonths[_jalali['month']]['short'])
+        .replaceAll('M', _jalaliMonths[_jalali['month']]['short'])
         .replaceAll('O', jtz)
         .replaceAll('V', _jalali['year'].toPersianWords())
         .replaceAll('Y', _jalali['year'].toString());
@@ -353,7 +348,7 @@ class JDate {
 //    }
   int now() => DateTime.now().millisecondsSinceEpoch;
 
-  var jalaliMonths = [
+  static const _jalaliMonths = [
     {'long': 'فروردین', 'short': 'فر'},
     {'long': 'اردیبهشت', 'short': 'ار'},
     {'long': 'خرداد', 'short': 'خر'},
@@ -367,13 +362,13 @@ class JDate {
     {'long': 'بهمن', 'short': 'به‍'},
     {'long': 'اسفند', 'short': 'اس‍'}
   ],
-      jalaliSeasons = [
+      _jalaliSeasons = [
     {'long': 'بهار', 'short': 'به‍'},
     {'long': 'تابستان', 'short': 'تا'},
     {'long': 'پاییز', 'short': 'پا'},
     {'long': 'زمستان', 'short': 'زم‍'}
   ],
-      jalaliWeeks = [
+      _jalaliWeeks = [
     {'long': 'شنبه', 'short': 'شن‍'},
     {'long': 'یکشنبه', 'short': 'یک'},
     {'long': 'دوشنبه', 'short': 'دو'},
@@ -386,9 +381,9 @@ class JDate {
   /// Jalali to Gregorian Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
   static Map jalaliToGregorian(var jy, var jm, var jd) {
-    jy = int.parse(jy.toString().numbersToEnglish()) - 979;
-    jm = int.parse(jm.toString().numbersToEnglish()) - 1;
-    jd = int.parse(jd.toString().numbersToEnglish()) - 1;
+    jy -= 979;
+    jm -= 1;
+    jd -= 1;
     const gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     const jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
 
@@ -440,9 +435,9 @@ class JDate {
   /// Gregorian to Jalali Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
   static Map<String, int> gregorianToJalali(int gy, int gm, int gd) {
-    gy = int.parse(gy.toString().numbersToEnglish()) - 1600;
-    gm = int.parse(gm.toString().numbersToEnglish()) - 1;
-    gd = int.parse(gd.toString().numbersToEnglish()) - 1;
+    gy -= 1600;
+    gm -= 1;
+    gd -= 1;
 
     const gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     const jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
@@ -480,6 +475,6 @@ class JDate {
     return {'year': jy, 'month': jm, 'date': jd};
   }
 
-  String withZero(int num) =>
+  static String withZero(int num) =>
       (num < 10) ? '0' + num.toString() : num.toString();
 }
