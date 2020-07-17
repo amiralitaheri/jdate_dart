@@ -3,13 +3,14 @@ import 'package:jdate/jdate.dart';
 void main() {
   // gregorian date constructor
   print('\nGregorian date constructor');
-  print(JDate(2020));
-  print(JDate(2020, 7));
-  print(JDate(2020, 7, 16));
-  print(JDate(2020, 7, 16, 12));
-  print(JDate(2020, 7, 16, 12, 18));
-  print(JDate(2020, 7, 16, 12, 18, 30));
-  print(JDate(2020, 7, 16, 12, 18, 30, 450));
+  print(DateTime.now().toJDate());
+  print(DateTime(2020).toJDate());
+  print(DateTime(2020, 7).toJDate());
+  print(DateTime(2020, 7, 16).toJDate());
+  print(DateTime(2020, 7, 16, 12).toJDate());
+  print(DateTime(2020, 7, 16, 12, 18).toJDate());
+  print(DateTime(2020, 7, 16, 12, 18, 30).toJDate());
+  print(DateTime(2020, 7, 16, 12, 18, 30, 450).toJDate());
 
   // jalali date constructor
   print('\nJalali date constructor');
@@ -41,6 +42,7 @@ void main() {
   print(JDate.now().toString().numbersToPersian());
   print(60000000.toPersianWords());
   print(60000000.toPersianWords(true));
+  print(DateTime.now().add(Duration(days: 2)).toJDate());
 
   //parse
   print('\nParse');
@@ -52,4 +54,6 @@ void main() {
   print(JDate.parse('1399/02/13'));
   print(JDate.parse('1399/02/13 03:14:30'));
   print(JDate.parse('2019/05/03 01:02:03'));
+
+  print(JDate(-1));
 }

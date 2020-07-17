@@ -194,19 +194,19 @@ class JDate {
         year, month, day, _hour, _minute, _second, _millisecond, _microsecond);
     _timeZoneName = gregorian.timeZoneName;
     _timeZoneOffset = gregorian.timeZoneOffset;
-    if (gregorian.millisecondsSinceEpoch > 0) {
-      var jalali = gregorianToJalali(year, month, day);
-      _year = jalali['year'];
-      _month = jalali['month'];
-      _day = jalali['day'];
-    } else {
-      _year = year;
-      _month = month;
-      _day = day;
-      var greg = jalaliToGregorian(year, month, day);
-      gregorian = DateTime(greg['year'], greg['month'], greg['day'], _hour,
-          _minute, _second, _millisecond, _microsecond);
-    }
+//    if (gregorian.millisecondsSinceEpoch > 0) {
+//      var jalali = gregorianToJalali(year, month, day);
+//      _year = jalali['year'];
+//      _month = jalali['month'];
+//      _day = jalali['day'];
+//    } else {
+//    }
+    _year = year;
+    _month = month;
+    _day = day;
+    var greg = jalaliToGregorian(year, month, day);
+    gregorian = DateTime(greg['year'], greg['month'], greg['day'], _hour,
+        _minute, _second, _millisecond, _microsecond);
     _weekDay = gregorian.weekday - 1 % 7;
     _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
     _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
@@ -236,19 +236,20 @@ class JDate {
         year, month, day, _hour, _minute, _second, _millisecond, _microsecond);
     _timeZoneName = gregorian.timeZoneName;
     _timeZoneOffset = gregorian.timeZoneOffset;
-    if (gregorian.millisecondsSinceEpoch > 0) {
-      var jalali = gregorianToJalali(year, month, day);
-      _year = jalali['year'];
-      _month = jalali['month'];
-      day = jalali['day'];
-    } else {
-      _year = year;
-      _month = month;
-      _day = day;
-      var greg = jalaliToGregorian(year, month, day);
-      gregorian = DateTime.utc(greg['year'], greg['month'], greg['day'], _hour,
-          _minute, _second, _millisecond, _microsecond);
-    }
+//    if (gregorian.millisecondsSinceEpoch > 0) {
+//      var jalali = gregorianToJalali(year, month, day);
+//      _year = jalali['year'];
+//      _month = jalali['month'];
+//      day = jalali['day'];
+//    } else {
+//    }
+    _year = year;
+    _month = month;
+    _day = day;
+    var greg = jalaliToGregorian(year, month, day);
+    gregorian = DateTime.utc(greg['year'], greg['month'], greg['day'], _hour,
+        _minute, _second, _millisecond, _microsecond);
+
     _weekDay = gregorian.weekday - 1 % 7;
     _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
     _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
@@ -265,20 +266,24 @@ class JDate {
     if (date == null) {
       throw 'Can\'t parse string';
     }
-    if (date.millisecondsSinceEpoch > 0) {
-      _setFromGregorian(date);
-    }
-    if (date.millisecondsSinceEpoch < 0) {
-      var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
-      var greg = DateTime(gdt['year'], gdt['month'], gdt['day'], date.hour,
-          date.minute, date.second, date.millisecond);
-      _setFromGregorian(greg);
-    }
+//    if (date.millisecondsSinceEpoch > 0) {
+//      _setFromGregorian(date);
+//    }
+//    if (date.millisecondsSinceEpoch < 0) {
+//    }
+    var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
+    var greg = DateTime(gdt['year'], gdt['month'], gdt['day'], date.hour,
+        date.minute, date.second, date.millisecond);
+    _setFromGregorian(greg);
   }
 
-  int getShortYear() => (_year >= 1300 && _year < 1400)
-      ? int.parse(_year.toString().substring(2))
-      : int.parse(_year.toString().substring(1));
+  int getShortYear() {
+    if (_year >= 1300 && _year < 1400) {
+      return int.parse(_year.toString().substring(2));
+    } else {
+      return _year;
+    }
+  }
 
   bool isLeapYear() => _year % 33 % 4 - 1 == (_year % 33 * .05).floor();
 
@@ -317,7 +322,7 @@ class JDate {
   }
 
   int setFullYear(int year, int month, int day) {
-    if (year >= 1000 && year <= 9999) {
+    if (year >= 10 && year <= 9999) {
       year = year;
       if (month != null) {
         if (month >= 0 && month <= 11) {
