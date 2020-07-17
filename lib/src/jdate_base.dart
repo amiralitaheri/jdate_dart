@@ -259,6 +259,23 @@ class JDate {
     _setFromGregorian(gregorian);
   }
 
+  JDate.parse(String string) {
+    string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
+    var date = DateTime.tryParse(string);
+    if (date == null) {
+      throw 'Can\'t parse string';
+    }
+    if (date.millisecondsSinceEpoch > 0) {
+      _setFromGregorian(date);
+    }
+    if (date.millisecondsSinceEpoch < 0) {
+      var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
+      var greg = DateTime(gdt['year'], gdt['month'], gdt['day'], date.hour,
+          date.minute, date.second, date.millisecond);
+      _setFromGregorian(greg);
+    }
+  }
+
   int getShortYear() => (_year >= 1300 && _year < 1400)
       ? int.parse(_year.toString().substring(2))
       : int.parse(_year.toString().substring(1));
@@ -528,23 +545,6 @@ class JDate {
 
   @override
   String toString() => echo();
-
-  JDate.parse(String string) {
-    string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
-    var date = DateTime.tryParse(string);
-    if (date == null) {
-      throw 'Can\'t parse string';
-    }
-    if (date.millisecondsSinceEpoch > 0) {
-      _setFromGregorian(date);
-    }
-    if (date.millisecondsSinceEpoch < 0) {
-      var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
-      var greg = DateTime(gdt['year'], gdt['month'], gdt['day'], date.hour,
-          date.minute, date.second, date.millisecond);
-      _setFromGregorian(greg);
-    }
-  }
 
   /// Jalali to Gregorian Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
