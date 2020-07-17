@@ -35,9 +35,11 @@ class JDate {
           }
         } else {
           _gregorian = DateTime.tryParse(year.toString());
-          if (_gregorian?.millisecondsSinceEpoch == null || _gregorian.millisecondsSinceEpoch < 0) {
+          if (_gregorian?.millisecondsSinceEpoch == null ||
+              _gregorian.millisecondsSinceEpoch < 0) {
 //            gregorian = DateTime(parse(year));
-            if (_gregorian?.millisecondsSinceEpoch == null || _gregorian.millisecondsSinceEpoch < 0) {
+            if (_gregorian?.millisecondsSinceEpoch == null ||
+                _gregorian.millisecondsSinceEpoch < 0) {
               throw 'Cannot parse date string';
             }
           }
@@ -95,7 +97,8 @@ class JDate {
 
   int getTimezoneOffset() => _gregorian.timeZoneOffset.inMinutes;
 
-  bool isLeapYear() => _jalali['year'] % 33 % 4 - 1 == (_jalali['year'] % 33 * .05).floor();
+  bool isLeapYear() =>
+      _jalali['year'] % 33 % 4 - 1 == (_jalali['year'] % 33 * .05).floor();
 
   int setDate(int date) {
     if (date > 0 && date <= 31) {
@@ -284,11 +287,15 @@ class JDate {
         )
         .replaceAll(
           'g',
-          _gregorian.hour <= 12 ? _gregorian.hour.toString() : (_gregorian.hour - 12).toString(),
+          _gregorian.hour <= 12
+              ? _gregorian.hour.toString()
+              : (_gregorian.hour - 12).toString(),
         )
         .replaceAll(
           'h',
-          _gregorian.hour <= 12 ? _withZero(_gregorian.hour) : _withZero(_gregorian.hour - 12),
+          _gregorian.hour <= 12
+              ? _withZero(_gregorian.hour)
+              : _withZero(_gregorian.hour - 12),
         )
         .replaceAll('i', _withZero(_gregorian.minute))
         .replaceAll('j', _jalali['date'].toString())
@@ -298,7 +305,9 @@ class JDate {
         .replaceAll('s', _withZero(_gregorian.second))
         .replaceAll(
           't',
-          (_jalali['month']) != 12 ? (31 - ((_jalali['month']) / 6.5).floor()).toString() : (leapYear ? 1 : 0 + 29).toString(),
+          (_jalali['month']) != 12
+              ? (31 - ((_jalali['month']) / 6.5).floor()).toString()
+              : (leapYear ? 1 : 0 + 29).toString(),
         )
         .replaceAll('u', _gregorian.millisecond.toString())
         .replaceAll('v', jy.toPersianWords())
@@ -339,7 +348,8 @@ class JDate {
     }
     if (date.millisecondsSinceEpoch < 0) {
       var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
-      return JDate(gdt['year'], gdt['month'], gdt['date'], date.hour, date.minute, date.second, date.millisecond);
+      return JDate(gdt['year'], gdt['month'], gdt['date'], date.hour,
+          date.minute, date.second, date.millisecond);
     }
     return null;
   }
@@ -440,7 +450,10 @@ class JDate {
     const gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     const jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
 
-    var gDayNo = 365 * gy + ((gy + 3) / 4).floor() - ((gy + 99) / 100).floor() + ((gy + 399) / 400).floor();
+    var gDayNo = 365 * gy +
+        ((gy + 3) / 4).floor() -
+        ((gy + 99) / 100).floor() +
+        ((gy + 399) / 400).floor();
 
     for (var i = 0; i < gm; ++i) {
       gDayNo += gDaysInMonth[i];
@@ -470,7 +483,8 @@ class JDate {
     return {'year': jy, 'month': jm, 'date': jd};
   }
 
-  static String _withZero(int num) => (num < 10) ? '0' + num.toString() : num.toString();
+  static String _withZero(int num) =>
+      (num < 10) ? '0' + num.toString() : num.toString();
 
   static Map hijriToGregorian(int hy, int hm, int hd) {
     var i = ((hy - 1) * 12) + 1 + (hm - 1) - 16260;
@@ -493,7 +507,8 @@ class JDate {
 
   static int _ummalquraDataIndex(int index) {
     if (index < 0 || index >= ummAlquraDateArray.length) {
-      throw ArgumentError("Valid date should be between 1356 AH (14 March 1937 CE) to 1500 AH (16 November 2077 CE)");
+      throw ArgumentError(
+          "Valid date should be between 1356 AH (14 March 1937 CE) to 1500 AH (16 November 2077 CE)");
     }
     return ummAlquraDateArray[index];
   }
@@ -515,7 +530,11 @@ class JDate {
     var jgc = a - (a / 4.0).floor() - 2;
 
     // compute Chronological Julian Day Number (CJDN)
-    var cjdn = (365.25 * (y + 4716)).floor() + (30.6001 * (m + 1)).floor() + day - jgc - 1524;
+    var cjdn = (365.25 * (y + 4716)).floor() +
+        (30.6001 * (m + 1)).floor() +
+        day -
+        jgc -
+        1524;
 
     a = ((cjdn - 1867216.25) / 36524.25).floor();
     jgc = a - (a / 4.0).floor() + 1;
@@ -554,10 +573,13 @@ class JDate {
 
   static Map hijriToJalali(int year, int month, int date) {
     var gregorian = hijriToGregorian(year, month, date);
-    return gregorianToJalali(gregorian['year'], gregorian['month'], gregorian['date']);
+    return gregorianToJalali(
+        gregorian['year'], gregorian['month'], gregorian['date']);
   }
+
   static Map jalaliToHijri(int year, int month, int date) {
     var gregorian = jalaliToGregorian(year, month, date);
-    return gregorianToHijri(gregorian['year'], gregorian['month'], gregorian['date']);
+    return gregorianToHijri(
+        gregorian['year'], gregorian['month'], gregorian['date']);
   }
 }
