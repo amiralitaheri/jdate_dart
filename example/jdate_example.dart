@@ -41,22 +41,18 @@ void main() {
   print('۱۲۳۴۵۶۷۸۹۰'.numbersToEnglish());
   print(JDate.now().toString().numbersToPersian());
   print(60000000.toPersianWords());
-  print(60000000.toPersianWords(true));
+  print((-250).toPersianWords());
+  print(550.toPersianWords(true));
   print(DateTime.now().add(Duration(days: 2)).toJDate());
 
   //parse
   print('\nParse');
-  print(JDate.parse('2012/02/27 13:27:00'));
-  print(JDate.parse('2012-02-27 13:27:00'));
+  print(DateTime.parse('2012-02-27 13:27:00').toJDate());
+  print(DateTime.parse('2012/02/27 13:27:00'.replaceAll(RegExp(r'[/\\]'), '-'))
+      .toJDate());
   print(JDate.parse('1399/09/09 13:27:00'));
   print(JDate.parse('1399-09-09 13:27:00'));
   print(JDate.parse('۱۳۹۹/۰۹/۰۹'));
   print(JDate.parse('1399/02/13'));
   print(JDate.parse('1399/02/13 03:14:30'));
-  print(JDate.parse('2019/05/03 01:02:03'));
-
-  print(JDate(-100));
-  
-  print(100.toPersianWords());
-  print((-100).toPersianWords());
 }

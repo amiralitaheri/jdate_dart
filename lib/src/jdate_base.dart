@@ -194,13 +194,6 @@ class JDate {
         year, month, day, _hour, _minute, _second, _millisecond, _microsecond);
     _timeZoneName = gregorian.timeZoneName;
     _timeZoneOffset = gregorian.timeZoneOffset;
-//    if (gregorian.millisecondsSinceEpoch > 0) {
-//      var jalali = gregorianToJalali(year, month, day);
-//      _year = jalali['year'];
-//      _month = jalali['month'];
-//      _day = jalali['day'];
-//    } else {
-//    }
     _year = year;
     _month = month;
     _day = day;
@@ -236,13 +229,6 @@ class JDate {
         year, month, day, _hour, _minute, _second, _millisecond, _microsecond);
     _timeZoneName = gregorian.timeZoneName;
     _timeZoneOffset = gregorian.timeZoneOffset;
-//    if (gregorian.millisecondsSinceEpoch > 0) {
-//      var jalali = gregorianToJalali(year, month, day);
-//      _year = jalali['year'];
-//      _month = jalali['month'];
-//      day = jalali['day'];
-//    } else {
-//    }
     _year = year;
     _month = month;
     _day = day;
@@ -266,11 +252,6 @@ class JDate {
     if (date == null) {
       throw 'Can\'t parse string';
     }
-//    if (date.millisecondsSinceEpoch > 0) {
-//      _setFromGregorian(date);
-//    }
-//    if (date.millisecondsSinceEpoch < 0) {
-//    }
     var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
     var greg = DateTime(gdt['year'], gdt['month'], gdt['day'], date.hour,
         date.minute, date.second, date.millisecond);
@@ -286,185 +267,6 @@ class JDate {
   }
 
   bool isLeapYear() => _year % 33 % 4 - 1 == (_year % 33 * .05).floor();
-
-  int setMonth(int month, int day) {
-    if (month >= 0 && month <= 11) {
-      _month = month;
-      if (day != null) {
-        if (day > 0 && day <= 31) {
-          _day = day;
-        } else {
-          throw 'Date number out of range';
-        }
-      }
-      var gd = jalaliToGregorian(
-        _year,
-        _month,
-        _day,
-      );
-      var gregorian = DateTime(
-        gd['year'],
-        gd['month'],
-        gd['day'],
-        _hour,
-        _minute,
-        _second,
-        _millisecond,
-        _microsecond,
-      );
-      _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-      _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-      _weekDay = gregorian.weekday - 1 % 7;
-      return _millisecondsSinceEpoch;
-    } else {
-      throw 'Month number out of range';
-    }
-  }
-
-  int setFullYear(int year, int month, int day) {
-    if (year >= 10 && year <= 9999) {
-      year = year;
-      if (month != null) {
-        if (month >= 0 && month <= 11) {
-          _month = month;
-        } else {
-          throw 'Month number out of range';
-        }
-      }
-      if (day != null) {
-        if (day > 0 && day <= 31) {
-          _day = day;
-        } else {
-          throw 'Day number out of range';
-        }
-      }
-      var gd = jalaliToGregorian(
-        year,
-        month,
-        day,
-      );
-      var gregorian = DateTime(
-        gd['year'],
-        gd['month'],
-        gd['day'],
-        _hour,
-        _minute,
-        _second,
-        _millisecond,
-        _microsecond,
-      );
-      _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-      _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-      _weekDay = gregorian.weekday - 1 % 7;
-      return _millisecondsSinceEpoch;
-    } else {
-      throw 'Year number out of range';
-    }
-  }
-
-  /// set Hour and optionally Minute, Second, Millisecond, Microsecond
-  /// if `null` nothing change
-  ///
-  /// returns `millisecondsSinceEpoch`
-  int setHours(int hour, [int min, int sec, int ms, int mis]) {
-    var gregorian = DateTime(
-      _year,
-      _month,
-      _day,
-      hour ?? _hour,
-      min ?? _minute,
-      sec ?? _second,
-      ms ?? _millisecond,
-      mis ?? _microsecond,
-    );
-    _hour = gregorian.hour;
-    _minute = gregorian.minute;
-    _second = gregorian.second;
-    _millisecond = gregorian.millisecond;
-    _microsecond = gregorian.microsecond;
-
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-    return _millisecondsSinceEpoch;
-  }
-
-  /// set Milliseconds of date
-  /// if `null` nothing change
-  ///
-  /// returns `millisecondsSinceEpoch`
-  int setMilliseconds(int ms, [int mis]) {
-    var gregorian = DateTime(
-      _year,
-      _month,
-      _day,
-      _hour,
-      _minute,
-      _second,
-      ms ?? _millisecond,
-      mis ?? _microsecond,
-    );
-    _millisecond = gregorian.millisecond;
-    _microsecond = gregorian.microsecond;
-
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-    return _millisecondsSinceEpoch;
-  }
-
-  /// set Minute and optionally Second, Millisecond
-  /// if `null` nothing change
-  ///
-  /// returns `millisecondsSinceEpoch`
-  int setMinutes(int min, [int sec, int ms, int mis]) {
-    var gregorian = DateTime(
-      _year,
-      _month,
-      _day,
-      _hour,
-      min ?? _minute,
-      sec ?? _second,
-      ms ?? _millisecond,
-      mis ?? _microsecond,
-    );
-    _minute = gregorian.minute;
-    _second = gregorian.second;
-    _millisecond = gregorian.millisecond;
-    _microsecond = gregorian.microsecond;
-
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-    return _millisecondsSinceEpoch;
-  }
-
-  /// set Second and optionally Millisecond
-  /// if `null` nothing change
-  ///
-  /// returns `millisecondsSinceEpoch`
-  int setSeconds(int sec, [int ms, int mis]) {
-    var gregorian = DateTime(
-      _year,
-      _month,
-      _day,
-      _hour,
-      _minute,
-      sec ?? _second,
-      ms ?? _millisecond,
-      mis ?? _microsecond,
-    );
-    _second = gregorian.second;
-    _millisecond = gregorian.millisecond;
-    _microsecond = gregorian.microsecond;
-
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-    return _millisecondsSinceEpoch;
-  }
-
-  int setTime(int ms) {
-    var gregorian = DateTime.fromMillisecondsSinceEpoch(ms);
-    _setFromGregorian(gregorian);
-    return _millisecondsSinceEpoch;
-  }
 
   /// returns number of days in that month
   int getMonthLength() {
