@@ -134,21 +134,4 @@ void main() {
           {'year': 2176, 'month': 7, 'date': 26});
     });
   });
-
-  group('withzero function', () {
-    test('1', () {
-      expect(JDate.withZero(1), '01');
-    });
-
-    test('9', () {
-      expect(JDate.withZero(9), '09');
-    });
-
-    test('10', () {
-      expect(JDate.withZero(10), '10');
-    });
-    test('100', () {
-      expect(JDate.withZero(100), '100');
-    });
-  });
 }

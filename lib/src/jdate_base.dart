@@ -264,7 +264,7 @@ class JDate {
     return format
         .replaceAll('a', (_gregorian.hour < 12) ? 'ق.ظ' : 'ب.ظ')
         .replaceAll('b', ((_jalali['month'] + 1) / 3.1).floor().toString())
-        .replaceAll('d', withZero(_jalali['date']))
+        .replaceAll('d', _withZero(_jalali['date']))
         .replaceAll(
             'f', _jalaliSeasons[((_jalali['month'] + 1) / 3.1).floor()]['long'])
         .replaceAll(
@@ -275,14 +275,14 @@ class JDate {
         .replaceAll(
             'h',
             _gregorian.hour <= 12
-                ? withZero(_gregorian.hour)
-                : withZero(_gregorian.hour - 12))
-        .replaceAll('i', withZero(_gregorian.minute))
+                ? _withZero(_gregorian.hour)
+                : _withZero(_gregorian.hour - 12))
+        .replaceAll('i', _withZero(_gregorian.minute))
         .replaceAll('j', _jalali['date'].toString())
         .replaceAll('l', _jalaliWeeks[jw]['long'])
-        .replaceAll('m', withZero(_jalali['month'] + 1))
+        .replaceAll('m', _withZero(_jalali['month'] + 1))
         .replaceAll('n', (_jalali['month'] + 1).toString())
-        .replaceAll('s', withZero(_gregorian.second))
+        .replaceAll('s', _withZero(_gregorian.second))
         .replaceAll(
             't',
             ((_jalali['month'] + 1) != 12)
@@ -296,7 +296,7 @@ class JDate {
         .replaceAll('D', _jalaliWeeks[jw]['short'])
         .replaceAll('F', _jalaliMonths[_jalali['month']]['long'])
         .replaceAll('G', _gregorian.hour.toString())
-        .replaceAll('H', withZero(_gregorian.hour))
+        .replaceAll('H', _withZero(_gregorian.hour))
         .replaceAll('J', _jalali['date'].toPersianWords())
         .replaceAll('L', leapYear.toString())
         .replaceAll('M', _jalaliMonths[_jalali['month']]['short'])
@@ -475,6 +475,6 @@ class JDate {
     return {'year': jy, 'month': jm, 'date': jd};
   }
 
-  static String withZero(int num) =>
+  static String _withZero(int num) =>
       (num < 10) ? '0' + num.toString() : num.toString();
 }
