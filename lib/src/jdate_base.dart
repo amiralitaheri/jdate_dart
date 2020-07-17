@@ -270,6 +270,17 @@ class JDate {
     return _gregorian.millisecondsSinceEpoch;
   }
 
+  int getMonthLength() {
+    var month = getMonth();
+    if (month <= 6) {
+      return 31;
+    } else if (month == 12){
+      return isLeapYear() ? 30 : 29;
+    } else {
+      return 30;
+    }
+  }
+
   String echo([String format = 'l، d F Y ساعت H:i:s']) {
     var leapYear = isLeapYear();
     var jw = getDay();
