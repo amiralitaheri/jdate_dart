@@ -55,5 +55,8 @@ void main() {
   print(JDate.parse('1399/02/13 03:14:30'));
   print(JDate.parse('2019/05/03 01:02:03'));
 
-  print(JDate(-1));
+  print(JDate(-100));
+  
+  print(100.toPersianWords());
+  print((-100).toPersianWords());
 }

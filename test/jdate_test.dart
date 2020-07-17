@@ -14,15 +14,6 @@ void main() {
     });
   });
 
-  group('Constructor with Gregorian Year', () {
-    test('Year 1998 test', () {
-      expect(JDate(1998).year, 1376);
-    });
-    test('Year 2020 test', () {
-      expect(JDate(2020).year, 1398);
-    });
-  });
-
   group('Constructor with Jalali Year', () {
     test('Year 1377 test', () {
       expect(JDate(1377).year, 1377);
@@ -34,7 +25,7 @@ void main() {
 
   group('Constructor with full Gregorian date', () {
     test('1998-6-18 test', () {
-      var jDate = JDate(1998, 6, 18);
+      var jDate = DateTime(1998, 6, 18).toJDate();
       expect(jDate.year, 1377);
       expect(jDate.month, 3);
       expect(jDate.day, 28);
@@ -54,7 +45,7 @@ void main() {
 
   group('parse', () {
     test('2012-02-27 13:27:00 test', () {
-      var jDate = JDate.parse('2012-02-27 13:27:00');
+      var jDate = DateTime.parse('2012-02-27 13:27:00').toJDate();
       expect(jDate.year, 1390);
       expect(jDate.month, 12);
       expect(jDate.day, 8);

@@ -71,34 +71,38 @@ extension PersianIntegerHelper on int {
       'تریلیارد'
     ];
 
-    var result = '';
-
     if (this == 0) return 'صفر';
-    if (toString().length <= 3) {
-      var d12 = this % 100, d3 = (this / 100).floor();
+    if (ordinal && isNegative) throw 'Ordinal can\'t be negative';
+
+    var result = isNegative ? 'منفی ' : '';
+    var number = isNegative ? abs() : this; // make number positive
+
+    if (number.toString().length <= 3) {
+      var d12 = number % 100;
+      var d3 = (number / 100).floor();
 
       if (d3 != 0) {
-        result = sadgan[d3] + ' و ';
+        result += sadgan[d3] + ' و ';
       }
 
       if ((d12 >= 10) && (d12 <= 19)) {
-        result = result + dahyek[d12 - 10];
+        result += dahyek[d12 - 10];
       } else {
         var d2 = (d12 / 10).floor();
         if (d2 != 0) {
-          result = result + dahgan[d2] + ' و ';
+          result += dahgan[d2] + ' و ';
         }
 
         var d1 = d12 % 10;
         if (d1 != 0) {
-          result = result + yekan[d1] + ' و ';
+          result += yekan[d1] + ' و ';
         }
 
         result = result.substring(0, result.length - 3);
       }
     } else {
       var padLen;
-      switch (toString().length % 3) {
+      switch (number.toString().length % 3) {
         case 1:
           padLen = 2;
           break;
@@ -108,7 +112,7 @@ extension PersianIntegerHelper on int {
         default:
           padLen = 0;
       }
-      var numStr = toString().padLeft(toString().length + padLen, '0');
+      var numStr = number.toString().padLeft(number.toString().length + padLen, '0');
       final L = (numStr.length / 3 - 1).floor();
       int b;
       var threeZero = false;
