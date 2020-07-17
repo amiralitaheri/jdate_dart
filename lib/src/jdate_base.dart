@@ -305,8 +305,8 @@ class JDate {
         .replaceAll('s', _withZero(_gregorian.second))
         .replaceAll(
           't',
-          (_jalali['month'] + 1) != 12
-              ? (31 - ((_jalali['month'] + 1) / 6.5).floor()).toString()
+          (_jalali['month']) != 12
+              ? (31 - ((_jalali['month']) / 6.5).floor()).toString()
               : (leapYear + 29).toString(),
         )
         .replaceAll('u', _gregorian.millisecond.toString())
