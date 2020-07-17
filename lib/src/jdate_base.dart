@@ -33,14 +33,24 @@ class JDate {
           );
         }
       } else {
-        _gregorian = DateTime.tryParse(year.toString());
-        if (_gregorian?.millisecondsSinceEpoch == null ||
-            _gregorian.millisecondsSinceEpoch < 0) {
-//            gregorian = DateTime(parse(year));
-          if (_gregorian?.millisecondsSinceEpoch == null ||
-              _gregorian.millisecondsSinceEpoch < 0) {
-            throw 'Cannot parse date string';
-          }
+        year = year
+            .toString()
+            .numbersToPersian()
+            .replaceAll(RegExp(r'[/\\]'), '-');
+        _gregorian = DateTime.tryParse(year);
+        if (_gregorian?.millisecondsSinceEpoch == null) {
+          throw 'Cannot parse date string';
+        } else if (_gregorian.millisecondsSinceEpoch < 0) {
+          var gdt = JDate.jalaliToGregorian(
+              _gregorian.year, _gregorian.month, _gregorian.day);
+          _gregorian = DateTime(
+              gdt['year'],
+              gdt['month'],
+              gdt['date'],
+              _gregorian.hour,
+              _gregorian.minute,
+              _gregorian.second,
+              _gregorian.millisecond);
         }
       }
     } else {
