@@ -1,3 +1,33 @@
+const jalaliMonths = [
+  {'long': 'فروردین', 'short': 'فر'},
+  {'long': 'اردیبهشت', 'short': 'ار'},
+  {'long': 'خرداد', 'short': 'خر'},
+  {'long': 'تیر', 'short': 'تی‍'},
+  {'long': 'مرداد', 'short': 'مر'},
+  {'long': 'شهریور', 'short': 'شه‍'},
+  {'long': 'مهر', 'short': 'مه‍'},
+  {'long': 'آبان', 'short': 'آب‍'},
+  {'long': 'آذر', 'short': 'آذر'},
+  {'long': 'دی', 'short': 'دی'},
+  {'long': 'بهمن', 'short': 'به‍'},
+  {'long': 'اسفند', 'short': 'اس‍'}
+];
+
+const jalaliSeasons = [
+  {'long': 'بهار', 'short': 'به‍'},
+  {'long': 'تابستان', 'short': 'تا'},
+  {'long': 'پاییز', 'short': 'پا'},
+  {'long': 'زمستان', 'short': 'زم‍'}
+];
+const jalaliWeeks = [
+  {'long': 'شنبه', 'short': 'شن‍'},
+  {'long': 'یکشنبه', 'short': 'یک'},
+  {'long': 'دوشنبه', 'short': 'دو'},
+  {'long': 'سه‌شنبه', 'short': 'سه'},
+  {'long': 'چهارشنبه', 'short': 'چه‍'},
+  {'long': 'پنج‌شنبه', 'short': 'پن‍'},
+  {'long': 'جمعه', 'short': 'جم‍'}
+];
 const List<int> ummAlquraDateArray = [
   28607,
   28636,
