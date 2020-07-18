@@ -190,7 +190,7 @@ class JDate {
   ///
   bool get isUtc => _isUtc;
 
-  String get dayName => jalaliWeeks[_weekday]['long'];
+  String get dayName => jalaliDays[_weekday]['long'];
 
   /// Constructs a [JDate] instance specified in the local time zone.
   ///
@@ -487,7 +487,7 @@ class JDate {
         )
         .replaceAll('i', _withZero(_minute))
         .replaceAll('j', _day.toString())
-        .replaceAll('l', jalaliWeeks[jw]['long'])
+        .replaceAll('l', jalaliDays[jw]['long'])
         .replaceAll('m', _withZero(_month))
         .replaceAll('n', (_month + 1).toString())
         .replaceAll('s', _withZero(_second))
@@ -502,7 +502,7 @@ class JDate {
         .replaceAll('w', jw.toString())
         .replaceAll('y', jy.toString())
         .replaceAll('A', (_hour < 12) ? 'قبل از ظهر' : 'بعد از ظهر')
-        .replaceAll('D', jalaliWeeks[jw]['short'])
+        .replaceAll('D', jalaliDays[jw]['short'])
         .replaceAll('F', jalaliMonths[_month - 1]['long'])
         .replaceAll('G', _hour.toString())
         .replaceAll('H', _withZero(_hour))

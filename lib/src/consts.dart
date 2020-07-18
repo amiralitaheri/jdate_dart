@@ -19,7 +19,7 @@ const jalaliSeasons = [
   {'long': 'پاییز', 'short': 'پا'},
   {'long': 'زمستان', 'short': 'زم‍'}
 ];
-const jalaliWeeks = [
+const jalaliDays = [
   {'long': 'شنبه', 'short': 'شن‍'},
   {'long': 'یکشنبه', 'short': 'یک'},
   {'long': 'دوشنبه', 'short': 'دو'},
