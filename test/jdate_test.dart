@@ -25,7 +25,7 @@ void main() {
       expect(jDate.year, 1378);
       expect(jDate.month, 12);
       expect(jDate.day, 18);
-      expect(jDate.weekday, 4);
+      expect(jDate.weekday, 5);
       expect(jDate.microsecond, 0);
       expect(jDate.millisecond, 0);
       expect(jDate.second, 0);
@@ -38,7 +38,7 @@ void main() {
       expect(jDate.year, 1395);
       expect(jDate.month, 1);
       expect(jDate.day, 31);
-      expect(jDate.weekday, 3);
+      expect(jDate.weekday, 4);
       expect(jDate.hour, 21);
       expect(jDate.minute, 30);
       expect(jDate.second, 15);
@@ -58,7 +58,7 @@ void main() {
       expect(jDate.year, 1374);
       expect(jDate.month, 10);
       expect(jDate.day, 10);
-      expect(jDate.weekday, 1);
+      expect(jDate.weekday, 2);
       expect(jDate.microsecond, 0);
       expect(jDate.millisecond, 0);
       expect(jDate.second, 0);
@@ -72,7 +72,7 @@ void main() {
       expect(jDate.year, 1369);
       expect(jDate.month, 2);
       expect(jDate.day, 20);
-      expect(jDate.weekday, 5);
+      expect(jDate.weekday, 6);
       expect(jDate.hour, 22);
       expect(jDate.minute, 36);
       expect(jDate.second, 12);
