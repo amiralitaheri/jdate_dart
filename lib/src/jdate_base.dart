@@ -44,8 +44,24 @@ class JDate {
 
   String get timeZoneName => _timeZoneName;
 
+  /// True if this [JDate] is set to UTC time.
+  ///
+  /// ```
+  /// var date = JDate.utc(1377, 6, 6);
+  /// assert(date.isUtc);
+  /// ```
+  ///
   bool get isUtc => _isUtc;
 
+  /// Constructs a [JDate] instance specified in the local time zone.
+  ///
+  /// For example,
+  /// to create a new JDate object representing the 5th of Khordad 1377,
+  /// 5:30pm
+  ///
+  /// ```
+  /// var dentistAppointment = JDate(1377, 3, 7, 17, 30);
+  /// ```
   JDate(
     int year, [
     int month = 1,
@@ -69,6 +85,11 @@ class JDate {
     );
   }
 
+  /// Constructs a [JDate] instance specified in the UTC time zone.
+  ///
+  /// ```
+  /// var moonLanding = JDate.utc(1377, 7, 20, 20, 18, 04);
+  /// ```
   JDate.utc(
     int year, [
     int month = 1,
@@ -92,6 +113,12 @@ class JDate {
     );
   }
 
+  /// Change a [JDate] instance to specified parameters.
+  /// returns currently changed [JDate]
+  ///
+  /// ```
+  /// var specifiedDate = JDate.now().changeTo(month: 10, day: 1);
+  /// ```
   JDate changeTo({
     int year,
     int month,
@@ -117,6 +144,12 @@ class JDate {
     return this;
   }
 
+  /// Constructs a [JDate] instance from given [DateTime].
+  ///
+  /// ```
+  /// var date = DateTime(1977, 5, 12);
+  /// var jDate = JDate.fromDateTime(date);
+  /// ```
   JDate.fromDateTime(DateTime date) {
     var jalali = gregorianToJalali(date.year, date.month, date.day);
     _internal(
@@ -132,16 +165,46 @@ class JDate {
     );
   }
 
-  JDate.fromMicrosecondsSinceEpoch(int microsecondsSinceEpoch) {
-    var gregorian = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch);
-    JDate.fromDateTime(gregorian);
+  /// Constructs a new [JDate] instance
+  /// with the given [microsecondsSinceEpoch].
+  ///
+  /// If [isUtc] is false then the date is in the local time zone.
+  ///
+  /// The constructed [JDate] represents
+  /// 1348-10-11 00:00:00 + [microsecondsSinceEpoch] ms in the given
+  /// time zone (local or UTC).
+  ///
+  /// [microsecondsSinceEpoch] is completely based on gregorian.
+  factory JDate.fromMicrosecondsSinceEpoch(int microsecondsSinceEpoch,
+      {bool isUtc = false}) {
+    var gregorian = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch,
+        isUtc: isUtc);
+    return JDate.fromDateTime(gregorian);
   }
 
-  JDate.fromMillisecondsSinceEpoch(int millisecondsSinceEpoch) {
-    var gregorian = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
-    JDate.fromDateTime(gregorian);
+  /// Constructs a new [JDate] instance
+  /// with the given [millisecondsSinceEpoch].
+  ///
+  /// If [isUtc] is false then the date is in the local time zone.
+  ///
+  /// The constructed [JDate] represents
+  /// 1348-10-11 00:00:00 + [millisecondsSinceEpoch] ms in the given
+  /// time zone (local or UTC).
+  ///
+  /// [millisecondsSinceEpoch] is completely based on gregorian.
+  factory JDate.fromMillisecondsSinceEpoch(int millisecondsSinceEpoch,
+      {bool isUtc = false}) {
+    var gregorian = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch,
+        isUtc: isUtc);
+    return JDate.fromDateTime(gregorian);
   }
 
+  /// Constructs a [JDate] instance with current date and time in the
+  /// local time zone.
+  ///
+  /// ```
+  /// var thisInstant = new JDate.now();
+  /// ```
   JDate.now() : this.fromDateTime(DateTime.now());
 
   JDate.parse(String string) {
@@ -163,6 +226,7 @@ class JDate {
     );
   }
 
+  /// Main function that converts
   void _internal(
     int year,
     int month,
@@ -225,6 +289,10 @@ class JDate {
   bool isLeapYear() => _year % 33 % 4 - 1 == (_year % 33 * .05).floor();
 
   /// returns number of days in that month
+  ///
+  /// ```Dart
+  /// var monthDays = JDate.now().getMonthLength();
+  /// ```
   int getMonthLength() {
     if (_month <= 6) {
       return 31;
