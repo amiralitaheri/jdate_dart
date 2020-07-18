@@ -85,7 +85,7 @@ void main() {
       expect(JDate.fromDateTime(DateTime(1720)).year, 1098);
       expect(JDate.fromDateTime(DateTime(2000)).year, 1378);
       expect(JDate.fromDateTime(DateTime(2200)).year, 1578);
- 
+
       for (var i = 1500; i < 2200; ++i) {
         expect(JDate.fromDateTime(DateTime(i)).year, i - 622);
       }
@@ -101,41 +101,7 @@ void main() {
 //      expect(jDate.weekday, 0);
 //    });
 //  });
-
-  group('gregorianToJalali', () {
-    [
-      [1998, 6, 18, 1377, 3, 28],
-      [2012, 6, 18, 1391, 3, 29],
-      [2020, 7, 16, 1399, 4, 26],
-      [2020, 2, 20, 1398, 12, 1],
-      [2222, 2, 22, 1600, 12, 3],
-    ].forEach((date) {
-      test('${date[0]}-${date[1]}-${date[2]}', () {
-        expect(
-          JDate.gregorianToJalali(date[0], date[1], date[2]),
-          {'year': date[3], 'month': date[4], 'day': date[5]},
-        );
-      });
-    });
-  });
-
-  group('jalaliToGregorian', () {
-    [
-      [1377, 3, 28, 1998, 6, 18],
-      [1399, 3, 28, 2020, 6, 17],
-      [1400, 1, 1, 2021, 3, 21],
-      [1414, 4, 14, 2035, 7, 5],
-      [1555, 5, 5, 2176, 7, 26],
-    ].forEach((date) {
-      test('${date[0]}-${date[1]}-${date[2]}', () {
-        expect(
-          JDate.jalaliToGregorian(date[0], date[1], date[2]),
-          {'year': date[3], 'month': date[4], 'day': date[5]},
-        );
-      });
-    });
-  });
-
+  
   group('Leap year', () {
     var leapYears = [
       1210,
