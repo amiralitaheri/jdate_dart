@@ -15,20 +15,21 @@ class JDate {
   int _year;
   Duration _timeZoneOffset;
   String _timeZoneName;
-  int _weekDay;
+  int _weekday;
+  bool _isUtc;
 
   int get microsecondsSinceEpoch => _microsecondsSinceEpoch;
 
   set microsecondsSinceEpoch(int microsecondsSinceEpoch) {
     var gregorian = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch);
-    _setFromGregorian(gregorian);
+    _passDateTimeToInternal(gregorian);
   }
 
   int get millisecondsSinceEpoch => _millisecondsSinceEpoch;
 
   set millisecondsSinceEpoch(int millisecondsSinceEpoch) {
     var gregorian = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
-    _setFromGregorian(gregorian);
+    _passDateTimeToInternal(gregorian);
   }
 
   int get microsecond => _microsecond;
@@ -38,7 +39,7 @@ class JDate {
       _microsecondsSinceEpoch += -_microsecond + microsecond;
       _microsecond = microsecond;
     } else {
-      throw 'microsecond number out of range';
+      throw 'Microsecond number out of range';
     }
   }
 
@@ -50,7 +51,7 @@ class JDate {
       _millisecondsSinceEpoch += -_millisecond + millisecond;
       _millisecond = millisecond;
     } else {
-      throw 'millisecond number out of range';
+      throw 'Millisecond number out of range';
     }
   }
 
@@ -62,7 +63,7 @@ class JDate {
       _millisecondsSinceEpoch += 1000 * (-_second + second);
       _second = second;
     } else {
-      throw 'second number out of range';
+      throw 'Second number out of range';
     }
   }
 
@@ -74,7 +75,7 @@ class JDate {
       _millisecondsSinceEpoch += 60 * 1000 * (-_minute + minute);
       _minute = minute;
     } else {
-      throw 'minute number out of range';
+      throw 'Minute number out of range';
     }
   }
 
@@ -86,7 +87,7 @@ class JDate {
       _millisecondsSinceEpoch += 60 * 60 * 1000 * (-_hour + hour);
       _hour = hour;
     } else {
-      throw 'hour number out of range';
+      throw 'Hour number out of range';
     }
   }
 
@@ -112,9 +113,9 @@ class JDate {
       );
       _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
       _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-      _weekDay = gregorian.weekday - 1 % 7;
+      _weekday = (gregorian.weekday - 1) % 7;
     } else {
-      throw 'day number out of range';
+      throw 'Day number out of range';
     }
   }
 
@@ -140,9 +141,9 @@ class JDate {
       );
       _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
       _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-      _weekDay = gregorian.weekday - 1 % 7;
+      _weekday = (gregorian.weekday - 1) % 7;
     } else {
-      throw 'month number out of range';
+      throw 'Month number out of range';
     }
   }
 
@@ -168,96 +169,184 @@ class JDate {
       );
       _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
       _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-      _weekDay = gregorian.weekday - 1 % 7;
+      _weekday = (gregorian.weekday - 1) % 7;
     } else {
-      throw 'year number out of range';
+      throw 'Year number out of range';
     }
   }
 
-  int get weekDay => _weekDay;
+  int get weekday => _weekday;
 
   Duration get timeZoneOffset => _timeZoneOffset;
 
   String get timeZoneName => _timeZoneName;
 
+  /// True if this [JDate] is set to UTC time.
+  ///
+  /// ```
+  /// var date = JDate.utc(1377, 6, 6);
+  /// assert(date.isUtc);
+  /// ```
+  ///
+  bool get isUtc => _isUtc;
+
+  /// Constructs a [JDate] instance specified in the local time zone.
+  ///
+  /// For example,
+  /// to create a new JDate object representing the 5th of Khordad 1377,
+  /// 5:30pm
+  ///
+  /// ```
+  /// var dentistAppointment = JDate(1377, 3, 7, 17, 30);
+  /// ```
   JDate(
     int year, [
     int month = 1,
     int day = 1,
-    this._hour = 0,
-    this._minute = 0,
-    this._second = 0,
-    this._millisecond = 0,
-    this._microsecond = 0,
+    int hour = 0,
+    int minute = 0,
+    int second = 0,
+    int millisecond = 0,
+    int microsecond = 0,
   ]) {
-    var gregorian = DateTime(
-        year, month, day, _hour, _minute, _second, _millisecond, _microsecond);
-    _timeZoneName = gregorian.timeZoneName;
-    _timeZoneOffset = gregorian.timeZoneOffset;
-    if (gregorian.millisecondsSinceEpoch > 0) {
-      var jalali = gregorianToJalali(year, month, day);
-      _year = jalali['year'];
-      _month = jalali['month'];
-      _day = jalali['day'];
-    } else {
-      _year = year;
-      _month = month;
-      _day = day;
-      var greg = jalaliToGregorian(year, month, day);
-      gregorian = DateTime(greg['year'], greg['month'], greg['day'], _hour,
-          _minute, _second, _millisecond, _microsecond);
-    }
-    _weekDay = gregorian.weekday - 1 % 7;
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
+    _internal(
+      year,
+      month,
+      day,
+      hour,
+      minute,
+      second,
+      millisecond,
+      microsecond,
+      false,
+    );
   }
 
-  JDate.fromMicrosecondsSinceEpoch(int microsecondsSinceEpoch) {
-    var gregorian = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch);
-    _setFromGregorian(gregorian);
-  }
-
-  JDate.fromMillisecondsSinceEpoch(int millisecondsSinceEpoch) {
-    var gregorian = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
-    _setFromGregorian(gregorian);
-  }
-
+  /// Constructs a [JDate] instance specified in the UTC time zone.
+  ///
+  /// ```
+  /// var moonLanding = JDate.utc(1377, 7, 20, 20, 18, 04);
+  /// ```
   JDate.utc(
     int year, [
     int month = 1,
     int day = 1,
-    this._hour = 0,
-    this._minute = 0,
-    this._second = 0,
-    this._millisecond = 0,
-    this._microsecond = 0,
+    int hour = 0,
+    int minute = 0,
+    int second = 0,
+    int millisecond = 0,
+    int microsecond = 0,
   ]) {
-    var gregorian = DateTime.utc(
-        year, month, day, _hour, _minute, _second, _millisecond, _microsecond);
-    _timeZoneName = gregorian.timeZoneName;
-    _timeZoneOffset = gregorian.timeZoneOffset;
-    if (gregorian.millisecondsSinceEpoch > 0) {
-      var jalali = gregorianToJalali(year, month, day);
-      _year = jalali['year'];
-      _month = jalali['month'];
-      day = jalali['day'];
-    } else {
-      _year = year;
-      _month = month;
-      _day = day;
-      var greg = jalaliToGregorian(year, month, day);
-      gregorian = DateTime.utc(greg['year'], greg['month'], greg['day'], _hour,
-          _minute, _second, _millisecond, _microsecond);
-    }
-    _weekDay = gregorian.weekday - 1 % 7;
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
+    _internal(
+      year,
+      month,
+      day,
+      hour,
+      minute,
+      second,
+      millisecond,
+      microsecond,
+      true,
+    );
   }
 
-  JDate.now() {
-    var gregorian = DateTime.now();
-    _setFromGregorian(gregorian);
+  /// Change a [JDate] instance to specified parameters.
+  /// returns currently changed [JDate]
+  ///
+  /// ```
+  /// var specifiedDate = JDate.now().changeTo(month: 10, day: 1);
+  /// ```
+  JDate changeTo({
+    int year,
+    int month,
+    int day,
+    int hour,
+    int minute,
+    int second,
+    int millisecond,
+    int microsecond,
+    bool isUtc,
+  }) {
+    _internal(
+      year ?? _year,
+      month ?? _month,
+      day ?? _day,
+      hour ?? _hour,
+      minute ?? _minute,
+      second ?? _second,
+      millisecond ?? _millisecond,
+      microsecond ?? _microsecond,
+      isUtc ?? _isUtc,
+    );
+    return this;
   }
+
+  /// Constructs a [JDate] instance from given [DateTime].
+  ///
+  /// ```
+  /// var date = DateTime(1977, 5, 12);
+  /// var jDate = JDate.fromDateTime(date);
+  /// ```
+  JDate.fromDateTime(DateTime date) {
+    _passDateTimeToInternal(date);
+  }
+
+  void _passDateTimeToInternal(DateTime date) {
+    var jalali = gregorianToJalali(date.year, date.month, date.day);
+    _internal(
+      jalali['year'],
+      jalali['month'],
+      jalali['day'],
+      date.hour,
+      date.minute,
+      date.second,
+      date.millisecond,
+      date.microsecond,
+      date.isUtc,
+    );
+  }
+
+  /// Constructs a new [JDate] instance
+  /// with the given [microsecondsSinceEpoch].
+  ///
+  /// If [isUtc] is false then the date is in the local time zone.
+  ///
+  /// The constructed [JDate] represents
+  /// 1348-10-11 00:00:00 + [microsecondsSinceEpoch] ms in the given
+  /// time zone (local or UTC).
+  ///
+  /// [microsecondsSinceEpoch] is completely based on gregorian.
+  JDate.fromMicrosecondsSinceEpoch(int microsecondsSinceEpoch,
+      {bool isUtc = false}) {
+    var gregorian = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch,
+        isUtc: isUtc);
+    _passDateTimeToInternal(gregorian);
+  }
+
+  /// Constructs a new [JDate] instance
+  /// with the given [millisecondsSinceEpoch].
+  ///
+  /// If [isUtc] is false then the date is in the local time zone.
+  ///
+  /// The constructed [JDate] represents
+  /// 1348-10-11 00:00:00 + [millisecondsSinceEpoch] ms in the given
+  /// time zone (local or UTC).
+  ///
+  /// [millisecondsSinceEpoch] is completely based on gregorian.
+  JDate.fromMillisecondsSinceEpoch(int millisecondsSinceEpoch,
+      {bool isUtc = false}) {
+    var gregorian = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch,
+        isUtc: isUtc);
+    _passDateTimeToInternal(gregorian);
+  }
+
+  /// Constructs a [JDate] instance with current date and time in the
+  /// local time zone.
+  ///
+  /// ```
+  /// var thisInstant = new JDate.now();
+  /// ```
+  JDate.now() : this.fromDateTime(DateTime.now());
 
   JDate.parse(String string) {
     string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
@@ -265,203 +354,92 @@ class JDate {
     if (date == null) {
       throw 'Can\'t parse string';
     }
-    if (date.millisecondsSinceEpoch > 0) {
-      _setFromGregorian(date);
-    }
-    if (date.millisecondsSinceEpoch < 0) {
-      var gdt = JDate.jalaliToGregorian(date.year, date.month, date.day);
-      var greg = DateTime(gdt['year'], gdt['month'], gdt['day'], date.hour,
-          date.minute, date.second, date.millisecond);
-      _setFromGregorian(greg);
-    }
+    _internal(
+      date.year,
+      date.month,
+      date.day,
+      date.hour,
+      date.minute,
+      date.second,
+      date.millisecond,
+      date.microsecond,
+      date.isUtc,
+    );
   }
 
-  int getShortYear() => (_year >= 1300 && _year < 1400)
-      ? int.parse(_year.toString().substring(2))
-      : int.parse(_year.toString().substring(1));
+  /// Main function that set everything in object
+  void _internal(
+    int year,
+    int month,
+    int day,
+    int hour,
+    int minute,
+    int second,
+    int millisecond,
+    int microsecond,
+    bool isUtc,
+  ) {
+    //check boundaries
+    assert(month <= 12 && month >= 1, 'Month is in range of 1-12');
+    assert(day <= 31 && day >= 1, 'Day is in range of 1-31');
+    assert(hour <= 23 && hour >= 0, 'Hour is in range of 0-23');
+    assert(minute <= 59 && minute >= 0, 'Minute is in range of 0-59');
+    assert(second <= 59 && second >= 0, 'Second is in range of 0-59');
+    assert(millisecond <= 999 && millisecond >= 0,
+        'Millisecond is in range of 0-999');
+    assert(microsecond <= 999 && microsecond >= 0,
+        'Microsecond is in range of 0-999');
+
+    //initialize parameters
+    _year = year;
+    _month = month;
+    _day = day;
+    _hour = hour;
+    _minute = minute;
+    _second = second;
+    _millisecond = millisecond;
+    _microsecond = microsecond;
+    _isUtc = isUtc;
+
+    //check day in month
+    final monthLen = getMonthLength();
+    assert(day <= monthLen && day >= 1,
+        'Day should be in range of 1-${monthLen} with given month ($_month)');
+
+    //convert jalali to gregorian to get other parameters
+    var greg = jalaliToGregorian(year, month, day);
+    DateTime gregorian;
+    if (_isUtc) {
+      gregorian = DateTime.utc(greg['year'], greg['month'], greg['day'], _hour,
+          _minute, _second, _millisecond, _microsecond);
+    } else {
+      gregorian = DateTime(greg['year'], greg['month'], greg['day'], _hour,
+          _minute, _second, _millisecond, _microsecond);
+    }
+
+    _timeZoneName = gregorian.timeZoneName;
+    _timeZoneOffset = gregorian.timeZoneOffset;
+    _weekday = (gregorian.weekday + 1) % 7;
+    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
+    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
+  }
+
+  int getShortYear() {
+    //todo: ask someone
+    if (_year >= 1300 && _year < 1400) {
+      return int.parse(_year.toString().substring(2)); //1375 -> 75
+    } else {
+      return _year; //85 -> 85, 1000 -> 1000
+    }
+  }
 
   bool isLeapYear() => _year % 33 % 4 - 1 == (_year % 33 * .05).floor();
 
-  int setMonth(int month, int day) {
-    if (month >= 0 && month <= 11) {
-      _month = month;
-      if (day != null) {
-        if (day > 0 && day <= 31) {
-          _day = day;
-        } else {
-          throw 'Date number out of range';
-        }
-      }
-      var gd = jalaliToGregorian(
-        _year,
-        _month,
-        _day,
-      );
-      var gregorian = DateTime(
-        gd['year'],
-        gd['month'],
-        gd['day'],
-        _hour,
-        _minute,
-        _second,
-        _millisecond,
-        _microsecond,
-      );
-      _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-      _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-      _weekDay = gregorian.weekday - 1 % 7;
-      return _millisecondsSinceEpoch;
-    } else {
-      throw 'Month number out of range';
-    }
-  }
-
-  int setFullYear(int year, int month, int day) {
-    if (year >= 1000 && year <= 9999) {
-      year = year;
-      if (month != null) {
-        if (month >= 0 && month <= 11) {
-          _month = month;
-        } else {
-          throw 'Month number out of range';
-        }
-      }
-      if (day != null) {
-        if (day > 0 && day <= 31) {
-          _day = day;
-        } else {
-          throw 'Day number out of range';
-        }
-      }
-      var gd = jalaliToGregorian(
-        year,
-        month,
-        day,
-      );
-      var gregorian = DateTime(
-        gd['year'],
-        gd['month'],
-        gd['day'],
-        _hour,
-        _minute,
-        _second,
-        _millisecond,
-        _microsecond,
-      );
-      _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-      _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-      _weekDay = gregorian.weekday - 1 % 7;
-      return _millisecondsSinceEpoch;
-    } else {
-      throw 'Year number out of range';
-    }
-  }
-
-  /// set Hour and optionally Minute, Second, Millisecond, Microsecond
-  /// if `null` nothing change
-  ///
-  /// returns `millisecondsSinceEpoch`
-  int setHours(int hour, [int min, int sec, int ms, int mis]) {
-    var gregorian = DateTime(
-      _year,
-      _month,
-      _day,
-      hour ?? _hour,
-      min ?? _minute,
-      sec ?? _second,
-      ms ?? _millisecond,
-      mis ?? _microsecond,
-    );
-    _hour = gregorian.hour;
-    _minute = gregorian.minute;
-    _second = gregorian.second;
-    _millisecond = gregorian.millisecond;
-    _microsecond = gregorian.microsecond;
-
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-    return _millisecondsSinceEpoch;
-  }
-
-  /// set Milliseconds of date
-  /// if `null` nothing change
-  ///
-  /// returns `millisecondsSinceEpoch`
-  int setMilliseconds(int ms, [int mis]) {
-    var gregorian = DateTime(
-      _year,
-      _month,
-      _day,
-      _hour,
-      _minute,
-      _second,
-      ms ?? _millisecond,
-      mis ?? _microsecond,
-    );
-    _millisecond = gregorian.millisecond;
-    _microsecond = gregorian.microsecond;
-
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-    return _millisecondsSinceEpoch;
-  }
-
-  /// set Minute and optionally Second, Millisecond
-  /// if `null` nothing change
-  ///
-  /// returns `millisecondsSinceEpoch`
-  int setMinutes(int min, [int sec, int ms, int mis]) {
-    var gregorian = DateTime(
-      _year,
-      _month,
-      _day,
-      _hour,
-      min ?? _minute,
-      sec ?? _second,
-      ms ?? _millisecond,
-      mis ?? _microsecond,
-    );
-    _minute = gregorian.minute;
-    _second = gregorian.second;
-    _millisecond = gregorian.millisecond;
-    _microsecond = gregorian.microsecond;
-
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-    return _millisecondsSinceEpoch;
-  }
-
-  /// set Second and optionally Millisecond
-  /// if `null` nothing change
-  ///
-  /// returns `millisecondsSinceEpoch`
-  int setSeconds(int sec, [int ms, int mis]) {
-    var gregorian = DateTime(
-      _year,
-      _month,
-      _day,
-      _hour,
-      _minute,
-      sec ?? _second,
-      ms ?? _millisecond,
-      mis ?? _microsecond,
-    );
-    _second = gregorian.second;
-    _millisecond = gregorian.millisecond;
-    _microsecond = gregorian.microsecond;
-
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-    return _millisecondsSinceEpoch;
-  }
-
-  int setTime(int ms) {
-    var gregorian = DateTime.fromMillisecondsSinceEpoch(ms);
-    _setFromGregorian(gregorian);
-    return _millisecondsSinceEpoch;
-  }
-
   /// returns number of days in that month
+  ///
+  /// ```Dart
+  /// var monthDays = JDate.now().getMonthLength();
+  /// ```
   int getMonthLength() {
     if (_month <= 6) {
       return 31;
@@ -474,7 +452,7 @@ class JDate {
 
   String echo([String format = 'l، d F Y ساعت H:i:s']) {
     var leapYear = isLeapYear();
-    var jw = _weekDay;
+    var jw = _weekday;
     var jy = getShortYear();
     var jtz = _timeZoneName;
 
@@ -523,28 +501,14 @@ class JDate {
         .replaceAll('Y', _year.toString());
   }
 
-  void _setFromGregorian(DateTime gregorian) {
-    _microsecond = gregorian.microsecond;
-    _millisecond = gregorian.millisecond;
-    _second = gregorian.second;
-    _minute = gregorian.minute;
-    _hour = gregorian.hour;
-    _weekDay = gregorian.weekday - 1 % 7;
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-
-    _timeZoneName = gregorian.timeZoneName;
-    _timeZoneOffset = gregorian.timeZoneOffset;
-
-    var jalali =
-        gregorianToJalali(gregorian.year, gregorian.month, gregorian.day);
-    _year = jalali['year'];
-    _month = jalali['month'];
-    _day = jalali['day'];
-  }
-
+  /// Returns a human-readable string for this instance.
+  ///
+  /// The returned string is constructed for the time zone of this instance.
+  /// The `toString()` method provides a simply formatted string.
+  ///
+  /// The resulting string can be parsed back using [parse].
   @override
-  String toString() => echo();
+  String toString() => echo('Y/m/d H:i:s');
 
   /// Jalali to Gregorian Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi

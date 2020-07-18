@@ -3,13 +3,14 @@ import 'package:jdate/jdate.dart';
 void main() {
   // gregorian date constructor
   print('\nGregorian date constructor');
-  print(JDate(2020));
-  print(JDate(2020, 7));
-  print(JDate(2020, 7, 16));
-  print(JDate(2020, 7, 16, 12));
-  print(JDate(2020, 7, 16, 12, 18));
-  print(JDate(2020, 7, 16, 12, 18, 30));
-  print(JDate(2020, 7, 16, 12, 18, 30, 450));
+  print(DateTime.now().toJDate());
+  print(DateTime(2020).toJDate());
+  print(DateTime(2020, 7).toJDate());
+  print(DateTime(2020, 7, 16).toJDate());
+  print(DateTime(2020, 7, 16, 12).toJDate());
+  print(DateTime(2020, 7, 16, 12, 18).toJDate());
+  print(DateTime(2020, 7, 16, 12, 18, 30).toJDate());
+  print(DateTime(2020, 7, 16, 12, 18, 30, 450).toJDate());
 
   // jalali date constructor
   print('\nJalali date constructor');
@@ -24,6 +25,7 @@ void main() {
 
   //custom format
   print('\nCustom format');
+  print(JDate.now().toString());
   print(JDate.now().echo('l، d F V ساعت H:i:s'));
 
   //useful static methods
@@ -40,16 +42,23 @@ void main() {
   print('۱۲۳۴۵۶۷۸۹۰'.numbersToEnglish());
   print(JDate.now().toString().numbersToPersian());
   print(60000000.toPersianWords());
-  print(60000000.toPersianWords(true));
+  print((-250).toPersianWords());
+  print(550.toPersianWords(true));
+  print(DateTime.now().add(Duration(days: 2)).toJDate());
 
   //parse
   print('\nParse');
-  print(JDate.parse('2012/02/27 13:27:00'));
-  print(JDate.parse('2012-02-27 13:27:00'));
+  print(DateTime.parse('2012-02-27 13:27:00').toJDate());
+  print(DateTime.parse('2012/02/27 13:27:00'.replaceAll(RegExp(r'[/\\]'), '-'))
+      .toJDate());
   print(JDate.parse('1399/09/09 13:27:00'));
   print(JDate.parse('1399-09-09 13:27:00'));
   print(JDate.parse('۱۳۹۹/۰۹/۰۹'));
   print(JDate.parse('1399/02/13'));
-  print(JDate.parse('1399/02/13 03:14:30'));
-  print(JDate.parse('2019/05/03 01:02:03'));
+  print(JDate.parse(JDate(1378).toString())); //toString can be parsed back
+
+  //change date
+  print('\nChange Date');
+  print(JDate.now().changeTo(year: 1357, day: 10));
+  print(JDate.now().changeTo(minute: 35, second: 10, millisecond: 250));
 }
