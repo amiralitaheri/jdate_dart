@@ -273,7 +273,7 @@ class JDate {
 
     _timeZoneName = gregorian.timeZoneName;
     _timeZoneOffset = gregorian.timeZoneOffset;
-    _weekday = gregorian.weekday - 1 % 7;
+    _weekday = (gregorian.weekday + 1) % 7;
     _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
     _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
   }

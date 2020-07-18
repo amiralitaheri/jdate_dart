@@ -2,7 +2,7 @@ import 'package:jdate/jdate.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Now constructor', () {
+  group('Now Constructor', () {
     test('Parameter Test', () {
       final jDate = JDate.now();
       final date = DateTime.now();
@@ -45,30 +45,62 @@ void main() {
       expect(jDate.millisecond, 250);
       expect(jDate.microsecond, 550);
     });
-    
-    test('Year 1377 test', () {
+
+    test('Only Year', () {
       expect(JDate(1377).year, 1377);
       expect(JDate(1399).year, 1399);
     });
-    
-    test('1377-3-27 test', () {
-      var jDate = JDate(1377, 3, 27);
-      expect(jDate.year, 1377);
-      expect(jDate.month, 3);
-      expect(jDate.day, 27);
-      expect(jDate.weekday, 2);
+  });
+
+  group('fromDateTime Constructor', () {
+    test('Full Date', () {
+      final jDate = JDate.fromDateTime(DateTime(1995, 12, 31));
+      expect(jDate.year, 1374);
+      expect(jDate.month, 10);
+      expect(jDate.day, 10);
+      expect(jDate.weekday, 1);
+      expect(jDate.microsecond, 0);
+      expect(jDate.millisecond, 0);
+      expect(jDate.second, 0);
+      expect(jDate.minute, 0);
+      expect(jDate.hour, 0);
+    });
+
+    test('Full Date and Time', () {
+      final jDate =
+          JDate.fromDateTime(DateTime(1990, 5, 10, 22, 36, 12, 110, 750));
+      expect(jDate.year, 1369);
+      expect(jDate.month, 2);
+      expect(jDate.day, 20);
+      expect(jDate.weekday, 5);
+      expect(jDate.hour, 22);
+      expect(jDate.minute, 36);
+      expect(jDate.second, 12);
+      expect(jDate.millisecond, 110);
+      expect(jDate.microsecond, 750);
+    });
+
+    test('Year test', () {
+      expect(JDate.fromDateTime(DateTime.now()).year, JDate.now().year);
+      expect(JDate.fromDateTime(DateTime(1720)).year, 1098);
+      expect(JDate.fromDateTime(DateTime(2000)).year, 1378);
+      expect(JDate.fromDateTime(DateTime(2200)).year, 1578);
+ 
+      for (var i = 1500; i < 2200; ++i) {
+        expect(JDate.fromDateTime(DateTime(i)).year, i - 622);
+      }
     });
   });
 
-  group('parse', () {
-    test('2012-02-27 13:27:00 test', () {
-      var jDate = DateTime.parse('2012-02-27 13:27:00').toJDate();
-      expect(jDate.year, 1390);
-      expect(jDate.month, 12);
-      expect(jDate.day, 8);
-      expect(jDate.weekday, 0);
-    });
-  });
+//  group('parse', () {
+//    test('2012-02-27 13:27:00 test', () {
+//      var jDate = DateTime.parse('2012-02-27 13:27:00').toJDate();
+//      expect(jDate.year, 1390);
+//      expect(jDate.month, 12);
+//      expect(jDate.day, 8);
+//      expect(jDate.weekday, 0);
+//    });
+//  });
 
   group('gregorianToJalali', () {
     [
