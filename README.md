@@ -1,6 +1,6 @@
 <p align="center">
     <img src="https://github.com/moghaddam24/JDate.js/blob/master/examples/logo.png?raw=true" alt="logo"><br/>
-    Simple yet flexible Dart Jalali date and time for developers
+    Powerful yet original Dart Jalali date and time for developers.
 </p>
 <p align="center">
     <img src="https://img.shields.io/github/workflow/status/amiralitaheri/jdate_dart/Dart%20CI" alt="CI"/>
