@@ -353,6 +353,7 @@ class JDate {
       date.isUtc,
     );
   }
+
   void _passDateTimeToInternal(DateTime date) {
     var jalali = gregorianToJalali(date.year, date.month, date.day);
     _internal(
@@ -708,8 +709,28 @@ class JDate {
         gregorian['year'], gregorian['month'], gregorian['day']);
   }
 
-// todo: JDate.fromGregorian();
-// todo: JDate.fromHijri();
-// todo: toDateTime();
-// todo: add();
+  DateTime toDateTime() {
+    return DateTime.fromMicrosecondsSinceEpoch(_microsecondsSinceEpoch);
+  }
+
+  JDate add(Duration duration) {
+    return JDate.fromMicrosecondsSinceEpoch(
+        _microsecondsSinceEpoch + duration.inMicroseconds);
+  }
+
+  JDate sub(Duration duration) {
+    return JDate.fromMicrosecondsSinceEpoch(
+        _microsecondsSinceEpoch - duration.inMicroseconds);
+  }
+
+  @override
+  bool operator ==(dynamic other) => (other is JDate)
+      ? (_microsecondsSinceEpoch == other.microsecondsSinceEpoch)
+      : false;
+
+  bool operator >(JDate other) =>
+      other.microsecondsSinceEpoch > _microsecondsSinceEpoch;
+
+  bool operator <(JDate other) =>
+      other.microsecondsSinceEpoch < _microsecondsSinceEpoch;
 }
