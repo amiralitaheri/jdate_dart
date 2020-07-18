@@ -18,6 +18,17 @@ class JDate {
   int _weekday;
   bool _isUtc;
 
+  /// The number of microseconds since
+  /// the "Unix epoch" 1970-01-01T00:00:00Z (UTC).
+  ///
+  /// This value is independent of the time zone.
+  ///
+  /// This value is at most
+  /// 8,640,000,000,000,000,000us (100,000,000 days) from the Unix epoch.
+  /// In other words: `microsecondsSinceEpoch.abs() <= 8640000000000000000`.
+  ///
+  /// Note that this value does not fit into 53 bits (the size of a IEEE double).
+  /// A JavaScript number is not able to hold this value.
   int get microsecondsSinceEpoch => _microsecondsSinceEpoch;
 
   set microsecondsSinceEpoch(int microsecondsSinceEpoch) {
@@ -25,6 +36,14 @@ class JDate {
     _passDateTimeToInternal(gregorian);
   }
 
+  /// The number of milliseconds since
+  /// the "Unix epoch" 1970-01-01T00:00:00Z (UTC).
+  ///
+  /// This value is independent of the time zone.
+  ///
+  /// This value is at most
+  /// 8,640,000,000,000,000ms (100,000,000 days) from the Unix epoch.
+  /// In other words: `millisecondsSinceEpoch.abs() <= 8640000000000000`.
   int get millisecondsSinceEpoch => _millisecondsSinceEpoch;
 
   set millisecondsSinceEpoch(int millisecondsSinceEpoch) {
@@ -32,6 +51,12 @@ class JDate {
     _passDateTimeToInternal(gregorian);
   }
 
+  /// The microsecond [0...999].
+  ///
+  /// ```
+  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// assert(moonLanding.microsecond == 0);
+  /// ```
   int get microsecond => _microsecond;
 
   set microsecond(int microsecond) {
@@ -43,6 +68,12 @@ class JDate {
     }
   }
 
+  /// The millisecond [0...999].
+  ///
+  /// ```
+  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// assert(moonLanding.millisecond == 0);
+  /// ```
   int get millisecond => _millisecond;
 
   set millisecond(int millisecond) {
@@ -55,6 +86,12 @@ class JDate {
     }
   }
 
+  /// The second [0...59].
+  ///
+  /// ```
+  /// var moonLanding = Jdate.parse("1969-07-20 20:18:04Z");
+  /// assert(moonLanding.second == 4);
+  /// ```
   int get second => _second;
 
   set second(int second) {
@@ -67,6 +104,12 @@ class JDate {
     }
   }
 
+  /// The minute [0...59].
+  ///
+  /// ```
+  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// assert(moonLanding.minute == 18);
+  /// ```
   int get minute => _minute;
 
   set minute(int minute) {
@@ -79,6 +122,12 @@ class JDate {
     }
   }
 
+  /// The hour of the day, expressed as in a 24-hour clock [0..23].
+  ///
+  /// ```
+  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// assert(moonLanding.hour == 20);
+  /// ```
   int get hour => _hour;
 
   set hour(int hour) {
@@ -91,6 +140,12 @@ class JDate {
     }
   }
 
+  /// The day of the month [1..31].
+  ///
+  /// ```
+  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// assert(moonLanding.day == 29);
+  /// ```
   int get day => _day;
 
   set day(int day) {
@@ -119,6 +174,12 @@ class JDate {
     }
   }
 
+  /// The month [1..12].
+  ///
+  /// ```
+  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// assert(moonLanding.month == 4);
+  /// ```
   int get month => _month;
 
   set month(int month) {
@@ -147,6 +208,12 @@ class JDate {
     }
   }
 
+  /// The year.
+  ///
+  /// ```
+  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// assert(moonLanding.year == 1348);
+  /// ```
   int get year => _year;
 
   set year(int year) {
@@ -175,10 +242,34 @@ class JDate {
     }
   }
 
-  int get weekday => _weekday;
+  /// The day of the week شنبه..جمعه.
+  ///
+  /// a week starts with شنبه, which has the value 1.
+  ///
+  /// ```
+  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// assert(moonLanding.weekday == 1);
+  /// ```
+  int get weekday => _weekday + 1;
 
+  /// The time zone offset, which
+  /// is the difference between local time and UTC.
+  ///
+  /// The offset is positive for time zones east of UTC.
+  ///
+  /// Note, that JavaScript, Python and C return the difference between UTC and
+  /// local time. Java, C# and Ruby return the difference between local time and
+  /// UTC.
   Duration get timeZoneOffset => _timeZoneOffset;
 
+  /// The time zone name.
+  ///
+  /// This value is provided by the operating system and may be an
+  /// abbreviation or a full name.
+  ///
+  /// In the browser or on Unix-like systems commonly returns abbreviations,
+  /// such as "CET" or "CEST". On Windows returns the full name, for example
+  /// "Pacific Standard Time".
   String get timeZoneName => _timeZoneName;
 
   /// True if this [JDate] is set to UTC time.
@@ -190,7 +281,12 @@ class JDate {
   ///
   bool get isUtc => _isUtc;
 
-  String get dayName => jalaliDays[_weekday]['long'];
+  /// returns the name of weekDay in persian
+  /// ```
+  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// assert(moonLanding.weekDayName == 'یکشنبه');
+  /// ```
+  String get weekDayName => jalaliDays[_weekday]['long'];
 
   /// Constructs a [JDate] instance specified in the local time zone.
   ///
@@ -335,23 +431,14 @@ class JDate {
   /// ```
   JDate.now() : this.fromDateTime(DateTime.now());
 
+  //todo: change to static method
   JDate.parse(String string) {
     string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
     var date = DateTime.tryParse(string);
     if (date == null) {
       throw 'Can\'t parse string';
     }
-    _internal(
-      date.year,
-      date.month,
-      date.day,
-      date.hour,
-      date.minute,
-      date.second,
-      date.millisecond,
-      date.microsecond,
-      date.isUtc,
-    );
+    _passDateTimeToInternal(date);
   }
 
   void _passDateTimeToInternal(DateTime date) {
@@ -713,12 +800,38 @@ class JDate {
     return DateTime.fromMicrosecondsSinceEpoch(_microsecondsSinceEpoch);
   }
 
+  /// Returns a new [JDate] instance with [duration] added to [this].
+  ///
+  /// ```
+  /// var today = new JDate.now();
+  /// var fiftyDaysFromNow = today.add(new Duration(days: 50));
+  /// ```
+  ///
+  /// Notice that the duration being added is actually 50 * 24 * 60 * 60
+  /// seconds. If the resulting `JDate` has a different daylight saving offset
+  /// than `this`, then the result won't have the same time-of-day as `this`, and
+  /// may not even hit the calendar date 50 days later.
+  ///
+  /// Be careful when working with dates in local time.
   JDate add(Duration duration) {
     return JDate.fromMicrosecondsSinceEpoch(
         _microsecondsSinceEpoch + duration.inMicroseconds);
   }
 
-  JDate sub(Duration duration) {
+  /// Returns a new [JDate] instance with [duration] subtracted from [this].
+  ///
+  /// ```
+  /// JDate today = new JDate.now();
+  /// JDate fiftyDaysAgo = today.subtract(new Duration(days: 50));
+  /// ```
+  ///
+  /// Notice that the duration being subtracted is actually 50 * 24 * 60 * 60
+  /// seconds. If the resulting `JDate` has a different daylight saving offset
+  /// than `this`, then the result won't have the same time-of-day as `this`, and
+  /// may not even hit the calendar date 50 days earlier.
+  ///
+  /// Be careful when working with dates in local time.
+  JDate subtract(Duration duration) {
     return JDate.fromMicrosecondsSinceEpoch(
         _microsecondsSinceEpoch - duration.inMicroseconds);
   }
