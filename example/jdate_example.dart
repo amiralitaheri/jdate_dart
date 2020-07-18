@@ -25,6 +25,7 @@ void main() {
 
   //custom format
   print('\nCustom format');
+  print(JDate.now().toString());
   print(JDate.now().echo('l، d F V ساعت H:i:s'));
 
   //useful static methods
@@ -54,9 +55,10 @@ void main() {
   print(JDate.parse('1399-09-09 13:27:00'));
   print(JDate.parse('۱۳۹۹/۰۹/۰۹'));
   print(JDate.parse('1399/02/13'));
-  print(JDate.parse('1399/02/13 03:14:30'));
+  print(JDate.parse(JDate(1378).toString())); //toString can be parsed back
 
   //change date
-  print(JDate.now().changeTo(year: 1357, second: 10));
-  print(JDate.now().changeTo(minute: 35, millisecond: 250));
+  print('\nChange Date');
+  print(JDate.now().changeTo(year: 1357, day: 10));
+  print(JDate.now().changeTo(minute: 35, second: 10, millisecond: 250));
 }

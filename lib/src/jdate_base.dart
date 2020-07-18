@@ -278,11 +278,11 @@ class JDate {
     _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
   }
 
-  int getShortYear() {
+  int getShortYear() { //todo: ask someone
     if (_year >= 1300 && _year < 1400) {
-      return int.parse(_year.toString().substring(2));
+      return int.parse(_year.toString().substring(2)); //1375 -> 75
     } else {
-      return _year;
+      return _year; //85 -> 85, 1000 -> 1000
     }
   }
 
@@ -354,8 +354,14 @@ class JDate {
         .replaceAll('Y', _year.toString());
   }
 
+  /// Returns a human-readable string for this instance.
+  ///
+  /// The returned string is constructed for the time zone of this instance.
+  /// The `toString()` method provides a simply formatted string.
+  ///
+  /// The resulting string can be parsed back using [parse].
   @override
-  String toString() => echo();
+  String toString() => echo('Y/m/d H:i:s');
 
   /// Jalali to Gregorian Conversion
   /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
