@@ -457,7 +457,7 @@ class JDate implements Comparable<JDate> {
     );
   }
 
-  /// Main function that set everything in object
+  // Main function that set everything in object
   void _internal(
     int year,
     int month,
