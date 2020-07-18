@@ -291,21 +291,6 @@ class JDate {
     _passDateTimeToInternal(date);
   }
 
-  void _passDateTimeToInternal(DateTime date) {
-    var jalali = gregorianToJalali(date.year, date.month, date.day);
-    _internal(
-      jalali['year'],
-      jalali['month'],
-      jalali['day'],
-      date.hour,
-      date.minute,
-      date.second,
-      date.millisecond,
-      date.microsecond,
-      date.isUtc,
-    );
-  }
-
   /// Constructs a new [JDate] instance
   /// with the given [microsecondsSinceEpoch].
   ///
@@ -358,6 +343,20 @@ class JDate {
       date.year,
       date.month,
       date.day,
+      date.hour,
+      date.minute,
+      date.second,
+      date.millisecond,
+      date.microsecond,
+      date.isUtc,
+    );
+  }
+  void _passDateTimeToInternal(DateTime date) {
+    var jalali = gregorianToJalali(date.year, date.month, date.day);
+    _internal(
+      jalali['year'],
+      jalali['month'],
+      jalali['day'],
       date.hour,
       date.minute,
       date.second,
@@ -422,6 +421,17 @@ class JDate {
     _weekday = (gregorian.weekday + 1) % 7;
     _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
     _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
+  }
+
+  static String _withZero(int num) =>
+      (num < 10) ? '0' + num.toString() : num.toString();
+
+  static int _ummalquraDataIndex(int index) {
+    if (index < 0 || index >= ummAlquraDateArray.length) {
+      throw ArgumentError(
+          'Valid date should be between 1356 AH (14 March 1937 CE) to 1500 AH (16 November 2077 CE)');
+    }
+    return ummAlquraDateArray[index];
   }
 
   int getShortYear() {
@@ -607,9 +617,6 @@ class JDate {
     return {'year': jy, 'month': jm, 'day': jd};
   }
 
-  static String _withZero(int num) =>
-      (num < 10) ? '0' + num.toString() : num.toString();
-
   static Map hijriToGregorian(int hy, int hm, int hd) {
     var i = ((hy - 1) * 12) + 1 + (hm - 1) - 16260;
     var julianDate = hd + _ummalquraDataIndex(i - 1) - 1 + 2400000;
@@ -627,14 +634,6 @@ class JDate {
       year--;
     }
     return {'year': year, 'month': month, 'day': day};
-  }
-
-  static int _ummalquraDataIndex(int index) {
-    if (index < 0 || index >= ummAlquraDateArray.length) {
-      throw ArgumentError(
-          'Valid date should be between 1356 AH (14 March 1937 CE) to 1500 AH (16 November 2077 CE)');
-    }
-    return ummAlquraDateArray[index];
   }
 
   static Map gregorianToHijri(int year, int month, int day) {
@@ -709,4 +708,6 @@ class JDate {
 
 // todo: JDate.fromGregorian();
 // todo: JDate.fromHijri();
+// todo: toDateTime();
+// todo: add();
 }

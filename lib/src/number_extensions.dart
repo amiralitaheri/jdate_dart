@@ -112,7 +112,8 @@ extension PersianIntegerHelper on int {
         default:
           padLen = 0;
       }
-      var numStr = number.toString().padLeft(number.toString().length + padLen, '0');
+      var numStr =
+          number.toString().padLeft(number.toString().length + padLen, '0');
       final L = (numStr.length / 3 - 1).floor();
       int b;
       var threeZero = false;
