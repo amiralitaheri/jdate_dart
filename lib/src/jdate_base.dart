@@ -3,7 +3,7 @@ import 'converters.dart' as converter;
 import 'number_extensions.dart';
 import 'string_extensions.dart';
 
-class JDate {
+class JDate implements Comparable<JDate> {
   int _microsecondsSinceEpoch;
   int _millisecondsSinceEpoch;
   int _microsecond;
@@ -20,7 +20,7 @@ class JDate {
   bool _isUtc;
 
   /// The number of microseconds since
-  /// the "Unix epoch" 1970-01-01T00:00:00Z (UTC).
+  /// the 'Unix epoch' 1970-01-01T00:00:00Z (UTC).
   ///
   /// This value is independent of the time zone.
   ///
@@ -38,7 +38,7 @@ class JDate {
   }
 
   /// The number of milliseconds since
-  /// the "Unix epoch" 1970-01-01T00:00:00Z (UTC).
+  /// the 'Unix epoch' 1970-01-01T00:00:00Z (UTC).
   ///
   /// This value is independent of the time zone.
   ///
@@ -55,7 +55,7 @@ class JDate {
   /// The microsecond [0...999].
   ///
   /// ```
-  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
   /// assert(moonLanding.microsecond == 0);
   /// ```
   int get microsecond => _microsecond;
@@ -72,7 +72,7 @@ class JDate {
   /// The millisecond [0...999].
   ///
   /// ```
-  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
   /// assert(moonLanding.millisecond == 0);
   /// ```
   int get millisecond => _millisecond;
@@ -90,7 +90,7 @@ class JDate {
   /// The second [0...59].
   ///
   /// ```
-  /// var moonLanding = Jdate.parse("1969-07-20 20:18:04Z");
+  /// var moonLanding = Jdate.parse('1969-07-20 20:18:04Z');
   /// assert(moonLanding.second == 4);
   /// ```
   int get second => _second;
@@ -108,7 +108,7 @@ class JDate {
   /// The minute [0...59].
   ///
   /// ```
-  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
   /// assert(moonLanding.minute == 18);
   /// ```
   int get minute => _minute;
@@ -126,7 +126,7 @@ class JDate {
   /// The hour of the day, expressed as in a 24-hour clock [0..23].
   ///
   /// ```
-  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
   /// assert(moonLanding.hour == 20);
   /// ```
   int get hour => _hour;
@@ -144,7 +144,7 @@ class JDate {
   /// The day of the month [1..31].
   ///
   /// ```
-  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
   /// assert(moonLanding.day == 29);
   /// ```
   int get day => _day;
@@ -178,7 +178,7 @@ class JDate {
   /// The month [1..12].
   ///
   /// ```
-  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
   /// assert(moonLanding.month == 4);
   /// ```
   int get month => _month;
@@ -212,7 +212,7 @@ class JDate {
   /// The year.
   ///
   /// ```
-  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
   /// assert(moonLanding.year == 1348);
   /// ```
   int get year => _year;
@@ -248,7 +248,7 @@ class JDate {
   /// a week starts with شنبه, which has the value 1.
   ///
   /// ```
-  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
   /// assert(moonLanding.weekday == 1);
   /// ```
   int get weekday => _weekday + 1;
@@ -269,8 +269,8 @@ class JDate {
   /// abbreviation or a full name.
   ///
   /// In the browser or on Unix-like systems commonly returns abbreviations,
-  /// such as "CET" or "CEST". On Windows returns the full name, for example
-  /// "Pacific Standard Time".
+  /// such as 'CET' or 'CEST'. On Windows returns the full name, for example
+  /// 'Pacific Standard Time'.
   String get timeZoneName => _timeZoneName;
 
   /// True if this [JDate] is set to UTC time.
@@ -284,7 +284,7 @@ class JDate {
 
   /// returns the name of weekDay in persian
   /// ```
-  /// var moonLanding = JDate.parse("1969-07-20 20:18:04Z");
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
   /// assert(moonLanding.weekDayName == 'یکشنبه');
   /// ```
   String get weekDayName => jalaliDays[_weekday]['long'];
@@ -643,10 +643,116 @@ class JDate {
         _microsecondsSinceEpoch - duration.inMicroseconds);
   }
 
+  /// Returns true if [other] is a [JDate] at the same moment and in the
+  /// same time zone (UTC or local).
+  ///
+  /// ```
+  /// var dDayUtc = new JDate.utc(1944, 6, 6);
+  /// var dDayLocal = dDayUtc.toLocal();
+  ///
+  /// // These two dates are at the same moment, but are in different zones.
+  /// assert(dDayUtc != dDayLocal);
+  /// ```
+  ///
+  /// See [isAtSameMomentAs] for a comparison that compares moments in time
+  /// independently of their zones.
   @override
-  bool operator ==(dynamic other) => (other is JDate)
-      ? (_microsecondsSinceEpoch == other.microsecondsSinceEpoch)
-      : false;
+  bool operator ==(dynamic other) {
+    throw UnimplementedError;
+  }
+
+  /// Returns true if [this] occurs at the same moment as [other].
+  ///
+  /// The comparison is independent of whether the time is in UTC or in the local
+  /// time zone.
+  ///
+  /// ```
+  /// var now = new JDate.now();
+  /// var later = now.add(const Duration(seconds: 5));
+  /// assert(!later.isAtSameMomentAs(now));
+  /// assert(now.isAtSameMomentAs(now));
+  ///
+  /// // This relation stays the same, even when changing timezones.
+  /// assert(!later.isAtSameMomentAs(now.toUtc()));
+  /// assert(!later.toUtc().isAtSameMomentAs(now));
+  ///
+  /// assert(now.toUtc().isAtSameMomentAs(now));
+  /// assert(now.isAtSameMomentAs(now.toUtc()));
+  /// ```
+  external bool isAtSameMomentAs(JDate other);
+
+  /// Returns true if [this] occurs before [other].
+  ///
+  /// The comparison is independent
+  /// of whether the time is in UTC or in the local time zone.
+  ///
+  /// ```
+  /// var now = new JDate.now();
+  /// var earlier = now.subtract(const Duration(seconds: 5));
+  /// assert(earlier.isBefore(now));
+  /// assert(!now.isBefore(now));
+  ///
+  /// // This relation stays the same, even when changing timezones.
+  /// assert(earlier.isBefore(now.toUtc()));
+  /// assert(earlier.toUtc().isBefore(now));
+  ///
+  /// assert(!now.toUtc().isBefore(now));
+  /// assert(!now.isBefore(now.toUtc()));
+  /// ```
+  external bool isBefore(JDate other);
+
+  /// Returns true if [this] occurs after [other].
+  ///
+  /// The comparison is independent
+  /// of whether the time is in UTC or in the local time zone.
+  ///
+  /// ```
+  /// var now = new JDate.now();
+  /// var later = now.add(const Duration(seconds: 5));
+  /// assert(later.isAfter(now));
+  /// assert(!now.isBefore(now));
+  ///
+  /// // This relation stays the same, even when changing timezones.
+  /// assert(later.isAfter(now.toUtc()));
+  /// assert(later.toUtc().isAfter(now));
+  ///
+  /// assert(!now.toUtc().isBefore(now));
+  /// assert(!now.isBefore(now.toUtc()));
+  /// ```
+  external bool isAfter(JDate other);
+
+  /// Returns a [Duration] with the difference when subtracting [other] from
+  /// [this].
+  ///
+  /// The returned [Duration] will be negative if [other] occurs after [this].
+  ///
+  /// ```
+  /// var berlinWallFell = new DateTime.utc(1989, DateTime.november, 9);
+  /// var dDay = new DateTime.utc(1944, DateTime.june, 6);
+  ///
+  /// Duration difference = berlinWallFell.difference(dDay);
+  /// assert(difference.inDays == 16592);
+  /// ```
+  ///
+  /// The difference is measured in seconds and fractions of seconds.
+  /// The difference above counts the number of fractional seconds between
+  /// midnight at the beginning of those dates.
+  /// If the dates above had been in local time, not UTC, then the difference
+  /// between two midnights may not be a multiple of 24 hours due to daylight
+  /// saving differences.
+  ///
+  /// For example, in Australia, similar code using local time instead of UTC:
+  ///
+  /// ```
+  /// var berlinWallFell = new DateTime(1989, DateTime.november, 9);
+  /// var dDay = new DateTime(1944, DateTime.june, 6);
+  /// Duration difference = berlinWallFell.difference(dDay);
+  /// assert(difference.inDays == 16592);
+  /// ```
+  /// will fail because the difference is actually 16591 days and 23 hours, and
+  /// [Duration.inDays] only returns the number of whole days.
+  Duration difference(JDate other) =>
+      toDateTime().difference(other.toDateTime());
 
   bool operator >(JDate other) =>
       other.microsecondsSinceEpoch > _microsecondsSinceEpoch;
@@ -676,5 +782,111 @@ class JDate {
     var gregorian = converter.jalaliToGregorian(year, month, day);
     return converter.gregorianToHijri(
         gregorian['year'], gregorian['month'], gregorian['day']);
+  }
+
+  /// Compares this JDate object to [other],
+  /// returning zero if the values are equal.
+  ///
+  /// Returns a negative value if this JDate [isBefore] [other]. It returns 0
+  /// if it [isAtSameMomentAs] [other], and returns a positive value otherwise
+  /// (when this [isAfter] [other]).
+  @override
+  int compareTo(JDate other) =>
+      _microsecondsSinceEpoch - other.microsecondsSinceEpoch;
+
+  static String _fourDigits(int n) {
+    int absN = n.abs();
+    String sign = n < 0 ? "-" : "";
+    if (absN >= 1000) return "$n";
+    if (absN >= 100) return "${sign}0$absN";
+    if (absN >= 10) return "${sign}00$absN";
+    return "${sign}000$absN";
+  }
+
+  static String _sixDigits(int n) {
+    assert(n < -9999 || n > 9999);
+    int absN = n.abs();
+    String sign = n < 0 ? "-" : "+";
+    if (absN >= 100000) return "$sign$absN";
+    return "${sign}0$absN";
+  }
+
+  static String _threeDigits(int n) {
+    if (n >= 100) return "${n}";
+    if (n >= 10) return "0${n}";
+    return "00${n}";
+  }
+
+  static String _twoDigits(int n) {
+    if (n >= 10) return "${n}";
+    return "0${n}";
+  }
+
+  /// Returns an ISO-8601 full-precision extended format representation.
+  ///
+  /// The format is `yyyy-MM-ddTHH:mm:ss.mmmuuuZ` for UTC time, and
+  /// `yyyy-MM-ddTHH:mm:ss.mmmuuu` (no trailing "Z") for local/non-UTC time,
+  /// where:
+  ///
+  /// * `yyyy` is a, possibly negative, four digit representation of the year,
+  ///   if the year is in the range -9999 to 9999,
+  ///   otherwise it is a signed six digit representation of the year.
+  /// * `MM` is the month in the range 01 to 12,
+  /// * `dd` is the day of the month in the range 01 to 31,
+  /// * `HH` are hours in the range 00 to 23,
+  /// * `mm` are minutes in the range 00 to 59,
+  /// * `ss` are seconds in the range 00 to 59 (no leap seconds),
+  /// * `mmm` are milliseconds in the range 000 to 999, and
+  /// * `uuu` are microseconds in the range 001 to 999. If [microsecond] equals
+  ///   0, then this part is omitted.
+  ///
+  /// The resulting string can be parsed back using [parse].
+  String toIso8601String() {
+    var y =
+        (year >= -9999 && year <= 9999) ? _fourDigits(year) : _sixDigits(year);
+    var m = _twoDigits(month);
+    var d = _twoDigits(day);
+    var h = _twoDigits(hour);
+    var min = _twoDigits(minute);
+    var sec = _twoDigits(second);
+    var ms = _threeDigits(millisecond);
+    var us = microsecond == 0 ? '' : _threeDigits(microsecond);
+    if (isUtc) {
+      return '$y-$m-${d}T$h:$min:$sec.$ms${us}Z';
+    } else {
+      return '$y-$m-${d}T$h:$min:$sec.$ms$us';
+    }
+  }
+
+  /// Returns this JDate value in the UTC time zone.
+  ///
+  /// Returns [this] if it is already in UTC.
+  /// Otherwise this method is equivalent to:
+  ///
+  /// ```
+  /// new JDate.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch,
+  ///                                         isUtc: true)
+  /// ```
+  JDate toUtc() {
+    if (isUtc) return this;
+    return JDate.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch,
+        isUtc: true);
+  }
+
+  /// Returns this JDate value in the local time zone.
+  ///
+  /// Returns [this] if it is already in the local time zone.
+  /// Otherwise this method is equivalent to:
+  ///
+  /// ```
+  /// new JDate.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch,
+  ///                                         isUtc: false)
+  /// ```
+  JDate toLocal() {
+    if (isUtc) {
+      return JDate.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch,
+          isUtc: false);
+    }
+    return this;
   }
 }
