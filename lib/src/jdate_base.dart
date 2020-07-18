@@ -190,6 +190,8 @@ class JDate {
   ///
   bool get isUtc => _isUtc;
 
+  String get dayName => jalaliWeeks[_weekday]['long'];
+
   /// Constructs a [JDate] instance specified in the local time zone.
   ///
   /// For example,
