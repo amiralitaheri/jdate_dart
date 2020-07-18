@@ -654,25 +654,25 @@ class JDate {
   bool operator <(JDate other) =>
       other.microsecondsSinceEpoch < _microsecondsSinceEpoch;
 
-  Map<String, int> jalaliToGregorian(int year, int month, int day) =>
+  static Map<String, int> jalaliToGregorian(int year, int month, int day) =>
       converter.jalaliToGregorian(year, month, day);
 
-  Map<String, int> gregorianToJalali(int year, int month, int day) =>
+  static Map<String, int> gregorianToJalali(int year, int month, int day) =>
       converter.gregorianToJalali(year, month, day);
 
-  Map<String, int> hijriToGregorian(int year, int month, int day) =>
+  static Map<String, int> hijriToGregorian(int year, int month, int day) =>
       converter.hijriToGregorian(year, month, day);
 
-  Map<String, int> gregorianToHijri(int year, int month, int day) =>
+  static Map<String, int> gregorianToHijri(int year, int month, int day) =>
       converter.gregorianToHijri(year, month, day);
 
-  Map<String, int> hijriToJalali(int year, int month, int day) {
+  static Map<String, int> hijriToJalali(int year, int month, int day) {
     var gregorian = converter.hijriToGregorian(year, month, day);
     return converter.gregorianToJalali(
         gregorian['year'], gregorian['month'], gregorian['day']);
   }
 
-  Map<String, int> jalaliToHijri(int year, int month, int day) {
+  static Map<String, int> jalaliToHijri(int year, int month, int day) {
     var gregorian = converter.jalaliToGregorian(year, month, day);
     return converter.gregorianToHijri(
         gregorian['year'], gregorian['month'], gregorian['day']);
