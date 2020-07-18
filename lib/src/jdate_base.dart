@@ -514,9 +514,6 @@ class JDate implements Comparable<JDate> {
     _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
   }
 
-  static String _withZero(int num) =>
-      (num < 10) ? '0' + num.toString() : num.toString();
-
   int getShortYear() {
     //todo: ask someone
     if (_year >= 1300 && _year < 1400) {
@@ -552,7 +549,7 @@ class JDate implements Comparable<JDate> {
     return format
         .replaceAll('a', (_hour < 12) ? 'ق.ظ' : 'ب.ظ')
         .replaceAll('b', ((_month) / 3.1).floor().toString())
-        .replaceAll('d', _withZero(_day))
+        .replaceAll('d', _twoDigits(_day))
         .replaceAll(
           'f',
           jalaliSeasons[((_month) / 3.1).floor()]['long'],
@@ -563,14 +560,14 @@ class JDate implements Comparable<JDate> {
         )
         .replaceAll(
           'h',
-          _hour <= 12 ? _withZero(_hour) : _withZero(_hour - 12),
+          _hour <= 12 ? _twoDigits(_hour) : _twoDigits(_hour - 12),
         )
-        .replaceAll('i', _withZero(_minute))
+        .replaceAll('i', _twoDigits(_minute))
         .replaceAll('j', _day.toString())
         .replaceAll('l', jalaliDays[jw]['long'])
-        .replaceAll('m', _withZero(_month))
+        .replaceAll('m', _twoDigits(_month))
         .replaceAll('n', (_month + 1).toString())
-        .replaceAll('s', _withZero(_second))
+        .replaceAll('s', _twoDigits(_second))
         .replaceAll(
           't',
           (_month) != 12
@@ -585,7 +582,7 @@ class JDate implements Comparable<JDate> {
         .replaceAll('D', jalaliDays[jw]['short'])
         .replaceAll('F', jalaliMonths[_month - 1]['long'])
         .replaceAll('G', _hour.toString())
-        .replaceAll('H', _withZero(_hour))
+        .replaceAll('H', _twoDigits(_hour))
         .replaceAll('J', _day.toPersianWords())
         .replaceAll('L', leapYear.toString())
         .replaceAll('M', jalaliMonths[_month - 1]['short'])
