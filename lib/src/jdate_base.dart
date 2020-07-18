@@ -15,7 +15,7 @@ class JDate {
   int _year;
   Duration _timeZoneOffset;
   String _timeZoneName;
-  int _weekDay;
+  int _weekday;
   bool _isUtc;
 
   int get microsecondsSinceEpoch => _microsecondsSinceEpoch;
@@ -38,7 +38,7 @@ class JDate {
 
   int get year => _year;
 
-  int get weekDay => _weekDay;
+  int get weekday => _weekday;
 
   Duration get timeZoneOffset => _timeZoneOffset;
 
@@ -273,7 +273,7 @@ class JDate {
 
     _timeZoneName = gregorian.timeZoneName;
     _timeZoneOffset = gregorian.timeZoneOffset;
-    _weekDay = gregorian.weekday - 1 % 7;
+    _weekday = gregorian.weekday - 1 % 7;
     _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
     _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
   }
@@ -305,7 +305,7 @@ class JDate {
 
   String echo([String format = 'l، d F Y ساعت H:i:s']) {
     var leapYear = isLeapYear();
-    var jw = _weekDay;
+    var jw = _weekday;
     var jy = getShortYear();
     var jtz = _timeZoneName;
 

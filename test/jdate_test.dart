@@ -3,43 +3,60 @@ import 'package:test/test.dart';
 
 void main() {
   group('Now constructor', () {
-    test('Second test', () {
-      expect(JDate.now().second, DateTime.now().second);
-    });
-    test('Minute test', () {
-      expect(JDate.now().minute, DateTime.now().minute);
-    });
-    test('Hour test', () {
-      expect(JDate.now().hour, DateTime.now().hour);
+    test('Parameter Test', () {
+      final jDate = JDate.now();
+      final date = DateTime.now();
+
+      //year, month, day are not equal
+      assert(jDate.year != date.year);
+
+      expect(jDate.hour, date.hour);
+      expect(jDate.minute, date.minute);
+      expect(jDate.second, date.second);
+      expect(jDate.isUtc, date.isUtc);
+      expect(jDate.timeZoneName, date.timeZoneName);
+      expect(jDate.timeZoneOffset, date.timeZoneOffset);
     });
   });
 
-  group('Constructor with Jalali Year', () {
+  group('Main Constructor', () {
+    test('Full Date', () {
+      final jDate = JDate(1378, 12, 18);
+      expect(jDate.year, 1378);
+      expect(jDate.month, 12);
+      expect(jDate.day, 18);
+      expect(jDate.weekday, 4);
+      expect(jDate.microsecond, 0);
+      expect(jDate.millisecond, 0);
+      expect(jDate.second, 0);
+      expect(jDate.minute, 0);
+      expect(jDate.hour, 0);
+    });
+
+    test('Full Date and Time', () {
+      final jDate = JDate(1395, 1, 31, 21, 30, 15, 250, 550);
+      expect(jDate.year, 1395);
+      expect(jDate.month, 1);
+      expect(jDate.day, 31);
+      expect(jDate.weekday, 3);
+      expect(jDate.hour, 21);
+      expect(jDate.minute, 30);
+      expect(jDate.second, 15);
+      expect(jDate.millisecond, 250);
+      expect(jDate.microsecond, 550);
+    });
+    
     test('Year 1377 test', () {
       expect(JDate(1377).year, 1377);
-    });
-    test('Year 1399 test', () {
       expect(JDate(1399).year, 1399);
     });
-  });
-
-  group('Constructor with full Gregorian date', () {
-    test('1998-6-18 test', () {
-      var jDate = DateTime(1998, 6, 18).toJDate();
-      expect(jDate.year, 1377);
-      expect(jDate.month, 3);
-      expect(jDate.day, 28);
-      expect(jDate.weekDay, 3);
-    });
-  });
-
-  group('Constructor with full Jalali date', () {
+    
     test('1377-3-27 test', () {
       var jDate = JDate(1377, 3, 27);
       expect(jDate.year, 1377);
       expect(jDate.month, 3);
       expect(jDate.day, 27);
-      expect(jDate.weekDay, 2);
+      expect(jDate.weekday, 2);
     });
   });
 
@@ -49,7 +66,7 @@ void main() {
       expect(jDate.year, 1390);
       expect(jDate.month, 12);
       expect(jDate.day, 8);
-      expect(jDate.weekDay, 0);
+      expect(jDate.weekday, 0);
     });
   });
 
