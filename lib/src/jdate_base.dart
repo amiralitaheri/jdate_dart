@@ -34,7 +34,7 @@ class JDate implements Comparable<JDate> {
 
   set microsecondsSinceEpoch(int microsecondsSinceEpoch) {
     var gregorian = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch);
-    _passDateTimeToInternal(gregorian);
+    _internal(gregorian);
   }
 
   /// The number of milliseconds since
@@ -49,7 +49,7 @@ class JDate implements Comparable<JDate> {
 
   set millisecondsSinceEpoch(int millisecondsSinceEpoch) {
     var gregorian = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
-    _passDateTimeToInternal(gregorian);
+    _internal(gregorian);
   }
 
   /// The microsecond [0...999].
@@ -351,7 +351,7 @@ class JDate implements Comparable<JDate> {
       microsecond ?? _microsecond,
     );
 
-    _passDateTimeToInternal(datetime);
+    _internal(datetime);
   }
 
   /// Constructs a [JDate] instance specified in the UTC time zone.
@@ -381,7 +381,7 @@ class JDate implements Comparable<JDate> {
       microsecond ?? _microsecond,
     );
 
-    _passDateTimeToInternal(datetime);
+    _internal(datetime);
   }
 
   /// Constructs a [JDate] instance from given [DateTime].
@@ -391,7 +391,7 @@ class JDate implements Comparable<JDate> {
   /// var jDate = JDate.fromDateTime(date);
   /// ```
   JDate.fromDateTime(DateTime date) {
-    _passDateTimeToInternal(date);
+    _internal(date);
   }
 
   /// Constructs a new [JDate] instance
@@ -408,7 +408,7 @@ class JDate implements Comparable<JDate> {
       {bool isUtc = false}) {
     var gregorian = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch,
         isUtc: isUtc);
-    _passDateTimeToInternal(gregorian);
+    _internal(gregorian);
   }
 
   /// Constructs a new [JDate] instance
@@ -425,7 +425,7 @@ class JDate implements Comparable<JDate> {
       {bool isUtc = false}) {
     var gregorian = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch,
         isUtc: isUtc);
-    _passDateTimeToInternal(gregorian);
+    _internal(gregorian);
   }
 
   /// Constructs a [JDate] instance with current date and time in the
@@ -464,78 +464,26 @@ class JDate implements Comparable<JDate> {
     return '0${n}';
   }
 
-  void _passDateTimeToInternal(DateTime date) {
-    var jalali = converter.gregorianToJalali(date.year, date.month, date.day);
-    _internal(
-      jalali['year'],
-      jalali['month'],
-      jalali['day'],
-      date.hour,
-      date.minute,
-      date.second,
-      date.millisecond,
-      date.microsecond,
-      date.isUtc,
-    );
-  }
-
   bool _isLeapYear(year) => year % 33 % 4 - 1 == (year % 33 * .05).floor();
 
   // Main function that set everything in object
-  void _internal(
-    int year,
-    int month,
-    int day,
-    int hour,
-    int minute,
-    int second,
-    int millisecond,
-    int microsecond,
-    bool isUtc,
-  ) {
-    //check boundaries
-    assert(month <= 12 && month >= 1, 'Month is in range of 1-12');
-    assert(day <= 31 && day >= 1, 'Day is in range of 1-31');
-    assert(hour <= 23 && hour >= 0, 'Hour is in range of 0-23');
-    assert(minute <= 59 && minute >= 0, 'Minute is in range of 0-59');
-    assert(second <= 59 && second >= 0, 'Second is in range of 0-59');
-    assert(millisecond <= 999 && millisecond >= 0,
-        'Millisecond is in range of 0-999');
-    assert(microsecond <= 999 && microsecond >= 0,
-        'Microsecond is in range of 0-999');
-
+  void _internal(DateTime dateTime) {
     //initialize parameters
-    _year = year;
-    _month = month;
-    _day = day;
-    _hour = hour;
-    _minute = minute;
-    _second = second;
-    _millisecond = millisecond;
-    _microsecond = microsecond;
-    _isUtc = isUtc;
-
-    //check day in month
-    final monthLen = monthLength;
-    assert(day <= monthLen && day >= 1,
-        'Day should be in range of 1-${monthLen} with given month ($_month)');
-
-    //convert jalali to gregorian to get other parameters
-    var greg = converter.jalaliToGregorian(year, month, day);
-    DateTime gregorian;
-    if (_isUtc) {
-      gregorian = DateTime.utc(greg['year'], greg['month'], greg['day'], _hour,
-          _minute, _second, _millisecond, _microsecond);
-    } else {
-      gregorian = DateTime(greg['year'], greg['month'], greg['day'], _hour,
-          _minute, _second, _millisecond, _microsecond);
-    }
-
-    _timeZoneName = gregorian.timeZoneName;
-    _timeZoneOffset = gregorian.timeZoneOffset;
-    _weekday = (gregorian.weekday + 1) % 7;
-    _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
-    _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
+    var greg = gregorianToJalali(dateTime.year, dateTime.month, dateTime.day);
+    _year = greg['year'];
+    _month = greg['month'];
+    _day = greg['day'];
+    _hour = dateTime.hour;
+    _minute = dateTime.minute;
+    _second = dateTime.second;
+    _millisecond = dateTime.millisecond;
+    _microsecond = dateTime.microsecond;
+    _isUtc = dateTime.isUtc;
+    _timeZoneName = dateTime.timeZoneName;
+    _timeZoneOffset = dateTime.timeZoneOffset;
+    _weekday = (dateTime.weekday + 1) % 7;
+    _millisecondsSinceEpoch = dateTime.millisecondsSinceEpoch;
+    _microsecondsSinceEpoch = dateTime.microsecondsSinceEpoch;
   }
 
   int _getMonthLength(int year, int month) {
@@ -650,7 +598,7 @@ class JDate implements Comparable<JDate> {
         microsecond ?? _microsecond,
       );
     }
-    _passDateTimeToInternal(datetime);
+    _internal(datetime);
     return this;
   }
 
