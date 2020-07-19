@@ -2,6 +2,7 @@ import 'consts.dart';
 import 'converters.dart' as converter;
 import 'number_extensions.dart';
 import 'string_extensions.dart';
+import 'js/is_js.dart' if (dart.library.io) 'vm/is_js.dart';
 
 class JDate implements Comparable<JDate> {
   int _microsecondsSinceEpoch;
@@ -664,9 +665,9 @@ class JDate implements Comparable<JDate> {
   String toString() => echo('Y/m/d H:i:s');
 
   /// Converts this [JDate] to a DateTime object with gregorian date.
-  DateTime toDateTime() {
-    return DateTime.fromMicrosecondsSinceEpoch(_microsecondsSinceEpoch);
-  }
+  DateTime toDateTime() => (isJs)
+      ? DateTime.fromMillisecondsSinceEpoch(_millisecondsSinceEpoch)
+      : DateTime.fromMicrosecondsSinceEpoch(_microsecondsSinceEpoch);
 
   /// Returns a new [JDate] instance with [duration] added to [this].
   ///
@@ -681,10 +682,11 @@ class JDate implements Comparable<JDate> {
   /// may not even hit the calendar date 50 days later.
   ///
   /// Be careful when working with dates in local time.
-  JDate add(Duration duration) {
-    return JDate.fromMicrosecondsSinceEpoch(
-        _microsecondsSinceEpoch + duration.inMicroseconds);
-  }
+  JDate add(Duration duration) => (isJs)
+      ? JDate.fromMillisecondsSinceEpoch(
+          _millisecondsSinceEpoch + duration.inMilliseconds)
+      : JDate.fromMicrosecondsSinceEpoch(
+          _microsecondsSinceEpoch + duration.inMicroseconds);
 
   /// Returns a new [JDate] instance with [duration] subtracted from [this].
   ///
@@ -699,10 +701,11 @@ class JDate implements Comparable<JDate> {
   /// may not even hit the calendar date 50 days earlier.
   ///
   /// Be careful when working with dates in local time.
-  JDate subtract(Duration duration) {
-    return JDate.fromMicrosecondsSinceEpoch(
-        _microsecondsSinceEpoch - duration.inMicroseconds);
-  }
+  JDate subtract(Duration duration) => (isJs)
+      ? JDate.fromMillisecondsSinceEpoch(
+          _millisecondsSinceEpoch - duration.inMilliseconds)
+      : JDate.fromMicrosecondsSinceEpoch(
+          _microsecondsSinceEpoch - duration.inMicroseconds);
 
   /// Returns true if [other] is a [JDate] at the same moment and in the
   /// same time zone (UTC or local).
@@ -718,10 +721,12 @@ class JDate implements Comparable<JDate> {
   /// See [isAtSameMomentAs] for a comparison that compares moments in time
   /// independently of their zones.
   @override
-  bool operator ==(dynamic other) => (other is JDate)
-      ? (_microsecondsSinceEpoch == other.microsecondsSinceEpoch &&
-          _timeZoneOffset == other.timeZoneOffset)
-      : false;
+  bool operator ==(dynamic other) =>
+      (other is JDate && _timeZoneOffset == other.timeZoneOffset)
+          ? (isJs)
+              ? (_millisecondsSinceEpoch == other.millisecondsSinceEpoch)
+              : (_microsecondsSinceEpoch == other.microsecondsSinceEpoch)
+          : false;
 
   /// Returns true if [this] occurs at the same moment as [other].
   ///
@@ -817,11 +822,13 @@ class JDate implements Comparable<JDate> {
   Duration difference(JDate other) =>
       toDateTime().difference(other.toDateTime());
 
-  bool operator >(JDate other) =>
-      other.microsecondsSinceEpoch > _microsecondsSinceEpoch;
+  bool operator >(JDate other) => isJs
+      ? _millisecondsSinceEpoch > other.millisecondsSinceEpoch
+      : _microsecondsSinceEpoch > other.microsecondsSinceEpoch;
 
-  bool operator <(JDate other) =>
-      other.microsecondsSinceEpoch < _microsecondsSinceEpoch;
+  bool operator <(JDate other) => isJs
+      ? _millisecondsSinceEpoch < other.millisecondsSinceEpoch
+      : _microsecondsSinceEpoch < other.microsecondsSinceEpoch;
 
   static Map<String, int> jalaliToGregorian(int year, int month, int day) =>
       converter.jalaliToGregorian(year, month, day);
@@ -902,9 +909,11 @@ class JDate implements Comparable<JDate> {
   ///                                         isUtc: true)
   /// ```
   JDate toUtc() {
-    if (isUtc) return this;
-    return JDate.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch,
-        isUtc: true);
+    if (_isUtc) return this;
+    return isJs
+        ? JDate.fromMillisecondsSinceEpoch(_millisecondsSinceEpoch, isUtc: true)
+        : JDate.fromMicrosecondsSinceEpoch(_microsecondsSinceEpoch,
+            isUtc: true);
   }
 
   /// Returns this JDate value in the local time zone.
@@ -918,12 +927,12 @@ class JDate implements Comparable<JDate> {
   /// ```
   JDate toLocal() {
     if (isUtc) {
-      return JDate.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch,
-          isUtc: false);
+      return isJs
+          ? JDate.fromMillisecondsSinceEpoch(_millisecondsSinceEpoch,
+              isUtc: false)
+          : JDate.fromMicrosecondsSinceEpoch(_microsecondsSinceEpoch,
+              isUtc: false);
     }
     return this;
   }
 }
-
-//todo: remove asserts
-//todo: fix js problem
