@@ -384,52 +384,6 @@ class JDate implements Comparable<JDate> {
     _passDateTimeToInternal(datetime);
   }
 
-  /// Change a [JDate] instance to specified parameters.
-  /// returns currently changed [JDate]
-  ///
-  /// ```
-  /// var specifiedDate = JDate.now().changeTo(month: 10, day: 1);
-  /// ```
-  JDate changeTo({
-    int year,
-    int month,
-    int day,
-    int hour,
-    int minute,
-    int second,
-    int millisecond,
-    int microsecond,
-    bool isUtc,
-  }) {
-    var greg = jalaliToGregorian(year ?? _year, month ?? _month, day ?? _day);
-    var datetime;
-    if (isUtc ?? _isUtc) {
-      datetime = DateTime.utc(
-        greg['year'],
-        greg['month'],
-        greg['day'],
-        hour ?? _hour,
-        minute ?? _minute,
-        second ?? _second,
-        millisecond ?? _millisecond,
-        microsecond ?? _microsecond,
-      );
-    } else {
-      datetime = DateTime(
-        greg['year'],
-        greg['month'],
-        greg['day'],
-        hour ?? _hour,
-        minute ?? _minute,
-        second ?? _second,
-        millisecond ?? _millisecond,
-        microsecond ?? _microsecond,
-      );
-    }
-    _passDateTimeToInternal(datetime);
-    return this;
-  }
-
   /// Constructs a [JDate] instance from given [DateTime].
   ///
   /// ```
@@ -500,6 +454,34 @@ class JDate implements Comparable<JDate> {
       date.microsecond,
       date.isUtc,
     );
+  }
+
+  static String _fourDigits(int n) {
+    var absN = n.abs();
+    var sign = n < 0 ? '-' : '';
+    if (absN >= 1000) return '$n';
+    if (absN >= 100) return '${sign}0$absN';
+    if (absN >= 10) return '${sign}00$absN';
+    return '${sign}000$absN';
+  }
+
+  static String _sixDigits(int n) {
+    assert(n < -9999 || n > 9999);
+    var absN = n.abs();
+    var sign = n < 0 ? '-' : '+';
+    if (absN >= 100000) return '$sign$absN';
+    return '${sign}0$absN';
+  }
+
+  static String _threeDigits(int n) {
+    if (n >= 100) return '${n}';
+    if (n >= 10) return '0${n}';
+    return '00${n}';
+  }
+
+  static String _twoDigits(int n) {
+    if (n >= 10) return '${n}';
+    return '0${n}';
   }
 
   void _passDateTimeToInternal(DateTime date) {
@@ -584,6 +566,52 @@ class JDate implements Comparable<JDate> {
     } else {
       return 30;
     }
+  }
+
+  /// Change a [JDate] instance to specified parameters.
+  /// returns currently changed [JDate]
+  ///
+  /// ```
+  /// var specifiedDate = JDate.now().changeTo(month: 10, day: 1);
+  /// ```
+  JDate changeTo({
+    int year,
+    int month,
+    int day,
+    int hour,
+    int minute,
+    int second,
+    int millisecond,
+    int microsecond,
+    bool isUtc,
+  }) {
+    var greg = jalaliToGregorian(year ?? _year, month ?? _month, day ?? _day);
+    var datetime;
+    if (isUtc ?? _isUtc) {
+      datetime = DateTime.utc(
+        greg['year'],
+        greg['month'],
+        greg['day'],
+        hour ?? _hour,
+        minute ?? _minute,
+        second ?? _second,
+        millisecond ?? _millisecond,
+        microsecond ?? _microsecond,
+      );
+    } else {
+      datetime = DateTime(
+        greg['year'],
+        greg['month'],
+        greg['day'],
+        hour ?? _hour,
+        minute ?? _minute,
+        second ?? _second,
+        millisecond ?? _millisecond,
+        microsecond ?? _microsecond,
+      );
+    }
+    _passDateTimeToInternal(datetime);
+    return this;
   }
 
   /// Turns [JDate] to [String] base on format.
@@ -839,34 +867,6 @@ class JDate implements Comparable<JDate> {
   /// (when this [isAfter] [other]).
   @override
   int compareTo(JDate other) => toDateTime().compareTo(other.toDateTime());
-
-  static String _fourDigits(int n) {
-    var absN = n.abs();
-    var sign = n < 0 ? '-' : '';
-    if (absN >= 1000) return '$n';
-    if (absN >= 100) return '${sign}0$absN';
-    if (absN >= 10) return '${sign}00$absN';
-    return '${sign}000$absN';
-  }
-
-  static String _sixDigits(int n) {
-    assert(n < -9999 || n > 9999);
-    var absN = n.abs();
-    var sign = n < 0 ? '-' : '+';
-    if (absN >= 100000) return '$sign$absN';
-    return '${sign}0$absN';
-  }
-
-  static String _threeDigits(int n) {
-    if (n >= 100) return '${n}';
-    if (n >= 10) return '0${n}';
-    return '00${n}';
-  }
-
-  static String _twoDigits(int n) {
-    if (n >= 10) return '${n}';
-    return '0${n}';
-  }
 
   /// Returns an ISO-8601 full-precision extended format representation.
   ///
