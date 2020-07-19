@@ -1,4 +1,16 @@
+## 0.6.0
+
+- Changed the goal from being friendly with javascript developers to be more compatible with original dart `DateTime` class
+- Replaced getter and setters with dart style
+- Added `toJdate()` as `DateTime` extension function
+- Changed constructors to be more like `DateTime` class
+- `parse` function is now a constructor
+- Added more documents
+- Added new functions  
+- Fixed bugs 
+
 ## 0.4.0
+
 - Added `jalaliToHijri`,`hijriToJalali`,`gregorianToHijri` and `hijriToGregorian`
 - Added `toPersianWords` function as extension to int 
 - Added `getMonthLength`
