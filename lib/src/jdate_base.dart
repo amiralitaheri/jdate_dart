@@ -326,17 +326,19 @@ class JDate implements Comparable<JDate> {
     int millisecond = 0,
     int microsecond = 0,
   ]) {
-    _internal(
-      year,
-      month,
-      day,
-      hour,
-      minute,
-      second,
-      millisecond,
-      microsecond,
-      false,
+    var greg = jalaliToGregorian(year, month, day);
+    var datetime = DateTime(
+      greg['year'],
+      greg['month'],
+      greg['day'],
+      hour ?? _hour,
+      minute ?? _minute,
+      second ?? _second,
+      millisecond ?? _millisecond,
+      microsecond ?? _microsecond,
     );
+
+    _passDateTimeToInternal(datetime);
   }
 
   /// Constructs a [JDate] instance specified in the UTC time zone.
@@ -354,17 +356,19 @@ class JDate implements Comparable<JDate> {
     int millisecond = 0,
     int microsecond = 0,
   ]) {
-    _internal(
-      year,
-      month,
-      day,
-      hour,
-      minute,
-      second,
-      millisecond,
-      microsecond,
-      true,
+    var greg = jalaliToGregorian(year, month, day);
+    var datetime = DateTime.utc(
+      greg['year'],
+      greg['month'],
+      greg['day'],
+      hour ?? _hour,
+      minute ?? _minute,
+      second ?? _second,
+      millisecond ?? _millisecond,
+      microsecond ?? _microsecond,
     );
+
+    _passDateTimeToInternal(datetime);
   }
 
   /// Change a [JDate] instance to specified parameters.
@@ -384,17 +388,32 @@ class JDate implements Comparable<JDate> {
     int microsecond,
     bool isUtc,
   }) {
-    _internal(
-      year ?? _year,
-      month ?? _month,
-      day ?? _day,
-      hour ?? _hour,
-      minute ?? _minute,
-      second ?? _second,
-      millisecond ?? _millisecond,
-      microsecond ?? _microsecond,
-      isUtc ?? _isUtc,
-    );
+    var greg = jalaliToGregorian(year ?? _year, month ?? _month, day ?? _day);
+    var datetime;
+    if (isUtc ?? _isUtc) {
+      datetime = DateTime.utc(
+        greg['year'],
+        greg['month'],
+        greg['day'],
+        hour ?? _hour,
+        minute ?? _minute,
+        second ?? _second,
+        millisecond ?? _millisecond,
+        microsecond ?? _microsecond,
+      );
+    } else {
+      datetime = DateTime(
+        greg['year'],
+        greg['month'],
+        greg['day'],
+        hour ?? _hour,
+        minute ?? _minute,
+        second ?? _second,
+        millisecond ?? _millisecond,
+        microsecond ?? _microsecond,
+      );
+    }
+    _passDateTimeToInternal(datetime);
     return this;
   }
 
