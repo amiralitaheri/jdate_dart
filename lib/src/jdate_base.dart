@@ -169,7 +169,7 @@ class JDate implements Comparable<JDate> {
       );
       _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
       _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-      _weekday = (gregorian.weekday - 1) % 7;
+      _weekday = (gregorian.weekday + 1) % 7;
     } else {
       throw 'Day number out of range';
     }
@@ -203,7 +203,7 @@ class JDate implements Comparable<JDate> {
       );
       _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
       _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-      _weekday = (gregorian.weekday - 1) % 7;
+      _weekday = (gregorian.weekday + 1) % 7;
     } else {
       throw 'Month number out of range';
     }
@@ -237,7 +237,7 @@ class JDate implements Comparable<JDate> {
       );
       _millisecondsSinceEpoch = gregorian.millisecondsSinceEpoch;
       _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
-      _weekday = (gregorian.weekday - 1) % 7;
+      _weekday = (gregorian.weekday + 1) % 7;
     } else {
       throw 'Year number out of range';
     }
