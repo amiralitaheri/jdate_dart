@@ -1,7 +1,7 @@
 import 'consts.dart';
 import 'converters.dart' as converter;
-import 'number_extensions.dart';
-import 'string_extensions.dart';
+import 'extensions/number_extensions.dart';
+import 'extensions/string_extensions.dart';
 import 'js/is_js.dart' if (dart.library.io) 'vm/is_js.dart';
 
 class JDate implements Comparable<JDate> {
