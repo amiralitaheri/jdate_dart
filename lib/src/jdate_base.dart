@@ -296,7 +296,6 @@ class JDate implements Comparable<JDate> {
   /// ```
   String get monthName => jalaliMonths[month]['long'];
 
-
   /// True if this [JDate.year] is a leap year.
   /// ```
   /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
@@ -586,6 +585,7 @@ class JDate implements Comparable<JDate> {
       return 30;
     }
   }
+
   /// Turns [JDate] to [String] base on format.
   String echo([String format = 'l، d F Y ساعت H:i:s']) {
     var leapYear = isLeapYear;
@@ -646,7 +646,6 @@ class JDate implements Comparable<JDate> {
   /// The resulting string can be parsed back using [parse].
   @override
   String toString() => echo('Y/m/d H:i:s');
-
 
   /// Converts this [JDate] to a DateTime object with gregorian date.
   DateTime toDateTime() {
