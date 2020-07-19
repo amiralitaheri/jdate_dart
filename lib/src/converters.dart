@@ -1,3 +1,5 @@
+import 'package:jdate/src/date_base.dart';
+
 import 'consts.dart';
 
 int _ummalquraDataIndex(int index) {
@@ -10,7 +12,7 @@ int _ummalquraDataIndex(int index) {
 
 /// Jalali to Gregorian Conversion
 /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
-Map<String, int> jalaliToGregorian(int jy, int jm, int jd) {
+DateBase jalaliToGregorian(int jy, int jm, int jd) {
   jy -= 979;
   jm -= 1;
   jd -= 1;
@@ -59,12 +61,12 @@ Map<String, int> jalaliToGregorian(int jy, int jm, int jd) {
   var gm = i + 1;
   var gd = gDayNo + 1;
 
-  return {'year': gy, 'month': gm, 'day': gd};
+  return DateBase(gy, gm, gd);
 }
 
 /// Gregorian to Jalali Conversion
 /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
-Map<String, int> gregorianToJalali(int gy, int gm, int gd) {
+DateBase gregorianToJalali(int gy, int gm, int gd) {
   gy -= 1600;
   gm -= 1;
   gd -= 1;
@@ -102,10 +104,10 @@ Map<String, int> gregorianToJalali(int gy, int gm, int gd) {
   }
   var jm = i + 1;
   var jd = jDayNo + 1;
-  return {'year': jy, 'month': jm, 'day': jd};
+  return DateBase(jy, jm, jd);
 }
 
-Map<String, int> hijriToGregorian(int hy, int hm, int hd) {
+DateBase hijriToGregorian(int hy, int hm, int hd) {
   var i = ((hy - 1) * 12) + 1 + (hm - 1) - 16260;
   var julianDate = hd + _ummalquraDataIndex(i - 1) - 1 + 2400000;
   var z = (julianDate + 0.5).floor();
@@ -121,10 +123,10 @@ Map<String, int> hijriToGregorian(int hy, int hm, int hd) {
   if (year <= 0) {
     year--;
   }
-  return {'year': year, 'month': month, 'day': day};
+  return DateBase(year, month, day);
 }
 
-Map<String, int> gregorianToHijri(int year, int month, int day) {
+DateBase gregorianToHijri(int year, int month, int day) {
 //This code the modified version of R.H. van Gent Code, it can be found at http://www.staff.science.uu.nl/~gent0113/islam/ummalqura.htm
   var m = month;
   var y = year;
@@ -179,5 +181,5 @@ Map<String, int> gregorianToHijri(int year, int month, int day) {
   var im = iln - 12 * ii;
   var id = mcjdn - _ummalquraDataIndex(i - 1) + 1;
 
-  return {'year': iy, 'month': im, 'day': id};
+  return DateBase(iy, im, id);
 }

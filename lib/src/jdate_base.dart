@@ -1,3 +1,5 @@
+import 'package:jdate/src/date_base.dart';
+
 import 'consts.dart';
 import 'converters.dart' as converter;
 import 'extensions/number_extensions.dart';
@@ -153,15 +155,11 @@ class JDate implements Comparable<JDate> {
   set day(int day) {
     if (day > 0 && day <= monthLength) {
       _day = day;
-      var gd = converter.jalaliToGregorian(
-        _year,
-        _month,
-        _day,
-      );
+      var date = converter.jalaliToGregorian(_year, _month, _day);
       var gregorian = DateTime(
-        gd['year'],
-        gd['month'],
-        gd['day'],
+        date.year,
+        date.month,
+        date.day,
         _hour,
         _minute,
         _second,
@@ -187,15 +185,11 @@ class JDate implements Comparable<JDate> {
   set month(int month) {
     if (month > 0 && month <= 12) {
       _month = month;
-      var gd = converter.jalaliToGregorian(
-        _year,
-        _month,
-        _day,
-      );
+      var date = converter.jalaliToGregorian(_year, _month, _day);
       var gregorian = DateTime(
-        gd['year'],
-        gd['month'],
-        gd['day'],
+        date.year,
+        date.month,
+        date.day,
         _hour,
         _minute,
         _second,
@@ -221,15 +215,11 @@ class JDate implements Comparable<JDate> {
   set year(int year) {
     if (year > 0) {
       _year = year;
-      var gd = converter.jalaliToGregorian(
-        _year,
-        _month,
-        _day,
-      );
+      var date = converter.jalaliToGregorian(_year, _month, _day);
       var gregorian = DateTime(
-        gd['year'],
-        gd['month'],
-        gd['day'],
+        date.year,
+        date.month,
+        date.day,
         _hour,
         _minute,
         _second,
@@ -342,9 +332,9 @@ class JDate implements Comparable<JDate> {
   ]) {
     var greg = jalaliToGregorian(year, month, day);
     var datetime = DateTime(
-      greg['year'],
-      greg['month'],
-      greg['day'],
+      greg.year,
+      greg.month,
+      greg.day,
       hour ?? _hour,
       minute ?? _minute,
       second ?? _second,
@@ -372,9 +362,9 @@ class JDate implements Comparable<JDate> {
   ]) {
     var greg = jalaliToGregorian(year, month, day);
     var datetime = DateTime.utc(
-      greg['year'],
-      greg['month'],
-      greg['day'],
+      greg.year,
+      greg.month,
+      greg.day,
       hour ?? _hour,
       minute ?? _minute,
       second ?? _second,
@@ -471,9 +461,9 @@ class JDate implements Comparable<JDate> {
   void _internal(DateTime dateTime) {
     //initialize parameters
     var greg = gregorianToJalali(dateTime.year, dateTime.month, dateTime.day);
-    _year = greg['year'];
-    _month = greg['month'];
-    _day = greg['day'];
+    _year = greg.year;
+    _month = greg.month;
+    _day = greg.day;
     _hour = dateTime.hour;
     _minute = dateTime.minute;
     _second = dateTime.second;
@@ -578,9 +568,9 @@ class JDate implements Comparable<JDate> {
     var datetime;
     if (isUtc ?? _isUtc) {
       datetime = DateTime.utc(
-        greg['year'],
-        greg['month'],
-        greg['day'],
+        greg.year,
+        greg.month,
+        greg.day,
         hour ?? _hour,
         minute ?? _minute,
         second ?? _second,
@@ -589,9 +579,9 @@ class JDate implements Comparable<JDate> {
       );
     } else {
       datetime = DateTime(
-        greg['year'],
-        greg['month'],
-        greg['day'],
+        greg.year,
+        greg.month,
+        greg.day,
         hour ?? _hour,
         minute ?? _minute,
         second ?? _second,
@@ -830,28 +820,26 @@ class JDate implements Comparable<JDate> {
       ? _millisecondsSinceEpoch < other.millisecondsSinceEpoch
       : _microsecondsSinceEpoch < other.microsecondsSinceEpoch;
 
-  static Map<String, int> jalaliToGregorian(int year, int month, int day) =>
+  static DateBase jalaliToGregorian(int year, int month, int day) =>
       converter.jalaliToGregorian(year, month, day);
 
-  static Map<String, int> gregorianToJalali(int year, int month, int day) =>
+  static DateBase gregorianToJalali(int year, int month, int day) =>
       converter.gregorianToJalali(year, month, day);
 
-  static Map<String, int> hijriToGregorian(int year, int month, int day) =>
+  static DateBase hijriToGregorian(int year, int month, int day) =>
       converter.hijriToGregorian(year, month, day);
 
-  static Map<String, int> gregorianToHijri(int year, int month, int day) =>
+  static DateBase gregorianToHijri(int year, int month, int day) =>
       converter.gregorianToHijri(year, month, day);
 
-  static Map<String, int> hijriToJalali(int year, int month, int day) {
-    var gregorian = converter.hijriToGregorian(year, month, day);
-    return converter.gregorianToJalali(
-        gregorian['year'], gregorian['month'], gregorian['day']);
+  static DateBase hijriToJalali(int year, int month, int day) {
+    var date = converter.hijriToGregorian(year, month, day);
+    return converter.gregorianToJalali(date.year, date.month, date.day);
   }
 
-  static Map<String, int> jalaliToHijri(int year, int month, int day) {
-    var gregorian = converter.jalaliToGregorian(year, month, day);
-    return converter.gregorianToHijri(
-        gregorian['year'], gregorian['month'], gregorian['day']);
+  static DateBase jalaliToHijri(int year, int month, int day) {
+    var date = converter.jalaliToGregorian(year, month, day);
+    return converter.gregorianToHijri(date.year, date.month, date.day);
   }
 
   /// Compares this JDate object to [other],

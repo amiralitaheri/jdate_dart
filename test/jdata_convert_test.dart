@@ -1,4 +1,5 @@
 import 'package:jdate/jdate.dart';
+import 'package:jdate/src/date_base.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -627,14 +628,14 @@ void main() {
       test('${date[0]}-${date[1]}-${date[2]} to Jalali', () {
         expect(
           JDate.gregorianToJalali(date[0], date[1], date[2]),
-          {'year': date[3], 'month': date[4], 'day': date[5]},
+          DateBase(date[3], date[4], date[5]),
         );
       });
 
       test('${date[3]}-${date[4]}-${date[5]} to Gregorian', () {
         expect(
           JDate.jalaliToGregorian(date[3], date[4], date[5]),
-          {'year': date[0], 'month': date[1], 'day': date[2]},
+          DateBase(date[0], date[1], date[2]),
         );
       });
     });

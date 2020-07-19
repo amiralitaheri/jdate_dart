@@ -19,7 +19,7 @@ class DateBase implements Comparable<DateBase> {
   DateBase(this.year, this.month, this.day);
 
   @override
-  String toString() => {'year': year, 'month': month, 'day': day}.toString();
+  String toString() => '$year-$month-$day';
 
   @override
   bool operator ==(other) {
@@ -32,13 +32,13 @@ class DateBase implements Comparable<DateBase> {
   bool operator >(DateBase other) {
     return compareTo(other) == 1;
   }
-  
+
   /// Relational less than operator.
   /// returns true if `this` is less than [other]
   bool operator <(DateBase other) {
     return compareTo(other) == -1;
   }
-  
+
   /// Relational less than or equal operator.
   /// returns true if `this` is less than or equal [other]
   bool operator <=(DateBase other) {

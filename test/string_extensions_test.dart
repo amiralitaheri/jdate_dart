@@ -24,13 +24,13 @@ void main() {
         '۱ok۲ok۳hello٤do٥you٦۷۸-۹۰',
       ],
     ];
-    
+
     test('numbersToEnglish', () {
       for (var i = 0; i < data[0].length; ++i) {
         var english = data[0][i];
         var persian = data[1][i];
         var arabic = data[2][i];
-        
+
         expect(persian.numbersToEnglish(), english);
         expect(arabic.numbersToEnglish(), english);
         expect(arabic.numbersToPersian(), persian);
@@ -38,7 +38,7 @@ void main() {
         expect((persian + arabic).numbersToEnglish(), english + english);
       }
     });
-    
+
     test('Empty Convert', () {
       expect(''.numbersToPersian(), '');
       expect('  '.numbersToPersian(), '  ');
