@@ -179,7 +179,7 @@ void main() {
 
     for (var i = 1206; i < 1499; i++) {
       test('$i.isLeapYear()', () {
-        expect(JDate(i, 12).isLeapYear(), leapYears.contains(i));
+        expect(JDate(i, 12).isLeapYear, leapYears.contains(i));
       });
     }
   });
@@ -188,11 +188,11 @@ void main() {
     var months = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
     for (var i = 0; i < months.length; ++i) {
       test('Month $i', () {
-        expect(JDate(1397, i + 1).getMonthLength(), months[i]);
+        expect(JDate(1397, i + 1).monthLength, months[i]);
       });
     }
     test('Month 12 Leap', () {
-      expect(JDate(1399, 12).getMonthLength(), 30);
+      expect(JDate(1399, 12).monthLength, 30);
     });
   });
 }

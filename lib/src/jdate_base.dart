@@ -150,7 +150,7 @@ class JDate implements Comparable<JDate> {
   int get day => _day;
 
   set day(int day) {
-    if (day > 0 && day <= getMonthLength()) {
+    if (day > 0 && day <= monthLength) {
       _day = day;
       var gd = converter.jalaliToGregorian(
         _year,
@@ -288,6 +288,24 @@ class JDate implements Comparable<JDate> {
   /// assert(moonLanding.weekDayName == 'یکشنبه');
   /// ```
   String get weekdayName => jalaliDays[_weekday]['long'];
+
+  bool get isLeapYear => _isLeapYear(_year);
+
+  int get shortYear {
+    //todo: ask someone
+    if (_year >= 1300 && _year < 1400) {
+      return int.parse(_year.toString().substring(2)); //1375 -> 75
+    } else {
+      return _year; //85 -> 85, 1000 -> 1000
+    }
+  }
+
+  /// returns number of days in that month
+  ///
+  /// ```Dart
+  /// var monthDays = JDate.now().getMonthLength();
+  /// ```
+  int get monthLength => _getMonthLength(_year, _month);
 
   /// Constructs a [JDate] instance specified in the local time zone.
   ///
@@ -457,6 +475,8 @@ class JDate implements Comparable<JDate> {
     );
   }
 
+  bool _isLeapYear(year) => year % 33 % 4 - 1 == (year % 33 * .05).floor();
+
   // Main function that set everything in object
   void _internal(
     int year,
@@ -492,7 +512,7 @@ class JDate implements Comparable<JDate> {
     _isUtc = isUtc;
 
     //check day in month
-    final monthLen = getMonthLength();
+    final monthLen = monthLength;
     assert(day <= monthLen && day >= 1,
         'Day should be in range of 1-${monthLen} with given month ($_month)');
 
@@ -514,36 +534,20 @@ class JDate implements Comparable<JDate> {
     _microsecondsSinceEpoch = gregorian.microsecondsSinceEpoch;
   }
 
-  int getShortYear() {
-    //todo: ask someone
-    if (_year >= 1300 && _year < 1400) {
-      return int.parse(_year.toString().substring(2)); //1375 -> 75
-    } else {
-      return _year; //85 -> 85, 1000 -> 1000
-    }
-  }
-
-  bool isLeapYear() => _year % 33 % 4 - 1 == (_year % 33 * .05).floor();
-
-  /// returns number of days in that month
-  ///
-  /// ```Dart
-  /// var monthDays = JDate.now().getMonthLength();
-  /// ```
-  int getMonthLength() {
-    if (_month <= 6) {
+  int _getMonthLength(int year, int month) {
+    if (month <= 6) {
       return 31;
-    } else if (_month == 12) {
-      return isLeapYear() ? 30 : 29;
+    } else if (month == 12) {
+      return _isLeapYear(year) ? 30 : 29;
     } else {
       return 30;
     }
   }
 
   String echo([String format = 'l، d F Y ساعت H:i:s']) {
-    var leapYear = isLeapYear();
+    var leapYear = isLeapYear;
     var jw = _weekday;
-    var jy = getShortYear();
+    var jy = shortYear;
     var jtz = _timeZoneName;
 
     return format
