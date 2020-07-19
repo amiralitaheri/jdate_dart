@@ -476,7 +476,17 @@ class JDate implements Comparable<JDate> {
     if (date == null) {
       throw 'Can\'t parse string';
     }
-    _passDateTimeToInternal(date);
+    _internal(
+      date.year,
+      date.month,
+      date.day,
+      date.hour,
+      date.minute,
+      date.second,
+      date.millisecond,
+      date.microsecond,
+      date.isUtc,
+    );
   }
 
   void _passDateTimeToInternal(DateTime date) {
