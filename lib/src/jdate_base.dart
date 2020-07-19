@@ -144,7 +144,7 @@ class JDate implements Comparable<JDate> {
   /// The day of the month [1..31].
   ///
   /// ```
-  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
+  /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
   /// assert(moonLanding.day == 29);
   /// ```
   int get day => _day;
@@ -178,7 +178,7 @@ class JDate implements Comparable<JDate> {
   /// The month [1..12].
   ///
   /// ```
-  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
+  /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
   /// assert(moonLanding.month == 4);
   /// ```
   int get month => _month;
@@ -212,7 +212,7 @@ class JDate implements Comparable<JDate> {
   /// The year.
   ///
   /// ```
-  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
+  /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
   /// assert(moonLanding.year == 1348);
   /// ```
   int get year => _year;
@@ -248,8 +248,8 @@ class JDate implements Comparable<JDate> {
   /// a week starts with شنبه, which has the value 1.
   ///
   /// ```
-  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
-  /// assert(moonLanding.weekday == 1);
+  /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
+  /// assert(moonLanding.weekday == 2);
   /// ```
   int get weekday => _weekday + 1;
 
@@ -284,10 +284,10 @@ class JDate implements Comparable<JDate> {
 
   /// returns the name of weekDay in persian
   /// ```
-  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
+  /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
   /// assert(moonLanding.weekDayName == 'یکشنبه');
   /// ```
-  String get weekDayName => jalaliDays[_weekday]['long'];
+  String get weekdayName => jalaliDays[_weekday]['long'];
 
   /// Constructs a [JDate] instance specified in the local time zone.
   ///
