@@ -436,26 +436,6 @@ class JDate implements Comparable<JDate> {
   /// ```
   JDate.now() : this.fromDateTime(DateTime.now());
 
-  //todo: change to static method
-  JDate.parse(String string) {
-    string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
-    var date = DateTime.tryParse(string);
-    if (date == null) {
-      throw 'Can\'t parse string';
-    }
-    _internal(
-      date.year,
-      date.month,
-      date.day,
-      date.hour,
-      date.minute,
-      date.second,
-      date.millisecond,
-      date.microsecond,
-      date.isUtc,
-    );
-  }
-
   static String _fourDigits(int n) {
     var absN = n.abs();
     var sign = n < 0 ? '-' : '';
@@ -565,6 +545,66 @@ class JDate implements Comparable<JDate> {
       return _isLeapYear(year) ? 30 : 29;
     } else {
       return 30;
+    }
+  }
+
+  /// Parse the string an returns a JDate object, throws Exception if string is not valid.
+  static JDate parse(String string) {
+    string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
+    var date = DateTime.parse(string);
+
+    if (date.isUtc) {
+      return JDate.utc(
+        date.year,
+        date.month,
+        date.day,
+        date.hour,
+        date.minute,
+        date.second,
+        date.millisecond,
+        date.microsecond,
+      );
+    } else {
+      return JDate(
+        date.year,
+        date.month,
+        date.day,
+        date.hour,
+        date.minute,
+        date.second,
+        date.millisecond,
+        date.microsecond,
+      );
+    }
+  }
+
+  /// Tries to parse the string an returns a JDate object, returns null if string is not valid.
+  static JDate tryParse(String string) {
+    string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
+    var date = DateTime.tryParse(string);
+    if (date == null) return null;
+    if (date.isUtc) {
+      return JDate.utc(
+        date.year,
+        date.month,
+        date.day,
+        date.hour,
+        date.minute,
+        date.second,
+        date.millisecond,
+        date.microsecond,
+      );
+    } else {
+      return JDate(
+        date.year,
+        date.month,
+        date.day,
+        date.hour,
+        date.minute,
+        date.second,
+        date.millisecond,
+        date.microsecond,
+      );
     }
   }
 
