@@ -22,14 +22,14 @@ extension PersianStringHelper on String {
   // ex: ```dart
   // 1 => ۱
   // ```
-  String numbersToPersian() => replaceAll('0', '۰')
-      .replaceAll('1', '۱')
-      .replaceAll('2', '۲')
-      .replaceAll('3', '۳')
-      .replaceAll('4', '۴')
-      .replaceAll('5', '۵')
-      .replaceAll('6', '۶')
-      .replaceAll('7', '۷')
-      .replaceAll('8', '۸')
-      .replaceAll('9', '۹');
+  String numbersToPersian() => replaceAll(RegExp(r'[0٠]'), '۰')
+      .replaceAll(RegExp(r'[1١]'), '۱')
+      .replaceAll(RegExp(r'[2٢]'), '۲')
+      .replaceAll(RegExp(r'[3٣]'), '۳')
+      .replaceAll(RegExp(r'[4٤]'), '۴')
+      .replaceAll(RegExp(r'[5٥]'), '۵')
+      .replaceAll(RegExp(r'[6٦]'), '۶')
+      .replaceAll(RegExp(r'[7٧]'), '۷')
+      .replaceAll(RegExp(r'[8٨]'), '۸')
+      .replaceAll(RegExp(r'[9٩]'), '۹');
 }
