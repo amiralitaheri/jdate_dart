@@ -1,8 +1,8 @@
 import 'package:jdate/jdate.dart';
 
 void main() {
-  // gregorian date constructor
-  print('\nGregorian date constructor');
+  // from DateTime
+  print('\nFrom DateTime');
   print(DateTime.now().toJDate());
   print(DateTime(2020).toJDate());
   print(DateTime(2020, 7).toJDate());
@@ -61,4 +61,5 @@ void main() {
   print('\nChange Date');
   print(JDate.now().changeTo(year: 1357, day: 10));
   print(JDate.now().changeTo(minute: 35, second: 10, millisecond: 250));
+
 }

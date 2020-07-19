@@ -282,15 +282,29 @@ class JDate implements Comparable<JDate> {
   ///
   bool get isUtc => _isUtc;
 
-  /// returns the name of weekDay in persian
+  /// Returns the name of weekDay in persian.
   /// ```
   /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
   /// assert(moonLanding.weekDayName == 'یکشنبه');
   /// ```
   String get weekdayName => jalaliDays[_weekday]['long'];
 
+  /// Returns the name of month in persian.
+  /// ```
+  /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
+  /// assert(moonLanding.weekDayName == 'مرداد');
+  /// ```
+  String get monthName => jalaliMonths[month]['long'];
+
+
+  /// True if this [JDate.year] is a leap year.
+  /// ```
+  /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
+  /// assert(moonLanding.isLeapYear == false);
+  /// ```
   bool get isLeapYear => _isLeapYear(_year);
 
+  /// Returns the short version of year.
   int get shortYear {
     //todo: ask someone
     if (_year >= 1300 && _year < 1400) {
@@ -300,7 +314,7 @@ class JDate implements Comparable<JDate> {
     }
   }
 
-  /// returns number of days in that month
+  /// Returns number of days in that month.
   ///
   /// ```Dart
   /// var monthDays = JDate.now().getMonthLength();
@@ -572,7 +586,7 @@ class JDate implements Comparable<JDate> {
       return 30;
     }
   }
-
+  /// Turns [JDate] to [String] base on format.
   String echo([String format = 'l، d F Y ساعت H:i:s']) {
     var leapYear = isLeapYear;
     var jw = _weekday;
@@ -633,6 +647,8 @@ class JDate implements Comparable<JDate> {
   @override
   String toString() => echo('Y/m/d H:i:s');
 
+
+  /// Converts this [JDate] to a DateTime object with gregorian date.
   DateTime toDateTime() {
     return DateTime.fromMicrosecondsSinceEpoch(_microsecondsSinceEpoch);
   }

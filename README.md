@@ -10,47 +10,47 @@
     <img src="https://img.shields.io/github/license/amiralitaheri/jdate_dart" alt="licence"/>
 </p>
 
-## new JDate()
+## Creat a JDate object from DateTime
 
-new JDate() creates a new jalali date object with the current date and time:
+DateTime extension `toJDate()` creates a JDate object for you:
 
-    var jd = JDate();
-    print(jd);
-    
-    ~~>    پنج‌شنبه، 15 اسفند 1398 ساعت 20:44:58
-
-## new JDate(year, month, ...)
-
-new JDate(year, month, ...) creates a new jalali date object with a specified date and time.
-7 numbers specify year, month, day, hour, minute, second, and millisecond (in that order):
-
-     JDate()                         ~~> پنج‌شنبه، 15 اسفند 1398 ساعت 20:44:58
-     JDate(2019)                     ~~> سه‌شنبه، 11 دی 1397 ساعت 00:00:00
-     JDate(2019, 4)                  ~~> چهارشنبه، 11 اردیبهشت 1398 ساعت 00:00:00
-     JDate(2019, 4, 3)               ~~> جمعه، 13 اردیبهشت 1398 ساعت 00:00:00
-     JDate(2019, 4, 3, 10)           ~~> جمعه، 13 اردیبهشت 1398 ساعت 10:00:00
-     JDate(2019, 4, 3, 10, 33)       ~~> جمعه، 13 اردیبهشت 1398 ساعت 10:33:00
-     JDate(2019, 4, 3, 10, 33, 30)   ~~> جمعه، 13 اردیبهشت 1398 ساعت 10:33:30
-
-## new JDate(year, month, ...) with shamsi date parameters
+```
+  print(DateTime.now().toJDate());                          // 1399/04/29 16:32:36
+  print(DateTime(2020).toJDate());                          // 1398/10/11 00:00:00
+  print(DateTime(2020, 7).toJDate());                       // 1399/04/11 00:00:00
+  print(DateTime(2020, 7, 16).toJDate());                   // 1399/04/26 00:00:00
+  print(DateTime(2020, 7, 16, 12).toJDate());               // 1399/04/26 12:00:00
+  print(DateTime(2020, 7, 16, 12, 18).toJDate());           // 1399/04/26 12:18:00
+  print(DateTime(2020, 7, 16, 12, 18, 30).toJDate());       // 1399/04/26 12:18:30
+  print(DateTime(2020, 7, 16, 12, 18, 30, 450).toJDate());  // 1399/04/26 12:18:30
+```
+## JDate(year, month, ...) with shamsi date parameters
 
 You can creates a new jalali date object with a specified shamsi date and time.
 
-     JDate()                         ~~> پنج‌شنبه، 15 اسفند 1398 ساعت 20:44:58
-     JDate(1398)                     ~~> پنج‌شنبه، 01 فروردین 1398 ساعت 00:00:00
-     JDate(1398, 1)                  ~~> یکشنبه، 01 اردیبهشت 1398 ساعت 00:00:00
-     JDate(1398, 1, 13)              ~~> جمعه، 13 اردیبهشت 1398 ساعت 00:00:00
-     JDate(1398, 1, 13, 3)           ~~> جمعه، 13 اردیبهشت 1398 ساعت 03:00:00
-     JDate(1398, 1, 13, 3, 14)       ~~> جمعه، 13 اردیبهشت 1398 ساعت 03:14:00
-     JDate(1398, 1, 13, 3, 14, 30)   ~~> جمعه، 13 اردیبهشت 1398 ساعت 03:14:30
+```
+    print(JDate.now());                         // 1399/04/29 16:32:36
+    print(JDate(1399));                         // 1399/01/01 00:00:00
+    print(JDate(1399, 4));                      // 1399/04/01 00:00:00  
+    print(JDate(1399, 4, 15));                  // 1399/04/15 00:00:00
+    print(JDate(1399, 4, 15, 20));              // 1399/04/15 20:00:00
+    print(JDate(1399, 4, 15, 20, 25));          // 1399/04/15 20:25:00
+    print(JDate(1399, 4, 15, 20, 25, 30));      // 1399/04/15 20:25:30
+    print(JDate(1399, 4, 15, 20, 25, 30, 650)); // 1399/04/15 20:25:30
+```
+## Other Constructors
+- `JDate.utc(int year, [int month = 1,int day = 1,int hour = 0,int minute = 0,int second = 0,int millisecond = 0,int microsecond = 0 ])`
+- `JDate.fromDateTime(DateTime date)`
+- `JDate.fromMicrosecondsSinceEpoch(int microsecondsSinceEpoch, {bool isUtc = false})`
+- `JDate.fromMillisecondsSinceEpoch(int millisecondsSinceEpoch, {bool isUtc = false})`
+- `JDate.now()`
 
-## new JDate(...).echo
+## JDate(...).echo
 
+```
     var jd = JDate(2019, 4, 3, 10, 33, 30, 0);
-    print(jd.echo('l، d F Y ساعت H:i:s'));
-    
-    ~~>     جمعه، 13 اردیبهشت 1398 ساعت 10:33:30
-
+    print(jd.echo('l، d F Y ساعت H:i:s'));      // چهارشنبه، 03 تیر 2019 ساعت 10:33:30
+```
 Method|Description|Range|Example
 ------|-----------|-----|-------
 a |  Before noon and afternoon |  ق.ظ - ب.ظ |  ق.ظ | 
@@ -86,50 +86,60 @@ Y |  A full numeric representation of a year, 4 digits |  0-... |  1398 |
 
 ## JDate.parse(...)
 
-You can parse specified shamsi or gregorian date from valid date string to convert it to JDate object.
+You can parse specified shamsi or date from valid date string to convert it to JDate object.  
 
-    print(JDate.parse('۱۳۹۹/۰۹/۰۹'));              ~~> جمعه، 09 آذر 1399 ساعت 00:00:00
-    print(JDate.parse('1399/02/13'));              ~~> پنج‌شنبه، 13 اردیبهشت 1399 ساعت 00:00:00
-    print(JDate.parse('1399/02/13 03:14:30'));     ~~> پنج‌شنبه، 13 اردیبهشت 1399 ساعت 03:14:30
-    print(JDate.parse('2019/05/03 01:02:03'));     ~~> چهارشنبه، 13 اردیبهشت 1398 ساعت 01:02:03
+```
+  print(JDate.parse('1399/09/09 13:27:00'));  // 1399/09/09 13:27:00
+  print(JDate.parse('1399-09-09 13:27:00'));  // 1399/09/09 13:27:00
+  print(JDate.parse('۱۳۹۹/۰۹/۰۹'));           // 1399/09/09 00:00:00
+  print(JDate.parse('1399/02/13'));           // 1399/02/13 00:00:00
+  print(JDate.parse(JDate(1378).toString())); // 1378/01/01 00:00:00
+```    
 
 
-## Get JDate Methods
+## JDate Parameters
 
-These methods can be used for getting information from a jalali date object:
+Parameters|Description|Type|Access
+----------|-----------|----|------
+microsecondsSinceEpoch | The number of microseconds since the 'Unix epoch' 1970-01-01T00:00:00Z (UTC). | int | read/write
+millisecondsSinceEpoch | The number of milliseconds since the 'Unix epoch' 1970-01-01T00:00:00Z (UTC). | int | read/write
+microsecond | The microsecond [0...999]. | int | read/write
+millisecond | The millisecond [0...999]. | int | read/write
+second | The second [0...59]. | int | read/write
+minute | The minute [0...59]. | int | read/write
+hour | The hour of the day, expressed as in a 24-hour clock [0..23]. | int | read/write
+day | The day of the month [1..31]. | int | read/write
+month | The month [1..12]. | int | read/write
+year | The year. | int | read/write
+weekday | The day of the week [1...7]. | int | read
+timeZoneOffset | Difference between local time and UTC. | Duration | read
+timeZoneName | The time zone name. | String | read
+isUtc | True if this [JDate] is set to UTC time. | bool | read
+isLeapYear | True if this [JDate.year] is a leap year. | bool | read
+weekdayName | Returns the name of weekDay in persian. | String | read
+monthName | Returns the name of month in persian. | String | read
+shortYear | Returns the short version of year. | int | read
+monthLength | Returns number of days in that month. | int | read
+
+
+## JDate Instance Methods
 
 Method|Description
 ------|-----------
-getDate() | Get the day as a number (1-31)
-getDay() | Get the weekday as a number (0-6)
-getFullYear() | Get the year as a four digit number (yyyy)
-getShortYear() | Get the year as a two or three digit number (yy \| yyy)
-getHours() | Get the hour (0-23)
-getMilliseconds() | Get the millisecond (0-999)
-getMinutes() | Get the minute (0-59)
-getMonth() | Get the month as a number (0-11)
-getSeconds() | Get the second (0-59)
-getTime() | Get the time (milliseconds)
-getTimezone() | Difference to Greenwich time (GMT) in hours
-getTimezoneOffset() |Difference between UTC and Local Time 
-isLeapYear() | Whether it’s a leap year (true \| false) 
-getMonthLength() | Get number of days in that month (29 \| 30 \| 31)
-
-## Set JDate Methods
-
-These methods can be used for set date values (years, months, days, hours, minutes, seconds, milliseconds) for a jalali date object:
-
-Method|Description
-------|-----------
-setDate(date) | Set the day as a number (1-31)
-setMonth(month, date) | Set the month (0-11)
-setFullYear(year, month, date) | Set the year (optionally month and day)
-setHours(hours, min, sec, ms) | Set the hour (0-23)
-setMilliseconds(ms) | Set the milliseconds (0-999)
-setMinutes(min, sec, ms) | Set the minutes (0-59)
-setSeconds(sec, ms) | Set the seconds (0-59)
-setTime(ms) | Set the time (milliseconds)
-
+changeTo({int year,int month,...,bool isUtc}) | Change a [JDate] instance to specified parameters.
+echo([String format]) | Turns [JDate] to [String] base on format. 
+toString() | Returns a human-readable string for this instance.
+toDateTime() | Converts this [JDate] to a DateTime object with gregorian date.
+add(Duration duration) | Returns a new [JDate] instance with [duration] added to [this].
+subtract(Duration duration) | Returns a new [JDate] instance with [duration] subtracted from [this].
+isAtSameMomentAs(JDate other) | Returns true if [this] occurs at the same moment as [other].
+isBefore(JDate other) | Returns true if [this] occurs before [other].
+isAfter(JDate other) | Returns true if [this] occurs after [other].
+Duration difference(JDate other) | Returns a [Duration] with the difference when subtracting [other] from [this].
+compareTo(JDate other) | Compares this JDate object to [other], returning zero if the values are equal.
+toIso8601String() | Returns an ISO-8601 full-precision extended format representation.
+toUtc() | Returns this JDate value in the UTC time zone.
+toLocal() | Returns this JDate value in the local time zone.
 
 ## Static methods
 
@@ -137,14 +147,16 @@ These methods can be used without creating an instance of the object:
 
 Method|Description
 ------|-----------
-jalaliToGregorian(year, month, date) | Converts Jalali date to Gregorian and return the result as a map
-gregorianToJalali(year, month, date) | Converts Gregorian date to Jalali and return the result as a map
-hijriToGregorian(year, month, date) | Converts Hijri date to Gregorian and return the result as a map
-gregorianToHijri(year, month, date) | Converts Gregorian date to Hijri and return the result as a map
-jalaliToHijri(year, month, date) | Converts Jalali date to Hijri and return the result as a map
-hijriToJalali(year, month, date) | Converts Hijri date to Jalali and return the result as a map
+parse(String string) | Parse the string an returns a JDate object, throws Exception if string is not valid 
+tryParse(String string) | Tries to parse the string an returns a JDate object, returns null if string is not valid 
+jalaliToGregorian(int year, int month, int date) | Converts Jalali date to Gregorian and return the result as a Map
+gregorianToJalali(int year, int month, int date) | Converts Gregorian date to Jalali and return the result as a Map
+hijriToGregorian(int year, int month, int date) | Converts Hijri date to Gregorian and return the result as a Map
+gregorianToHijri(int year, int month, int date) | Converts Gregorian date to Hijri and return the result as a Map
+jalaliToHijri(int year, int month, int date) | Converts Jalali date to Hijri and return the result as a Map
+hijriToJalali(int year, int month, int date) | Converts Hijri date to Jalali and return the result as a Map
 
-## extension methods
+## Extension Methods
 
 These methods can be used on mentioned objects:
 
@@ -152,7 +164,8 @@ Method|Description
 ------|-----------
 String.numbersToEnglish() | Converts Persian digits in string to english digits
 String.numbersToPersian() | Converts English digits in string to Persian digits
-Int.toPersianWords(bool ordinal) | Returns number as Persian text
+int.toPersianWords(bool ordinal) | Returns number as Persian text
+DateTime.toJdate() | Creates a JDate base on DateTime gregorian date
 
 ## License
 
