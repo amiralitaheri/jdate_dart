@@ -654,9 +654,10 @@ class JDate implements Comparable<JDate> {
   /// See [isAtSameMomentAs] for a comparison that compares moments in time
   /// independently of their zones.
   @override
-  bool operator ==(dynamic other) {
-    throw UnimplementedError;
-  }
+  bool operator ==(dynamic other) => (other is JDate)
+      ? (_microsecondsSinceEpoch == other.microsecondsSinceEpoch &&
+          _timeZoneOffset == other.timeZoneOffset)
+      : false;
 
   /// Returns true if [this] occurs at the same moment as [other].
   ///
@@ -676,7 +677,8 @@ class JDate implements Comparable<JDate> {
   /// assert(now.toUtc().isAtSameMomentAs(now));
   /// assert(now.isAtSameMomentAs(now.toUtc()));
   /// ```
-  external bool isAtSameMomentAs(JDate other);
+  bool isAtSameMomentAs(JDate other) =>
+      toDateTime().isAtSameMomentAs(other.toDateTime());
 
   /// Returns true if [this] occurs before [other].
   ///
@@ -696,7 +698,7 @@ class JDate implements Comparable<JDate> {
   /// assert(!now.toUtc().isBefore(now));
   /// assert(!now.isBefore(now.toUtc()));
   /// ```
-  external bool isBefore(JDate other);
+  bool isBefore(JDate other) => toDateTime().isBefore(other.toDateTime());
 
   /// Returns true if [this] occurs after [other].
   ///
@@ -716,7 +718,7 @@ class JDate implements Comparable<JDate> {
   /// assert(!now.toUtc().isBefore(now));
   /// assert(!now.isBefore(now.toUtc()));
   /// ```
-  external bool isAfter(JDate other);
+  bool isAfter(JDate other) => toDateTime().isAfter(other.toDateTime());
 
   /// Returns a [Duration] with the difference when subtracting [other] from
   /// [this].
@@ -788,8 +790,7 @@ class JDate implements Comparable<JDate> {
   /// if it [isAtSameMomentAs] [other], and returns a positive value otherwise
   /// (when this [isAfter] [other]).
   @override
-  int compareTo(JDate other) =>
-      _microsecondsSinceEpoch - other.microsecondsSinceEpoch;
+  int compareTo(JDate other) => toDateTime().compareTo(other.toDateTime());
 
   static String _fourDigits(int n) {
     var absN = n.abs();
