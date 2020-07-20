@@ -12,7 +12,6 @@ void main() {
 
       expect(jDate.hour, date.hour);
       expect(jDate.minute, date.minute);
-      expect(jDate.second, date.second);
       expect(jDate.isUtc, date.isUtc);
       expect(jDate.timeZoneName, date.timeZoneName);
       expect(jDate.timeZoneOffset, date.timeZoneOffset);
