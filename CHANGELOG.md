@@ -3,11 +3,12 @@
 - Changed the goal from being friendly with javascript developers to be more compatible with original dart `DateTime` class
 - Replaced getter and setters with dart style
 - Added `toJdate()` as `DateTime` extension function
-- Changed constructors to be more like `DateTime` class
-- `parse` function is now a constructor
+- Changed `JDate` to be more like `DateTime` class
 - Added more documents
 - Added new functions  
+- Added more tests!!
 - Fixed bugs 
+
 
 ## 0.4.0
 
