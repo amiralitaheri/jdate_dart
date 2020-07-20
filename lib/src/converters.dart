@@ -12,7 +12,7 @@ int _ummalquraDataIndex(int index) {
 
 /// Jalali to Gregorian Conversion
 /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
-DateBase jalaliToGregorian(int jy, int jm, int jd) {
+BasicDate jalaliToGregorian(int jy, int jm, int jd) {
   jy -= 979;
   jm -= 1;
   jd -= 1;
@@ -61,12 +61,12 @@ DateBase jalaliToGregorian(int jy, int jm, int jd) {
   var gm = i + 1;
   var gd = gDayNo + 1;
 
-  return DateBase(gy, gm, gd);
+  return BasicDate(gy, gm, gd);
 }
 
 /// Gregorian to Jalali Conversion
 /// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
-DateBase gregorianToJalali(int gy, int gm, int gd) {
+BasicDate gregorianToJalali(int gy, int gm, int gd) {
   gy -= 1600;
   gm -= 1;
   gd -= 1;
@@ -104,10 +104,10 @@ DateBase gregorianToJalali(int gy, int gm, int gd) {
   }
   var jm = i + 1;
   var jd = jDayNo + 1;
-  return DateBase(jy, jm, jd);
+  return BasicDate(jy, jm, jd);
 }
 
-DateBase hijriToGregorian(int hy, int hm, int hd) {
+BasicDate hijriToGregorian(int hy, int hm, int hd) {
   var i = ((hy - 1) * 12) + 1 + (hm - 1) - 16260;
   var julianDate = hd + _ummalquraDataIndex(i - 1) - 1 + 2400000;
   var z = (julianDate + 0.5).floor();
@@ -123,10 +123,10 @@ DateBase hijriToGregorian(int hy, int hm, int hd) {
   if (year <= 0) {
     year--;
   }
-  return DateBase(year, month, day);
+  return BasicDate(year, month, day);
 }
 
-DateBase gregorianToHijri(int year, int month, int day) {
+BasicDate gregorianToHijri(int year, int month, int day) {
 //This code the modified version of R.H. van Gent Code, it can be found at http://www.staff.science.uu.nl/~gent0113/islam/ummalqura.htm
   var m = month;
   var y = year;
@@ -181,5 +181,5 @@ DateBase gregorianToHijri(int year, int month, int day) {
   var im = iln - 12 * ii;
   var id = mcjdn - _ummalquraDataIndex(i - 1) + 1;
 
-  return DateBase(iy, im, id);
+  return BasicDate(iy, im, id);
 }

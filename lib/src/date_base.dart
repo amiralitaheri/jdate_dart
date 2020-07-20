@@ -4,7 +4,7 @@
 /// ```dart
 /// var date = DateBase(1378, 10, 30);
 /// ```
-class DateBase implements Comparable<DateBase> {
+class BasicDate implements Comparable<BasicDate> {
   /// Year of the date
   int year;
 
@@ -14,40 +14,40 @@ class DateBase implements Comparable<DateBase> {
   /// Day of the month
   int day;
 
-  /// Constructor of [DateBase]
+  /// Constructor of [BasicDate]
   /// [year], [month] and [day] are int and there is no constraint for it
-  DateBase(this.year, this.month, this.day);
+  BasicDate(this.year, this.month, this.day);
 
   @override
   String toString() => '$year-$month-$day';
 
   @override
   bool operator ==(other) {
-    if (!(other is DateBase)) throw 'Unrelated type equality checks';
+    if (!(other is BasicDate)) throw 'Unrelated type equality checks';
     return year == other.year && month == other.month && day == other.day;
   }
 
   /// Relational greater than operator.
   /// returns true if `this` is greater than [other]
-  bool operator >(DateBase other) {
+  bool operator >(BasicDate other) {
     return compareTo(other) == 1;
   }
 
   /// Relational less than operator.
   /// returns true if `this` is less than [other]
-  bool operator <(DateBase other) {
+  bool operator <(BasicDate other) {
     return compareTo(other) == -1;
   }
 
   /// Relational less than or equal operator.
   /// returns true if `this` is less than or equal [other]
-  bool operator <=(DateBase other) {
+  bool operator <=(BasicDate other) {
     return compareTo(other) != 1;
   }
 
   /// Relational greater than or equal operator.
   /// returns true if `this` is greater than or equal [other]
-  bool operator >=(DateBase other) {
+  bool operator >=(BasicDate other) {
     return compareTo(other) != -1;
   }
 
@@ -55,7 +55,7 @@ class DateBase implements Comparable<DateBase> {
   // a positive integer if `this` is ordered after `other`,
   // and zero if `this` and `other` are ordered together.
   @override
-  int compareTo(DateBase other) {
+  int compareTo(BasicDate other) {
     if (year > other.year) {
       return 1;
     } else if (year < other.year) {

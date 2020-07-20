@@ -628,14 +628,14 @@ void main() {
       test('${date[0]}-${date[1]}-${date[2]} to Jalali', () {
         expect(
           JDate.gregorianToJalali(date[0], date[1], date[2]),
-          DateBase(date[3], date[4], date[5]),
+          BasicDate(date[3], date[4], date[5]),
         );
       });
 
       test('${date[3]}-${date[4]}-${date[5]} to Gregorian', () {
         expect(
           JDate.jalaliToGregorian(date[3], date[4], date[5]),
-          DateBase(date[0], date[1], date[2]),
+          BasicDate(date[0], date[1], date[2]),
         );
       });
     });

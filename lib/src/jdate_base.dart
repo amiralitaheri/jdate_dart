@@ -820,24 +820,24 @@ class JDate implements Comparable<JDate> {
       ? _millisecondsSinceEpoch < other.millisecondsSinceEpoch
       : _microsecondsSinceEpoch < other.microsecondsSinceEpoch;
 
-  static DateBase jalaliToGregorian(int year, int month, int day) =>
+  static BasicDate jalaliToGregorian(int year, int month, int day) =>
       converter.jalaliToGregorian(year, month, day);
 
-  static DateBase gregorianToJalali(int year, int month, int day) =>
+  static BasicDate gregorianToJalali(int year, int month, int day) =>
       converter.gregorianToJalali(year, month, day);
 
-  static DateBase hijriToGregorian(int year, int month, int day) =>
+  static BasicDate hijriToGregorian(int year, int month, int day) =>
       converter.hijriToGregorian(year, month, day);
 
-  static DateBase gregorianToHijri(int year, int month, int day) =>
+  static BasicDate gregorianToHijri(int year, int month, int day) =>
       converter.gregorianToHijri(year, month, day);
 
-  static DateBase hijriToJalali(int year, int month, int day) {
+  static BasicDate hijriToJalali(int year, int month, int day) {
     var date = converter.hijriToGregorian(year, month, day);
     return converter.gregorianToJalali(date.year, date.month, date.day);
   }
 
-  static DateBase jalaliToHijri(int year, int month, int day) {
+  static BasicDate jalaliToHijri(int year, int month, int day) {
     var date = converter.jalaliToGregorian(year, month, day);
     return converter.gregorianToHijri(date.year, date.month, date.day);
   }

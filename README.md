@@ -103,19 +103,19 @@ Parameters|Description|Type|Access
 ----------|-----------|----|------
 microsecondsSinceEpoch | The number of microseconds since the 'Unix epoch' 1970-01-01T00:00:00Z (UTC). | int | read/write
 millisecondsSinceEpoch | The number of milliseconds since the 'Unix epoch' 1970-01-01T00:00:00Z (UTC). | int | read/write
-microsecond | The microsecond [0...999]. | int | read/write
-millisecond | The millisecond [0...999]. | int | read/write
-second | The second [0...59]. | int | read/write
-minute | The minute [0...59]. | int | read/write
-hour | The hour of the day, expressed as in a 24-hour clock [0..23]. | int | read/write
-day | The day of the month [1..31]. | int | read/write
-month | The month [1..12]. | int | read/write
+microsecond | The microsecond `0...999`. | int | read/write
+millisecond | The millisecond `0...999`. | int | read/write
+second | The second `0...59`. | int | read/write
+minute | The minute `0...59`. | int | read/write
+hour | The hour of the day, expressed as in a 24-hour clock `0..23`. | int | read/write
+day | The day of the month `1..31`. | int | read/write
+month | The month `1..12`. | int | read/write
 year | The year. | int | read/write
-weekday | The day of the week [1...7]. | int | read
+weekday | The day of the week `1...7`. | int | read
 timeZoneOffset | Difference between local time and UTC. | Duration | read
 timeZoneName | The time zone name. | String | read
-isUtc | True if this [JDate] is set to UTC time. | bool | read
-isLeapYear | True if this [JDate.year] is a leap year. | bool | read
+isUtc | True if this `JDate` is set to UTC time. | bool | read
+isLeapYear | True if this `JDate.year` is a leap year. | bool | read
 weekdayName | Returns the name of weekDay in persian. | String | read
 monthName | Returns the name of month in persian. | String | read
 shortYear | Returns the short version of year. | int | read
@@ -126,20 +126,20 @@ monthLength | Returns number of days in that month. | int | read
 
 Method|Description
 ------|-----------
-changeTo({int year,int month,...,bool isUtc}) | Change a [JDate] instance to specified parameters.
-echo([String format]) | Turns [JDate] to [String] base on format. 
+changeTo({int year,int month,...,bool isUtc}) | Change a `JDate` instance to specified parameters.
+echo(String format) | returns String of `JDate` base on given format. 
 toString() | Returns a human-readable string for this instance.
-toDateTime() | Converts this [JDate] to a DateTime object with gregorian date.
-add(Duration duration) | Returns a new [JDate] instance with [duration] added to [this].
-subtract(Duration duration) | Returns a new [JDate] instance with [duration] subtracted from [this].
-isAtSameMomentAs(JDate other) | Returns true if [this] occurs at the same moment as [other].
-isBefore(JDate other) | Returns true if [this] occurs before [other].
-isAfter(JDate other) | Returns true if [this] occurs after [other].
-Duration difference(JDate other) | Returns a [Duration] with the difference when subtracting [other] from [this].
-compareTo(JDate other) | Compares this JDate object to [other], returning zero if the values are equal.
+toDateTime() | Converts this `JDate` to a DateTime object with gregorian date.
+add(Duration duration) | Returns a new `JDate` instance with `duration` added to `this`.
+subtract(Duration duration) | Returns a new `JDate` instance with `duration` subtracted from `this`.
+isAtSameMomentAs(JDate other) | Returns true if `this` occurs at the same moment as `other`.
+isBefore(JDate other) | Returns true if `this` occurs before `other`.
+isAfter(JDate other) | Returns true if `this` occurs after `other`.
+Duration difference(JDate other) | Returns a `Duration` with the difference when subtracting `other` from `this`.
+compareTo(JDate other) | Compares this `JDate` object to `other`, returning zero if the values are equal.
 toIso8601String() | Returns an ISO-8601 full-precision extended format representation.
-toUtc() | Returns this JDate value in the UTC time zone.
-toLocal() | Returns this JDate value in the local time zone.
+toUtc() | Returns this `JDate` value in the UTC time zone.
+toLocal() | Returns this `JDate` value in the local time zone.
 
 ## Static methods
 
@@ -147,14 +147,14 @@ These methods can be used without creating an instance of the object:
 
 Method|Description
 ------|-----------
-parse(String string) | Parse the string an returns a JDate object, throws Exception if string is not valid 
-tryParse(String string) | Tries to parse the string an returns a JDate object, returns null if string is not valid 
-jalaliToGregorian(int year, int month, int date) | Converts Jalali date to Gregorian and return the result as a Map
-gregorianToJalali(int year, int month, int date) | Converts Gregorian date to Jalali and return the result as a Map
-hijriToGregorian(int year, int month, int date) | Converts Hijri date to Gregorian and return the result as a Map
-gregorianToHijri(int year, int month, int date) | Converts Gregorian date to Hijri and return the result as a Map
-jalaliToHijri(int year, int month, int date) | Converts Jalali date to Hijri and return the result as a Map
-hijriToJalali(int year, int month, int date) | Converts Hijri date to Jalali and return the result as a Map
+parse(String string) | Parse the string an returns a `JDate` object, throws Exception if string is not valid 
+tryParse(String string) | Tries to parse the string an returns a `JDate` object, returns null if string is not valid 
+jalaliToGregorian(int year, int month, int date) | Converts Jalali date to Gregorian and return the result as a `BasicDate`
+gregorianToJalali(int year, int month, int date) | Converts Gregorian date to Jalali and return the result as a `BasicDate`
+hijriToGregorian(int year, int month, int date) | Converts Hijri date to Gregorian and return the result as a `BasicDate`
+gregorianToHijri(int year, int month, int date) | Converts Gregorian date to Hijri and return the result as a `BasicDate`
+jalaliToHijri(int year, int month, int date) | Converts Jalali date to Hijri and return the result as a `BasicDate`
+hijriToJalali(int year, int month, int date) | Converts Hijri date to Jalali and return the result as a `BasicDate`
 
 ## Extension Methods
 
