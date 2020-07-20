@@ -1,3 +1,5 @@
+import 'package:jdate/src/consts.dart';
+
 extension PersianIntegerHelper on int {
   // Convert numbers to Persian Words
   //
@@ -12,65 +14,6 @@ extension PersianIntegerHelper on int {
   // 919.toPersianWords(true)` == نهصد و نوزدهم
   // ```
   String toPersianWords([ordinal = false]) {
-    const yekan = [
-      'صفر',
-      'یک',
-      'دو',
-      'سه',
-      'چهار',
-      'پنج',
-      'شش',
-      'هفت',
-      'هشت',
-      'نه'
-    ];
-    const dahgan = [
-      '',
-      '',
-      'بیست',
-      'سی',
-      'چهل',
-      'پنجاه',
-      'شصت',
-      'هفتاد',
-      'هشتاد',
-      'نود'
-    ];
-    const dahyek = [
-      'ده',
-      'یازده',
-      'دوازده',
-      'سیزده',
-      'چهارده',
-      'پانزده',
-      'شانزده',
-      'هفده',
-      'هجده',
-      'نوزده'
-    ];
-    const sadgan = [
-      '',
-      'یکصد',
-      'دویست',
-      'سیصد',
-      'چهارصد',
-      'پانصد',
-      'ششصد',
-      'هفتصد',
-      'هشتصد',
-      'نهصد'
-    ];
-    const basegan = [
-      '',
-      'هزار',
-      'میلیون',
-      'میلیارد',
-      'بیلیون',
-      'بیلیارد',
-      'تریلیون',
-      'تریلیارد'
-    ];
-
     if (this == 0) return 'صفر';
     if (ordinal && isNegative) throw 'Ordinal can\'t be negative';
 
@@ -82,20 +25,20 @@ extension PersianIntegerHelper on int {
       var d3 = (number / 100).floor();
 
       if (d3 != 0) {
-        result += sadgan[d3] + ' و ';
+        result += persianNumHundreds[d3] + ' و ';
       }
 
       if ((d12 >= 10) && (d12 <= 19)) {
-        result += dahyek[d12 - 10];
+        result += persianNumTen_Twenty[d12 - 10];
       } else {
         var d2 = (d12 / 10).floor();
         if (d2 != 0) {
-          result += dahgan[d2] + ' و ';
+          result += persianNumDecimal[d2] + ' و ';
         }
 
         var d1 = d12 % 10;
         if (d1 != 0) {
-          result += yekan[d1] + ' و ';
+          result += persianNumUnit[d1] + ' و ';
         }
 
         result = result.substring(0, result.length - 3);
@@ -120,7 +63,7 @@ extension PersianIntegerHelper on int {
       for (var i = 0; i <= L; i++) {
         b = int.parse(numStr.substring(i * 3, (i + 1) * 3));
         if (b != 0) {
-          result += b.toPersianWords() + ' ' + basegan[L - i] + ' و ';
+          result += b.toPersianWords() + ' ' + persianNumBase[L - i] + ' و ';
           threeZero = false;
         } else if (b == 0 && i > 0) {
           threeZero = true;
