@@ -1,9 +1,9 @@
 import 'package:jdate/jdate.dart';
-import 'package:jdate/src/date_base.dart';
+import 'package:jdate/src/basic_date.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Date Convert', () {
+  group('Date Convert (Jalali - Gregorian)', () {
     [
       //edge
       [1000, 01, 01, 0378, 10, 11],
