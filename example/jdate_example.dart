@@ -114,13 +114,12 @@ void main() {
   print(JDate(1377, 12).compareTo(JDate(1377, 11)));
 
   //Compare
-  print('\n---Compare---');
-  JDate(1377, 12, 11) > JDate(1377, 12, 11);
-  JDate(1377, 12, 11) < JDate(1377, 12, 11);
-  JDate(1377, 12, 11) <= JDate(1377, 12, 11);
-  JDate(1377, 12, 11) >= JDate(1377, 12, 11);
-  JDate(1377, 12, 11) == JDate(1377, 12, 11);
-  JDate(1377, 12, 11).isAtSameMomentAs(JDate(1377, 12, 11));
-  JDate(1377, 12, 11).isBefore(JDate(1377, 12, 11));
-  JDate(1377, 12, 11).isAfter(JDate(1377, 12, 11));
+  JDate(1377, 12, 11) > JDate(1377, 12, 11); //false
+  JDate(1377, 12, 11) < JDate(1377, 12, 11); //false
+  JDate(1377, 12, 11) <= JDate(1377, 12, 11); //true
+  JDate(1378, 12, 11) >= JDate(1377, 12, 11); //true
+  JDate(1377, 12, 11) == JDate(1377, 12, 11); //true
+  JDate(1377, 12, 11).isAtSameMomentAs(JDate(1377, 12, 11, 10)); //false
+  JDate(1377, 10, 11).isBefore(JDate(1377, 12, 11)); //true
+  JDate(1377, 10, 11).isAfter(JDate(1377, 12, 11)); //false
 }
