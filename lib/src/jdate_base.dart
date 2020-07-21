@@ -816,9 +816,17 @@ class JDate implements Comparable<JDate> {
       ? _millisecondsSinceEpoch > other.millisecondsSinceEpoch
       : _microsecondsSinceEpoch > other.microsecondsSinceEpoch;
 
+  bool operator >=(JDate other) => isJs
+          ? _millisecondsSinceEpoch >= other.millisecondsSinceEpoch
+          : _microsecondsSinceEpoch >= other.microsecondsSinceEpoch;
+
   bool operator <(JDate other) => isJs
-      ? _millisecondsSinceEpoch < other.millisecondsSinceEpoch
-      : _microsecondsSinceEpoch < other.microsecondsSinceEpoch;
+          ? _millisecondsSinceEpoch > other.millisecondsSinceEpoch
+          : _microsecondsSinceEpoch > other.microsecondsSinceEpoch;
+
+  bool operator <=(JDate other) => isJs
+      ? _millisecondsSinceEpoch <= other.millisecondsSinceEpoch
+      : _microsecondsSinceEpoch <= other.microsecondsSinceEpoch;
 
   static BasicDate jalaliToGregorian(int year, int month, int day) =>
       converter.jalaliToGregorian(year, month, day);

@@ -117,6 +117,8 @@ void main() {
   print('\n---Compare---');
   JDate(1377, 12, 11) > JDate(1377, 12, 11);
   JDate(1377, 12, 11) < JDate(1377, 12, 11);
+  JDate(1377, 12, 11) <= JDate(1377, 12, 11);
+  JDate(1377, 12, 11) >= JDate(1377, 12, 11);
   JDate(1377, 12, 11) == JDate(1377, 12, 11);
   JDate(1377, 12, 11).isAtSameMomentAs(JDate(1377, 12, 11));
   JDate(1377, 12, 11).isBefore(JDate(1377, 12, 11));
