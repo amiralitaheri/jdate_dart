@@ -1,5 +1,4 @@
-import 'package:jdate/src/basic_date.dart';
-
+import 'basic_date.dart';
 import 'consts.dart';
 import 'converters.dart' as converter;
 import 'extensions/number_extensions.dart';
@@ -817,12 +816,12 @@ class JDate implements Comparable<JDate> {
       : _microsecondsSinceEpoch > other.microsecondsSinceEpoch;
 
   bool operator >=(JDate other) => isJs
-          ? _millisecondsSinceEpoch >= other.millisecondsSinceEpoch
-          : _microsecondsSinceEpoch >= other.microsecondsSinceEpoch;
+      ? _millisecondsSinceEpoch >= other.millisecondsSinceEpoch
+      : _microsecondsSinceEpoch >= other.microsecondsSinceEpoch;
 
   bool operator <(JDate other) => isJs
-          ? _millisecondsSinceEpoch > other.millisecondsSinceEpoch
-          : _microsecondsSinceEpoch > other.microsecondsSinceEpoch;
+      ? _millisecondsSinceEpoch > other.millisecondsSinceEpoch
+      : _microsecondsSinceEpoch > other.microsecondsSinceEpoch;
 
   bool operator <=(JDate other) => isJs
       ? _millisecondsSinceEpoch <= other.millisecondsSinceEpoch
