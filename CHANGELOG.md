@@ -1,3 +1,11 @@
+## 0.7.0
+
+- Added a new class `BasicDate`
+- Convert functions now return `BasicDate`
+- Added more tests!!
+- Added more examples
+- Added two new operator `>=` and `<=`  
+
 ## 0.6.0
 
 - Changed the goal from being friendly with javascript developers to be more compatible with original dart `DateTime` class
