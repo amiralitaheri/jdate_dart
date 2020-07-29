@@ -100,7 +100,7 @@ void main() {
   print(JDate.parse('۱۳۹۹/۰۹/۰۹'));
   print(JDate.parse('1399/02/13'));
   print(JDate.parse(JDate(1378).toString())); //toString can be parsed back
-  
+
   // Other Methods
   print('\n---Other Methods---');
   print(JDate(1377, 12).toDateTime());
