@@ -179,7 +179,7 @@ void main() {
     });
 
     test('Bad Format', () {
-      expect(JDate.parse('1386-06-27  13:27:00'), FormatException);
+      expect(() => JDate.parse('1386-06-27  13:27:00'), throwsException);
       expect(JDate.tryParse('1386-06-27  13:27:00'), null);
     });
 
@@ -191,6 +191,19 @@ void main() {
       expect(date.hour, 11);
       expect(date.minute, 00);
       expect(date.second, 21);
+    });
+
+    test('Parse Back toIso8601String', () {
+      final date = JDate.parse(
+          JDate(1378, 11, 27, 11, 30, 20, 123, 456).toIso8601String());
+      expect(date.year, 1378);
+      expect(date.month, 11);
+      expect(date.day, 27);
+      expect(date.hour, 11);
+      expect(date.minute, 30);
+      expect(date.second, 20);
+      expect(date.millisecond, 123);
+      expect(date.microsecond, 456);
     });
 
     test('TimeZone Test', () {});
