@@ -649,7 +649,8 @@ class JDate implements Comparable<JDate> {
   /// The returned string is constructed for the time zone of this instance.
   /// The `toString()` method provides a simply formatted string.
   ///
-  /// The resulting string can be parsed back using [parse].
+  /// The resulting string can be parsed back using [parse],
+  /// but it doesn't contain millisecond and microsecond.
   @override
   String toString() => echo('Y/m/d H:i:s');
 

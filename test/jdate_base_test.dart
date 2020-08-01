@@ -137,12 +137,64 @@ void main() {
     test('fromMillisecondsSinceEpoch', () {});
   });
 
-  group('parse', () {
-    test('', () {});
-  });
+  group('Parser', () {
+    [
+      ['1386-06-27 13:27:00', 1386, 06, 27, 13, 27, 00, 0, 0],
+      ['1386-06-27 13:27:00.123456789z', 1386, 06, 27, 13, 27, 00, 123, 456],
+      ['1386-06-27 13:27:00,123456789z', 1386, 06, 27, 13, 27, 00, 123, 456],
+      ['13860627 13:27:00', 1386, 06, 27, 13, 27, 00, 0, 0],
+      ['13860627T132700', 1386, 06, 27, 13, 27, 00, 0, 0],
+      ['13860627', 1386, 06, 27, 00, 00, 00, 0, 0],
+      ['+13860627', 1386, 06, 27, 00, 00, 00, 0, 0],
+      ['1386-06-27T14Z', 1386, 06, 27, 14, 00, 00, 0, 0],
+      ['1386-06-27T14+00:00', 1386, 06, 27, 14, 00, 00, 0, 0],
+      ['-123450101 00:00:00 Z', -12345, 01, 01, 00, 00, 00, 0, 0],
+      ['1389-02-27T14:00:00-0500', 1389, 02, 27, 19, 00, 00, 0, 0],
+      ['1389-02-27T19:00:00Z', 1389, 02, 27, 19, 00, 00, 0, 0],
+      ['1399/09/10 13:27:00', 1399, 09, 10, 13, 27, 00, 0, 0],
+      ['۱۳۹۹/۱۱/۰۹', 1399, 11, 09, 00, 00, 00, 0, 0],
+    ].forEach((element) {
+      test('Parse (${element[0]})', () {
+        final date = JDate.tryParse(element[0]);
+        expect(date.year, element[1]);
+        expect(date.month, element[2]);
+        expect(date.day, element[3]);
+        expect(date.hour, element[4]);
+        expect(date.minute, element[5]);
+        expect(date.second, element[6]);
+        expect(date.millisecond, element[7]);
+        expect(date.microsecond, element[8]);
+      });
+      test('Try Parse (${element[0]})', () {
+        final date = JDate.tryParse(element[0]);
+        expect(date.year, element[1]);
+        expect(date.month, element[2]);
+        expect(date.day, element[3]);
+        expect(date.hour, element[4]);
+        expect(date.minute, element[5]);
+        expect(date.second, element[6]);
+        expect(date.millisecond, element[7]);
+        expect(date.microsecond, element[8]);
+      });
+    });
 
-  group('tryParse', () {
-    test('', () {});
+    test('Bad Format', () {
+      expect(JDate.parse('1386-06-27  13:27:00'), FormatException);
+      expect(JDate.tryParse('1386-06-27  13:27:00'), null);
+    });
+
+    test('Parse Back toString', () {
+      final date = JDate.parse(JDate(1378, 11, 27, 11, 00, 21).toString());
+      expect(date.year, 1378);
+      expect(date.month, 11);
+      expect(date.day, 27);
+      expect(date.hour, 11);
+      expect(date.minute, 00);
+      expect(date.second, 21);
+    });
+
+    test('TimeZone Test', () {});
+    test('Utc Test', () {});
   });
 
   group('changeTo', () {
