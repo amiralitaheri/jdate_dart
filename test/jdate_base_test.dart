@@ -92,16 +92,144 @@ void main() {
   });
 
   group('Parameters Setter', () {
-    test('year', () {});
-    test('month', () {});
-    test('day', () {});
-    test('hour', () {});
-    test('minute', () {});
-    test('second', () {});
-    test('millisecond', () {});
-    test('microsecond', () {});
-    test('millisecondsSinceEpoch', () {});
-    test('microsecondsSinceEpoch', () {});
+    JDate date;
+
+    setUp(() {
+      date = JDate(1378, 05, 10, 14, 30, 15, 123, 456);
+    });
+
+    test('year', () {
+      date.year = 123;
+      expect(date.year, 123);
+      expect(date.month, 05);
+      expect(date.day, 10);
+      expect(date.hour, 14);
+      expect(date.minute, 30);
+      expect(date.second, 15);
+      expect(date.millisecond, 123);
+      expect(date.microsecond, 456);
+    });
+
+    test('month', () {
+      date.month = 11;
+      expect(date.year, 1378);
+      expect(date.month, 11);
+      expect(date.day, 10);
+      expect(date.hour, 14);
+      expect(date.minute, 30);
+      expect(date.second, 15);
+      expect(date.millisecond, 123);
+      expect(date.microsecond, 456);
+    });
+
+    test('day', () {
+      date.day = 28;
+      expect(date.year, 1378);
+      expect(date.month, 05);
+      expect(date.day, 28);
+      expect(date.hour, 14);
+      expect(date.minute, 30);
+      expect(date.second, 15);
+      expect(date.millisecond, 123);
+      expect(date.microsecond, 456);
+    });
+
+    test('hour', () {
+      date.hour = 23;
+      expect(date.year, 1378);
+      expect(date.month, 05);
+      expect(date.day, 10);
+      expect(date.hour, 23);
+      expect(date.minute, 30);
+      expect(date.second, 15);
+      expect(date.millisecond, 123);
+      expect(date.microsecond, 456);
+    });
+
+    test('minute', () {
+      date.minute = 59;
+      expect(date.year, 1378);
+      expect(date.month, 05);
+      expect(date.day, 10);
+      expect(date.hour, 14);
+      expect(date.minute, 59);
+      expect(date.second, 15);
+      expect(date.millisecond, 123);
+      expect(date.microsecond, 456);
+    });
+
+    test('second', () {
+      date.second = 23;
+      expect(date.year, 1378);
+      expect(date.month, 05);
+      expect(date.day, 10);
+      expect(date.hour, 14);
+      expect(date.minute, 30);
+      expect(date.second, 23);
+      expect(date.millisecond, 123);
+      expect(date.microsecond, 456);
+    });
+
+    test('millisecond', () {
+      date.millisecond = 789;
+      expect(date.year, 1378);
+      expect(date.month, 05);
+      expect(date.day, 10);
+      expect(date.hour, 14);
+      expect(date.minute, 30);
+      expect(date.second, 15);
+      expect(date.millisecond, 789);
+      expect(date.microsecond, 456);
+    });
+
+    test('microsecond', () {
+      date.microsecond = 852;
+      expect(date.year, 1378);
+      expect(date.month, 05);
+      expect(date.day, 10);
+      expect(date.hour, 14);
+      expect(date.minute, 30);
+      expect(date.second, 15);
+      expect(date.millisecond, 123);
+      expect(date.microsecond, 852);
+    });
+
+    test('millisecondsSinceEpoch', () {
+      date.millisecondsSinceEpoch = date.millisecondsSinceEpoch +
+          123 + //millisecond
+          (2 * 1000) + //second
+          (5 * 60 * 1000) + //minute
+          (7 * 60 * 60 * 1000) + //hour
+          (3 * 24 * 60 * 60 * 1000) + //day
+          (1 * 31 * 24 * 60 * 60 * 1000); //month
+      expect(date.year, 1378);
+      expect(date.month, 05 + 1);
+      expect(date.day, 10 + 3);
+      expect(date.hour, 14 + 7);
+      expect(date.minute, 30 + 5);
+      expect(date.second, 15 + 2);
+      expect(date.millisecond, 123 + 123);
+      expect(date.microsecond, 0);
+    });
+
+    test('microsecondsSinceEpoch', () {
+      date.microsecondsSinceEpoch = date.microsecondsSinceEpoch +
+          123 + //microsecond
+          (456 * 1000) + //millisecond
+          (5 * 1000 * 1000) + //second
+          (7 * 60 * 1000 * 1000) + //minute
+          (3 * 60 * 60 * 1000 * 1000) + //hour
+          (4 * 24 * 60 * 60 * 1000 * 1000) + //day
+          (1 * 31 * 24 * 60 * 60 * 1000 * 1000); //month
+      expect(date.year, 1378);
+      expect(date.month, 05 + 1);
+      expect(date.day, 10 + 4);
+      expect(date.hour, 14 + 3);
+      expect(date.minute, 30 + 7);
+      expect(date.second, 15 + 5);
+      expect(date.millisecond, 123 + 456);
+      expect(date.microsecond, 456 + 123);
+    });
   });
 
   group('weekday Parameter', () {
