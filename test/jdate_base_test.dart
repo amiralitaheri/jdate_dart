@@ -91,15 +91,92 @@ void main() {
     });
   });
 
-//  group('parse', () {
-//    test('2012-02-27 13:27:00 test', () {
-//      var jDate = DateTime.parse('2012-02-27 13:27:00').toJDate();
-//      expect(jDate.year, 1390);
-//      expect(jDate.month, 12);
-//      expect(jDate.day, 8);
-//      expect(jDate.weekday, 0);
-//    });
-//  });
+  group('Parameters Setter', () {
+    test('year', () {});
+    test('month', () {});
+    test('day', () {});
+    test('hour', () {});
+    test('minute', () {});
+    test('second', () {});
+    test('millisecond', () {});
+    test('microsecond', () {});
+    test('millisecondsSinceEpoch', () {});
+    test('microsecondsSinceEpoch', () {});
+  });
+
+  group('weekday Parameter', () {
+    test('', () {});
+  });
+
+  group('timeZoneOffset Parameter', () {
+    test('', () {});
+  });
+
+  group('timeZoneName Parameter', () {
+    test('', () {});
+  });
+
+  group('weekdayName Parameter', () {
+    test('', () {});
+  });
+
+  group('monthName Parameter', () {
+    test('', () {});
+  });
+
+  group('shortYear Parameter', () {
+    test('', () {});
+  });
+
+  group('utc', () {
+    test('', () {});
+  });
+
+  group('Second to Date Constructor', () {
+    test('fromMicrosecondsSinceEpoch', () {});
+    test('fromMillisecondsSinceEpoch', () {});
+  });
+
+  group('parse', () {
+    test('', () {});
+  });
+
+  group('tryParse', () {
+    test('', () {});
+  });
+
+  group('changeTo', () {
+    test('', () {});
+  });
+
+  group('echo', () {
+    test('', () {});
+  });
+
+  group('Change Date (Add, Sub)', () {
+    test('subtract', () {});
+    test('add', () {});
+  });
+
+  group('Compare Dates', () {
+    test('compareTo', () {});
+    test('difference', () {});
+    test('isAfter', () {});
+    test('isBefore', () {});
+    test('isAtSameMomentAs', () {});
+  });
+
+  group('toIso8601String', () {
+    test('', () {});
+  });
+
+  group('toUtc', () {
+    test('', () {});
+  });
+
+  group('toLocal', () {
+    test('', () {});
+  });
 
   group('Leap year', () {
     var leapYears = [
