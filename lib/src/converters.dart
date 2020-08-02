@@ -107,7 +107,7 @@ BasicDate gregorianToJalali(int gy, int gm, int gd) {
   return BasicDate(jy, jm, jd);
 }
 
-BasicDate hijriToGregorian(int hy, int hm, int hd) {
+BasicDate ummalquraToGregorian(int hy, int hm, int hd) {
   var i = ((hy - 1) * 12) + 1 + (hm - 1) - 16260;
   var julianDate = hd + _ummalquraDataIndex(i - 1) - 1 + 2400000;
   var z = (julianDate + 0.5).floor();
@@ -126,7 +126,7 @@ BasicDate hijriToGregorian(int hy, int hm, int hd) {
   return BasicDate(year, month, day);
 }
 
-BasicDate gregorianToHijri(int year, int month, int day) {
+BasicDate gregorianToUmmalqura(int year, int month, int day) {
 //This code the modified version of R.H. van Gent Code, it can be found at http://www.staff.science.uu.nl/~gent0113/islam/ummalqura.htm
   var m = month;
   var y = year;
@@ -183,3 +183,56 @@ BasicDate gregorianToHijri(int year, int month, int day) {
 
   return BasicDate(iy, im, id);
 }
+
+int islamicToJdn(int year, int month, int day) {
+  if (year <= 0) ++year;
+  return ((10631 * year - 10617) / 30).floor() +
+      ((325 * month - 320) / 11).floor() +
+      day +
+      1948439;
+}
+
+BasicDate jdnToIslamic(int jd) {
+  final k2 = 30 * (jd - 1948440) + 15;
+  final k1 = 11 * ((k2 % 10631) / 30).floor() + 5;
+  var effective_year = (k2 / 10631).floor() + 1;
+  if (effective_year <= 0) --effective_year;
+  return BasicDate(
+      effective_year, (k1 / 325).floor() + 1, ((k1 % 325) / 11).floor() + 1);
+}
+
+int gregorianToJdn(int year, int month, int day) {
+// append January and February to the previous year (i.e. regard March as
+// the first month of the year in order to simplify leapday corrections)
+  if (month < 3) {
+    year -= 1;
+    month += 12;
+  }
+// determine offset between Julian and Gregorian calendar
+  var a = (year / 100).floor();
+  var jgc = a - (a / 4.0).floor() - 2;
+// compute Chronological Julian Day Number (CJDN)
+  return (365.25 * (year + 4716)).floor() +
+      (30.6001 * (month + 1)).floor() +
+      day -
+      jgc -
+      1524;
+}
+
+BasicDate jdnToGregorian(int jd) {
+  final x3Quot = ((4 * jd - 6884477) / 146097).floor();
+  final x3Rem = ((4 * jd - 6884477) % 146097);
+  final x2Quot = ((100 * (x3Rem / 4).floor() + 99) / 36525).floor();
+  final x2Rem = ((100 * (x3Rem / 4).floor() + 99) % 36525);
+  final x1Quot = ((5 * (x2Rem / 100).floor() + 2) / 153).floor();
+  final x1Rem = ((5 * (x2Rem / 100).floor() + 2) % 153);
+  final c0 = ((x1Quot + 2) / 12).floor();
+  return BasicDate(100 * x3Quot + x2Quot + c0, x1Quot - 12 * c0 + 3,
+      (x1Rem / 5).floor() + 1);
+}
+
+BasicDate gregorianToIslamic(int year, int month, int day) =>
+    jdnToIslamic(gregorianToJdn(year, month, day));
+
+BasicDate islamicToGregorian(int year, int month, int day) =>
+    jdnToGregorian(islamicToJdn(year, month, day));

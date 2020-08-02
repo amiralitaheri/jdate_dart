@@ -1028,7 +1028,7 @@ void main() {
           jalali,
         );
         expect(
-          JDate.gregorianToHijri(greg.year, greg.month, greg.day),
+          JDate.gregorianToUmmalqura(greg.year, greg.month, greg.day),
           um,
         );
       });
@@ -1039,18 +1039,18 @@ void main() {
           greg,
         );
         expect(
-          JDate.jalaliToHijri(jalali.year, jalali.month, jalali.day),
+          JDate.jalaliToUmmalqura(jalali.year, jalali.month, jalali.day),
           um,
         );
       });
 
       test('${um.year}-${um.month}-${um.day}(Ummalqura) Convert', () {
         expect(
-          JDate.hijriToGregorian(um.year, um.month, um.day),
+          JDate.ummalquraToGregorian(um.year, um.month, um.day),
           greg,
         );
         expect(
-          JDate.hijriToJalali(um.year, um.month, um.day),
+          JDate.ummalquraToJalali(um.year, um.month, um.day),
           jalali,
         );
       });

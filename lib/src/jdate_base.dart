@@ -834,21 +834,37 @@ class JDate implements Comparable<JDate> {
   static BasicDate gregorianToJalali(int year, int month, int day) =>
       converter.gregorianToJalali(year, month, day);
 
-  static BasicDate hijriToGregorian(int year, int month, int day) =>
-      converter.hijriToGregorian(year, month, day);
+  static BasicDate ummalquraToGregorian(int year, int month, int day) =>
+      converter.ummalquraToGregorian(year, month, day);
 
-  static BasicDate gregorianToHijri(int year, int month, int day) =>
-      converter.gregorianToHijri(year, month, day);
+  static BasicDate gregorianToUmmalqura(int year, int month, int day) =>
+      converter.gregorianToUmmalqura(year, month, day);
 
-  static BasicDate hijriToJalali(int year, int month, int day) {
-    var date = converter.hijriToGregorian(year, month, day);
+  static BasicDate ummalquraToJalali(int year, int month, int day) {
+    final date = converter.ummalquraToGregorian(year, month, day);
     return converter.gregorianToJalali(date.year, date.month, date.day);
   }
 
-  static BasicDate jalaliToHijri(int year, int month, int day) {
-    var date = converter.jalaliToGregorian(year, month, day);
-    return converter.gregorianToHijri(date.year, date.month, date.day);
+  static BasicDate jalaliToUmmalqura(int year, int month, int day) {
+    final date = converter.jalaliToGregorian(year, month, day);
+    return converter.gregorianToUmmalqura(date.year, date.month, date.day);
   }
+
+  static BasicDate jalaliToIslamic(int year, int month, int day) {
+    final date = converter.jalaliToGregorian(year, month, day);
+    return converter.gregorianToIslamic(date.year, date.month, date.day);
+  }
+
+  static BasicDate islamicToJalali(int year, int month, int day) {
+    final date = converter.islamicToGregorian(year, month, day);
+    return converter.gregorianToJalali(date.year, date.month, date.day);
+  }
+
+  static BasicDate gregorianToIslamic(int year, int month, int day) =>
+      converter.gregorianToIslamic(year, month, day);
+
+  static BasicDate islamicToGregorian(int year, int month, int day) =>
+      converter.islamicToGregorian(year, month, day);
 
   /// Compares this JDate object to [other],
   /// returning zero if the values are equal.
