@@ -1,3 +1,9 @@
+## 0.8.0
+
+- Renamed Hijri Converters to Ummalqura (Arabic Hijri Qamari)
+- Added Islamic (Persian Hijri Qamari) Converters
+- Added even more tests 😊
+
 ## 0.7.0
 
 - Added a new class `BasicDate`
