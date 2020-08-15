@@ -34,6 +34,17 @@ class JDate implements Comparable<JDate> {
   /// A JavaScript number is not able to hold this value.
   int get microsecondsSinceEpoch => _microsecondsSinceEpoch;
 
+  /// The number of microseconds since
+  /// the 'Unix epoch' 1970-01-01T00:00:00Z (UTC).
+  ///
+  /// This value is independent of the time zone.
+  ///
+  /// This value is at most
+  /// 8,640,000,000,000,000,000us (100,000,000 days) from the Unix epoch.
+  /// In other words: `microsecondsSinceEpoch.abs() <= 8640000000000000000`.
+  ///
+  /// Note that this value does not fit into 53 bits (the size of a IEEE double).
+  /// A JavaScript number is not able to hold this value.
   set microsecondsSinceEpoch(int microsecondsSinceEpoch) {
     var gregorian = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch);
     _internal(gregorian);
@@ -49,6 +60,14 @@ class JDate implements Comparable<JDate> {
   /// In other words: `millisecondsSinceEpoch.abs() <= 8640000000000000`.
   int get millisecondsSinceEpoch => _millisecondsSinceEpoch;
 
+  /// The number of milliseconds since
+  /// the 'Unix epoch' 1970-01-01T00:00:00Z (UTC).
+  ///
+  /// This value is independent of the time zone.
+  ///
+  /// This value is at most
+  /// 8,640,000,000,000,000ms (100,000,000 days) from the Unix epoch.
+  /// In other words: `millisecondsSinceEpoch.abs() <= 8640000000000000`.
   set millisecondsSinceEpoch(int millisecondsSinceEpoch) {
     var gregorian = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
     _internal(gregorian);
@@ -62,6 +81,12 @@ class JDate implements Comparable<JDate> {
   /// ```
   int get microsecond => _microsecond;
 
+  /// The microsecond [0...999].
+  ///
+  /// ```
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
+  /// assert(moonLanding.microsecond == 0);
+  /// ```
   set microsecond(int microsecond) {
     if (microsecond >= 0 && microsecond < 1000) {
       _microsecondsSinceEpoch += -_microsecond + microsecond;
@@ -79,6 +104,12 @@ class JDate implements Comparable<JDate> {
   /// ```
   int get millisecond => _millisecond;
 
+  /// The millisecond [0...999].
+  ///
+  /// ```
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
+  /// assert(moonLanding.millisecond == 0);
+  /// ```
   set millisecond(int millisecond) {
     if (millisecond >= 0 && millisecond < 1000) {
       _microsecondsSinceEpoch += 1000 * (-_millisecond + millisecond);
@@ -97,6 +128,12 @@ class JDate implements Comparable<JDate> {
   /// ```
   int get second => _second;
 
+  /// The second [0...59].
+  ///
+  /// ```
+  /// var moonLanding = Jdate.parse('1969-07-20 20:18:04Z');
+  /// assert(moonLanding.second == 4);
+  /// ```
   set second(int second) {
     if (second >= 0 && second < 60) {
       _microsecondsSinceEpoch += 1000000 * (-_second + second);
@@ -115,6 +152,12 @@ class JDate implements Comparable<JDate> {
   /// ```
   int get minute => _minute;
 
+  /// The minute [0...59].
+  ///
+  /// ```
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
+  /// assert(moonLanding.minute == 18);
+  /// ```
   set minute(int minute) {
     if (minute >= 0 && minute < 60) {
       _microsecondsSinceEpoch += 60 * 1000000 * (-_minute + minute);
@@ -133,6 +176,12 @@ class JDate implements Comparable<JDate> {
   /// ```
   int get hour => _hour;
 
+  /// The hour of the day, expressed as in a 24-hour clock [0..23].
+  ///
+  /// ```
+  /// var moonLanding = JDate.parse('1969-07-20 20:18:04Z');
+  /// assert(moonLanding.hour == 20);
+  /// ```
   set hour(int hour) {
     if (hour >= 0 && hour < 60) {
       _microsecondsSinceEpoch += 60 * 60 * 1000000 * (-_hour + hour);
@@ -151,6 +200,12 @@ class JDate implements Comparable<JDate> {
   /// ```
   int get day => _day;
 
+  /// The day of the month [1..31].
+  ///
+  /// ```
+  /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
+  /// assert(moonLanding.day == 29);
+  /// ```
   set day(int day) {
     if (day > 0 && day <= monthLength) {
       _day = day;
@@ -181,6 +236,12 @@ class JDate implements Comparable<JDate> {
   /// ```
   int get month => _month;
 
+  /// The month [1..12].
+  ///
+  /// ```
+  /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
+  /// assert(moonLanding.month == 4);
+  /// ```
   set month(int month) {
     if (month > 0 && month <= 12) {
       _month = month;
@@ -211,6 +272,12 @@ class JDate implements Comparable<JDate> {
   /// ```
   int get year => _year;
 
+  /// The year.
+  ///
+  /// ```
+  /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
+  /// assert(moonLanding.year == 1348);
+  /// ```
   set year(int year) {
     if (year > 0) {
       _year = year;
@@ -812,57 +879,71 @@ class JDate implements Comparable<JDate> {
   Duration difference(JDate other) =>
       toDateTime().difference(other.toDateTime());
 
+  /// Compares two JDate base on their microsecondsSinceEpoch (millisecondsSinceEpoch if running on js environment)
   bool operator >(JDate other) => isJs
       ? _millisecondsSinceEpoch > other.millisecondsSinceEpoch
       : _microsecondsSinceEpoch > other.microsecondsSinceEpoch;
 
+  /// Compares two JDate base on their microsecondsSinceEpoch (millisecondsSinceEpoch if running on js environment)
   bool operator >=(JDate other) => isJs
       ? _millisecondsSinceEpoch >= other.millisecondsSinceEpoch
       : _microsecondsSinceEpoch >= other.microsecondsSinceEpoch;
 
+  /// Compares two JDate base on their microsecondsSinceEpoch (millisecondsSinceEpoch if running on js environment)
   bool operator <(JDate other) => isJs
       ? _millisecondsSinceEpoch > other.millisecondsSinceEpoch
       : _microsecondsSinceEpoch > other.microsecondsSinceEpoch;
 
+  /// Compares two JDate base on their microsecondsSinceEpoch (millisecondsSinceEpoch if running on js environment)
   bool operator <=(JDate other) => isJs
       ? _millisecondsSinceEpoch <= other.millisecondsSinceEpoch
       : _microsecondsSinceEpoch <= other.microsecondsSinceEpoch;
 
+  /// Convert Jalali (Shamsi) Date to Gregorian (Miladi) Date and returns a [BasicDate]
   static BasicDate jalaliToGregorian(int year, int month, int day) =>
       converter.jalaliToGregorian(year, month, day);
 
+  /// Convert Gregorian (Miladi) Date to Jalali (Shamsi) Date and returns a [BasicDate]
   static BasicDate gregorianToJalali(int year, int month, int day) =>
       converter.gregorianToJalali(year, month, day);
 
+  /// Convert Ummalqura (Arabic Hijri Qamari) Date to Gregorian (Miladi) Date and returns a [BasicDate]
   static BasicDate ummalquraToGregorian(int year, int month, int day) =>
       converter.ummalquraToGregorian(year, month, day);
 
+  /// Convert Gregorian (Miladi) Date to Ummalqura (Arabic Hijri Qamari) Date and returns a [BasicDate]
   static BasicDate gregorianToUmmalqura(int year, int month, int day) =>
       converter.gregorianToUmmalqura(year, month, day);
 
+  /// Convert Ummalqura (Arabic Hijri Qamari) Date to Jalali (Shamsi) Date and returns a [BasicDate]
   static BasicDate ummalquraToJalali(int year, int month, int day) {
     final date = converter.ummalquraToGregorian(year, month, day);
     return converter.gregorianToJalali(date.year, date.month, date.day);
   }
 
+  /// Convert Jalali (Shamsi) Date to Ummalqura (Arabic Hijri Qamari) Date and returns a [BasicDate]
   static BasicDate jalaliToUmmalqura(int year, int month, int day) {
     final date = converter.jalaliToGregorian(year, month, day);
     return converter.gregorianToUmmalqura(date.year, date.month, date.day);
   }
 
+  /// Convert Jalali (Shamsi) Date to Islamic (Persian Hijri Qamari) Date and returns a [BasicDate]
   static BasicDate jalaliToIslamic(int year, int month, int day) {
     final date = converter.jalaliToGregorian(year, month, day);
     return converter.gregorianToIslamic(date.year, date.month, date.day);
   }
 
+  /// Convert Islamic (Persian Hijri Qamari) Date to Jalali (Shamsi) Date and returns a [BasicDate]
   static BasicDate islamicToJalali(int year, int month, int day) {
     final date = converter.islamicToGregorian(year, month, day);
     return converter.gregorianToJalali(date.year, date.month, date.day);
   }
 
+  /// Convert Gregorian (Miladi) Date to Islamic (Persian Hijri Qamari) Date and returns a [BasicDate]
   static BasicDate gregorianToIslamic(int year, int month, int day) =>
       converter.gregorianToIslamic(year, month, day);
 
+  /// Convert Islamic (Persian Hijri Qamari) Date to Gregorian (Miladi) Date and returns a [BasicDate]
   static BasicDate islamicToGregorian(int year, int month, int day) =>
       converter.islamicToGregorian(year, month, day);
 

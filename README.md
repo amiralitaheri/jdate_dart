@@ -151,10 +151,14 @@ parse(String string) | Parse the string an returns a `JDate` object, throws Exce
 tryParse(String string) | Tries to parse the string an returns a `JDate` object, returns null if string is not valid 
 jalaliToGregorian(int year, int month, int date) | Converts Jalali date to Gregorian and return the result as a `BasicDate`
 gregorianToJalali(int year, int month, int date) | Converts Gregorian date to Jalali and return the result as a `BasicDate`
-hijriToGregorian(int year, int month, int date) | Converts Hijri date to Gregorian and return the result as a `BasicDate`
-gregorianToHijri(int year, int month, int date) | Converts Gregorian date to Hijri and return the result as a `BasicDate`
-jalaliToHijri(int year, int month, int date) | Converts Jalali date to Hijri and return the result as a `BasicDate`
-hijriToJalali(int year, int month, int date) | Converts Hijri date to Jalali and return the result as a `BasicDate`
+ummalquraToGregorian(int year, int month, int date) | Converts Ummalqura date to Gregorian and return the result as a `BasicDate`
+gregorianToUmmalqura(int year, int month, int date) | Converts Gregorian date to Ummalqura and return the result as a `BasicDate`
+ummalquraToJalali(int year, int month, int date) | Converts Jalali date to Ummalqura and return the result as a `BasicDate`
+jalaliToUmmalqura(int year, int month, int date) | Converts Ummalqura date to Jalali and return the result as a `BasicDate`
+islamicToGregorian(int year, int month, int date) | Converts Islamic date to Gregorian and return the result as a `BasicDate`
+gregorianToIslamic(int year, int month, int date) | Converts Gregorian date to Islamic and return the result as a `BasicDate`
+islamicToJalali(int year, int month, int date) | Converts Islamic date to Jalali and return the result as a `BasicDate`
+jalaliToIslamic(int year, int month, int date) | Converts Jalali date to Islamic and return the result as a `BasicDate`
 
 ## Extension Methods
 
