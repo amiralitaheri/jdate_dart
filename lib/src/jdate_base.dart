@@ -46,8 +46,9 @@ class JDate implements Comparable<JDate> {
   /// Note that this value does not fit into 53 bits (the size of a IEEE double).
   /// A JavaScript number is not able to hold this value.
   set microsecondsSinceEpoch(int microsecondsSinceEpoch) {
-    var gregorian = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch);
-    _internal(gregorian);
+    if (microsecondsSinceEpoch.abs() <= 8640000000000000000) {
+      _internal(DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch));
+    }
   }
 
   /// The number of milliseconds since
@@ -69,8 +70,9 @@ class JDate implements Comparable<JDate> {
   /// 8,640,000,000,000,000ms (100,000,000 days) from the Unix epoch.
   /// In other words: `millisecondsSinceEpoch.abs() <= 8640000000000000`.
   set millisecondsSinceEpoch(int millisecondsSinceEpoch) {
-    var gregorian = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
-    _internal(gregorian);
+    if (millisecondsSinceEpoch.abs() <= 8640000000000000) {
+      _internal(DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch));
+    }
   }
 
   /// The microsecond [0...999].
@@ -209,8 +211,8 @@ class JDate implements Comparable<JDate> {
   set day(int day) {
     if (day > 0 && day <= monthLength) {
       _day = day;
-      var date = converter.jalaliToGregorian(_year, _month, _day);
-      var gregorian = DateTime(
+      final date = converter.jalaliToGregorian(_year, _month, _day);
+      final gregorian = DateTime(
         date.year,
         date.month,
         date.day,
@@ -245,8 +247,8 @@ class JDate implements Comparable<JDate> {
   set month(int month) {
     if (month > 0 && month <= 12) {
       _month = month;
-      var date = converter.jalaliToGregorian(_year, _month, _day);
-      var gregorian = DateTime(
+      final date = converter.jalaliToGregorian(_year, _month, _day);
+      final gregorian = DateTime(
         date.year,
         date.month,
         date.day,
@@ -281,8 +283,8 @@ class JDate implements Comparable<JDate> {
   set year(int year) {
     if (year > 0) {
       _year = year;
-      var date = converter.jalaliToGregorian(_year, _month, _day);
-      var gregorian = DateTime(
+      final date = converter.jalaliToGregorian(_year, _month, _day);
+      final gregorian = DateTime(
         date.year,
         date.month,
         date.day,
@@ -396,8 +398,8 @@ class JDate implements Comparable<JDate> {
     int millisecond = 0,
     int microsecond = 0,
   ]) {
-    var greg = jalaliToGregorian(year, month, day);
-    var datetime = DateTime(
+    final greg = jalaliToGregorian(year, month, day);
+    final datetime = DateTime(
       greg.year,
       greg.month,
       greg.day,
@@ -426,8 +428,8 @@ class JDate implements Comparable<JDate> {
     int millisecond = 0,
     int microsecond = 0,
   ]) {
-    var greg = jalaliToGregorian(year, month, day);
-    var datetime = DateTime.utc(
+    final greg = jalaliToGregorian(year, month, day);
+    final datetime = DateTime.utc(
       greg.year,
       greg.month,
       greg.day,
@@ -463,9 +465,8 @@ class JDate implements Comparable<JDate> {
   /// [microsecondsSinceEpoch] is completely based on gregorian.
   JDate.fromMicrosecondsSinceEpoch(int microsecondsSinceEpoch,
       {bool isUtc = false}) {
-    var gregorian = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch,
-        isUtc: isUtc);
-    _internal(gregorian);
+    _internal(DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch,
+        isUtc: isUtc));
   }
 
   /// Constructs a new [JDate] instance
@@ -480,9 +481,8 @@ class JDate implements Comparable<JDate> {
   /// [millisecondsSinceEpoch] is completely based on gregorian.
   JDate.fromMillisecondsSinceEpoch(int millisecondsSinceEpoch,
       {bool isUtc = false}) {
-    var gregorian = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch,
-        isUtc: isUtc);
-    _internal(gregorian);
+    _internal(DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch,
+        isUtc: isUtc));
   }
 
   /// Constructs a [JDate] instance with current date and time in the
@@ -494,8 +494,8 @@ class JDate implements Comparable<JDate> {
   JDate.now() : this.fromDateTime(DateTime.now());
 
   static String _fourDigits(int n) {
-    var absN = n.abs();
-    var sign = n < 0 ? '-' : '';
+    final absN = n.abs();
+    final sign = n < 0 ? '-' : '';
     if (absN >= 1000) return '$n';
     if (absN >= 100) return '${sign}0$absN';
     if (absN >= 10) return '${sign}00$absN';
@@ -504,8 +504,8 @@ class JDate implements Comparable<JDate> {
 
   static String _sixDigits(int n) {
     assert(n < -9999 || n > 9999);
-    var absN = n.abs();
-    var sign = n < 0 ? '-' : '+';
+    final absN = n.abs();
+    final sign = n < 0 ? '-' : '+';
     if (absN >= 100000) return '$sign$absN';
     return '${sign}0$absN';
   }
@@ -526,7 +526,7 @@ class JDate implements Comparable<JDate> {
   // Main function that set everything in object
   void _internal(DateTime dateTime) {
     //initialize parameters
-    var greg = gregorianToJalali(dateTime.year, dateTime.month, dateTime.day);
+    final greg = gregorianToJalali(dateTime.year, dateTime.month, dateTime.day);
     _year = greg.year;
     _month = greg.month;
     _day = greg.day;
@@ -556,7 +556,7 @@ class JDate implements Comparable<JDate> {
   /// Parse the string an returns a JDate object, throws Exception if string is not valid.
   static JDate parse(String string) {
     string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
-    var date = DateTime.parse(string);
+    final date = DateTime.parse(string);
 
     if (date.isUtc) {
       return JDate.utc(
@@ -586,7 +586,7 @@ class JDate implements Comparable<JDate> {
   /// Tries to parse the string an returns a JDate object, returns null if string is not valid.
   static JDate tryParse(String string) {
     string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
-    var date = DateTime.tryParse(string);
+    final date = DateTime.tryParse(string);
     if (date == null) return null;
     if (date.isUtc) {
       return JDate.utc(
@@ -630,7 +630,7 @@ class JDate implements Comparable<JDate> {
     int microsecond,
     bool isUtc,
   }) {
-    var greg = jalaliToGregorian(year ?? _year, month ?? _month, day ?? _day);
+    final greg = jalaliToGregorian(year ?? _year, month ?? _month, day ?? _day);
     var datetime;
     if (isUtc ?? _isUtc) {
       datetime = DateTime.utc(
@@ -661,10 +661,10 @@ class JDate implements Comparable<JDate> {
 
   /// Turns [JDate] to [String] base on format.
   String echo([String format = 'l، d F Y ساعت H:i:s']) {
-    var leapYear = isLeapYear;
-    var jw = _weekday;
-    var jy = shortYear;
-    var jtz = _timeZoneName;
+    final leapYear = isLeapYear;
+    final jw = _weekday;
+    final jy = shortYear;
+    final jtz = _timeZoneName;
 
     return format
         .replaceAll('a', (_hour < 12) ? 'ق.ظ' : 'ب.ظ')
@@ -722,7 +722,7 @@ class JDate implements Comparable<JDate> {
   String toString() => echo('Y/m/d H:i:s');
 
   /// Converts this [JDate] to a DateTime object with gregorian date.
-  DateTime toDateTime() => (isJs)
+  DateTime toDateTime() => isJs
       ? DateTime.fromMillisecondsSinceEpoch(_millisecondsSinceEpoch)
       : DateTime.fromMicrosecondsSinceEpoch(_microsecondsSinceEpoch);
 
@@ -739,7 +739,7 @@ class JDate implements Comparable<JDate> {
   /// may not even hit the calendar date 50 days later.
   ///
   /// Be careful when working with dates in local time.
-  JDate add(Duration duration) => (isJs)
+  JDate add(Duration duration) => isJs
       ? JDate.fromMillisecondsSinceEpoch(
           _millisecondsSinceEpoch + duration.inMilliseconds)
       : JDate.fromMicrosecondsSinceEpoch(
@@ -758,7 +758,7 @@ class JDate implements Comparable<JDate> {
   /// may not even hit the calendar date 50 days earlier.
   ///
   /// Be careful when working with dates in local time.
-  JDate subtract(Duration duration) => (isJs)
+  JDate subtract(Duration duration) => isJs
       ? JDate.fromMillisecondsSinceEpoch(
           _millisecondsSinceEpoch - duration.inMilliseconds)
       : JDate.fromMicrosecondsSinceEpoch(
@@ -780,7 +780,7 @@ class JDate implements Comparable<JDate> {
   @override
   bool operator ==(dynamic other) =>
       (other is JDate && _timeZoneOffset == other.timeZoneOffset)
-          ? (isJs)
+          ? isJs
               ? (_millisecondsSinceEpoch == other.millisecondsSinceEpoch)
               : (_microsecondsSinceEpoch == other.microsecondsSinceEpoch)
           : false;
