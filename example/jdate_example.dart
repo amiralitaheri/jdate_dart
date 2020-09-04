@@ -76,10 +76,14 @@ void main() {
   print('\n---Static methods---');
   print(JDate.gregorianToJalali(2020, 7, 16));
   print(JDate.jalaliToGregorian(1399, 4, 26));
-  print(JDate.gregorianToHijri(2020, 7, 16));
-  print(JDate.hijriToGregorian(1441, 11, 25));
-  print(JDate.hijriToJalali(1441, 11, 25));
-  print(JDate.jalaliToHijri(1399, 6, 6));
+  print(JDate.gregorianToUmmalqura(2020, 7, 16));
+  print(JDate.ummalquraToGregorian(1441, 11, 25));
+  print(JDate.ummalquraToJalali(1441, 11, 25));
+  print(JDate.jalaliToUmmalqura(1399, 6, 6));
+  print(JDate.islamicToJalali(1441, 11, 25));
+  print(JDate.jalaliToIslamic(1399, 6, 6));
+  print(JDate.gregorianToIslamic(2020, 1, 1));
+  print(JDate.islamicToGregorian(1441, 5, 5));
 
   // useful extension
   print('\n---Extension methods---');
