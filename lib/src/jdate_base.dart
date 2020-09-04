@@ -773,7 +773,39 @@ class JDate implements Comparable<JDate> {
   }
 
   /// Turns [JDate] to [String] base on format.
+  ///
+  /// Parameters:
+  ///
+  /// * a |  Before noon and afternoon. values: ق.ظ - ب.ظ
+  /// * b |  Numeric representation of a season, without leading zeros. values: 0-3
+  /// * d |  Day of the month, 2 digits with leading zeros. values: 01-31
+  /// * f |  Season name. values: بهار - تابستان - پاییز - زمستان
+  /// * g |  12-hour format of an hour without leading zeros. values: 0-12
+  /// * h |  12-hour format of an hour with leading zeros. values: 00-12
+  /// * i |  Minutes with leading zeros. values: 00-59
+  /// * j |  Day of the month without leading zeros. values: 1-31
+  /// * l |  A full textual representation of the day of the week. values: شنبه-جمعه
+  /// * m |  Numeric representation of a month, with leading zeros. values: 01-12
+  /// * n |  Numeric representation of a month, without leading zeros. values: 1-12
+  /// * s |  Seconds, with leading zeros. values: 00-59
+  /// * t |  Number of days in the given month. values: 0-31
+  /// * u |  Millisecond. values: 000000
+  /// * v |  Short year display in letters. example: نود و نه
+  /// * w |  Numeric representation of the day of the week. values: 0-6
+  /// * y |  A two or three digit representation of a year. example: 97
+  /// * A |  Before noon and afternoon. values: بعد از ظهر - قبل از ظهر
+  /// * D |  Persian ordinal suffix for the day of the month, 2 characters. values: شن‍ - جم
+  /// * F |  A full textual representation of a month. values: فروردین - اسفند
+  /// * G |  24-hour format of an hour without leading zeros. values: 0-24
+  /// * H |  24-hour format of an hour with leading zeros. values: 00-24
+  /// * J |  Day of the month. values: یک - سی و یک
+  /// * L |  Whether it’s a leap year. values: 0-1
+  /// * M |  A short textual representation of a month, two letters. values: فر-اس
+  /// * O |  Difference to Greenwich time (GMT) in hours. values: -1200 - +1400
+  /// * V |  Full year display in letters. example: یک هزار و سیصد و نود و هشت
+  /// * Y |  A full numeric representation of a year, 4 digits. values: 1377
   String echo([String format = 'l، d F Y ساعت H:i:s']) {
+    //todo: Change formatting names to smt more standard
     final leapYear = isLeapYear;
     final jw = _weekday;
     final jy = shortYear;
