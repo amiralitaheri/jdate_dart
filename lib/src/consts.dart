@@ -1,3 +1,4 @@
+/// Jalali months name
 const jalaliMonths = [
   {'long': 'فروردین', 'short': 'فر'},
   {'long': 'اردیبهشت', 'short': 'ار'},
@@ -13,6 +14,7 @@ const jalaliMonths = [
   {'long': 'اسفند', 'short': 'اس‍'}
 ];
 
+/// Jalali seasons name
 const jalaliSeasons = [
   {'long': 'بهار', 'short': 'به‍'},
   {'long': 'تابستان', 'short': 'تا'},
@@ -20,6 +22,7 @@ const jalaliSeasons = [
   {'long': 'زمستان', 'short': 'زم‍'}
 ];
 
+/// Jalali days name
 const jalaliDays = [
   {'long': 'شنبه', 'short': 'شن‍'},
   {'long': 'یکشنبه', 'short': 'یک'},
@@ -30,6 +33,7 @@ const jalaliDays = [
   {'long': 'جمعه', 'short': 'جم‍'}
 ];
 
+/// 1 to 9 in Persian
 const persianNumUnit = [
   'صفر',
   'یک',
@@ -43,6 +47,7 @@ const persianNumUnit = [
   'نه'
 ];
 
+/// 20 to 90 with 10 steps in Persian
 const persianNumDecimal = [
   '',
   '',
@@ -56,6 +61,7 @@ const persianNumDecimal = [
   'نود'
 ];
 
+/// 10 to 19 in Persian
 const persianNumTen_Twenty = [
   'ده',
   'یازده',
@@ -69,6 +75,7 @@ const persianNumTen_Twenty = [
   'نوزده'
 ];
 
+/// 100 to 900 with 100 steps in Persian
 const persianNumHundreds = [
   '',
   'یکصد',
@@ -82,6 +89,7 @@ const persianNumHundreds = [
   'نهصد'
 ];
 
+/// 1,000 to 1,000,000,000,000,000,000,000 with 1,000 steps in Persian
 const persianNumBase = [
   '',
   'هزار',

@@ -97,12 +97,20 @@ void main() {
   // parse
   print('\n---Parse---');
   print(DateTime.parse('2012-02-27 13:27:00').toJDate());
-  print(DateTime.parse('2012/02/27 13:27:00'.replaceAll(RegExp(r'[/\\]'), '-'))
-      .toJDate());
+  print(JDate.parse('1387-02-27'));
+  print(JDate.parse('1387-02-27 13:27:00'));
+  print(JDate.parse('1387-02-27 13:27:00.123456789z'));
+  print(JDate.parse('1387-02-27 13:27:00,123456789z'));
   print(JDate.parse('1399/09/09 13:27:00'));
-  print(JDate.parse('1399-09-09 13:27:00'));
+  print(JDate.parse('13870227 13:27:00'));
+  print(JDate.parse('13870227T132700'));
+  print(JDate.parse('13870227'));
+  print(JDate.parse('+13870227'));
+  print(JDate.parse('1387-02-27T14Z'));
+  print(JDate.parse('1387-02-27T14+00:00'));
+  print(JDate.parse('-123450101 00:00:00 Z'));
+  print(JDate.parse('1387-02-27T14:00:00-0500'));
   print(JDate.parse('۱۳۹۹/۰۹/۰۹'));
-  print(JDate.parse('1399/02/13'));
   print(JDate.parse(JDate(1378).toString())); //toString can be parsed back
 
   // Other Methods

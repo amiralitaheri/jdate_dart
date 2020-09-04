@@ -1,5 +1,5 @@
-/// This class only holds Date data.
-/// The Date Type is't specified so it can be Jalali, Gregorian or Hijri
+/// The class responsible to holds Date data.
+/// Date Type isn't specified so it can be Jalali, Gregorian or Hijri
 ///
 /// ```dart
 /// var date = DateBase(1378, 10, 30);

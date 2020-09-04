@@ -5,6 +5,86 @@ import 'extensions/number_extensions.dart';
 import 'extensions/string_extensions.dart';
 import 'js/is_js.dart' if (dart.library.io) 'vm/is_js.dart';
 
+/// An instant in time, such as 1377-02-16, 8:18pm.
+///
+/// JDate can represent time values that are at a distance of at most
+/// 100,000,000 days from epoch (1348-10-11 UTC): -272442-01-10 to 275139-07-12.
+/// Crossing this limit will cause `DateTime is outside valid range` exception.
+///
+/// Create a JDate object by using one of the constructors
+/// or by parsing a correctly formatted string.
+/// Note that hours are specified between 0 and 23,
+/// as in a 24-hour clock.
+/// For example:
+///
+/// ```
+/// var now = new JDate.now();
+/// var dayInPast = new JDate.utc(1377, 3, 14);
+/// var dayInNearFuture = JDate.parse("1405-01-01 20:18:04Z");
+/// ```
+///
+/// A JDate object is anchored either in the UTC time zone
+/// or in the local time zone of the current computer
+/// when the object is created.
+///
+/// You can use properties to get
+/// the individual units of a JDate object.
+///
+/// ```
+/// assert(dayInPast.month == 3);
+/// assert(dayInNearFuture.second == 4);
+/// ```
+///
+/// Day and month values begin at 1.
+///
+/// ## Working with UTC and local time
+///
+/// A JDate object is in the local time zone
+/// unless explicitly created in the UTC time zone.
+///
+/// ```
+/// var dDay = new JDate.utc(1944, 6, 6);
+/// ```
+///
+/// Use [isUtc] to determine whether a JDate object is based in UTC.
+/// Use the methods [toLocal] and [toUtc]
+/// to get the equivalent date/time value specified in the other time zone.
+/// Use [timeZoneName] to get an abbreviated name of the time zone
+/// for the JDate object.
+/// To find the difference
+/// between UTC and the time zone of a JDate object
+/// call [timeZoneOffset].
+///
+/// ## Comparing JDate objects
+///
+/// The JDate class contains several handy methods,
+/// such as [isAfter], [isBefore], and [isAtSameMomentAs],
+/// for comparing JDate objects.
+///
+/// ```
+/// assert(dayInPast.isAfter(dayInNearFuture) == false);
+/// assert(dayInPast.isBefore(dayInNearFuture) == true);
+/// ```
+///
+/// ## Using JDate with Duration
+///
+/// Use the [add] and [subtract] methods with a [Duration] object
+/// to create a new JDate object based on another.
+/// For example, to find the date that is sixty days (24 * 60 hours) after today,
+/// write:
+///
+/// ```
+/// var now = new JDate.now();
+/// var sixtyDaysFromNow = now.add(new Duration(days: 60));
+/// ```
+///
+/// To find out how much time is between two JDate objects use
+/// [difference], which returns a [Duration] object:
+///
+/// ```
+/// var difference = dayInPast.difference(dayInNearFuture);
+/// print(difference.inDays);
+/// ```
 class JDate implements Comparable<JDate> {
   int _microsecondsSinceEpoch;
   int _millisecondsSinceEpoch;
@@ -553,7 +633,58 @@ class JDate implements Comparable<JDate> {
     }
   }
 
-  /// Parse the string an returns a JDate object, throws Exception if string is not valid.
+  /// Constructs a new [JDate] instance based on [string].
+  ///
+  /// The [string] must not be `null`.
+  /// Throws a [FormatException] if the input string cannot be parsed.
+  ///
+  /// The function parses a subset of ISO 8601
+  /// which includes the subset accepted by RFC 3339.
+  ///
+  /// The accepted inputs are currently:
+  ///
+  /// * A date: A signed four-to-six digit year, two digit month and
+  ///   two digit day, optionally separated by `-` characters.
+  ///   Examples: "13770101", "-0004-12-24", "1600-04-01".
+  /// * An optional time part, separated from the date by either `T` or a space.
+  ///   The time part is a two digit hour,
+  ///   then optionally a two digit minutes value,
+  ///   then optionally a two digit seconds value, and
+  ///   then optionally a '.' or ',' followed by at least a one digit
+  ///   second fraction.
+  ///   The minutes and seconds may be separated from the previous parts by a
+  ///   ':'.
+  ///   Examples: "12", "12:30:24.124", "12:30:24,124", "123010.50".
+  /// * An optional time-zone offset part,
+  ///   possibly separated from the previous by a space.
+  ///   The time zone is either 'z' or 'Z', or it is a signed two digit hour
+  ///   part and an optional two digit minute part. The sign must be either
+  ///   "+" or "-", and can not be omitted.
+  ///   The minutes may be separated from the hours by a ':'.
+  ///   Examples: "Z", "-10", "+01:30", "+1130".
+  ///
+  /// This includes the output of both [toString] and [toIso8601String], which
+  /// will be parsed back into a `DateTime` object with the same time as the
+  /// original.
+  ///
+  /// The result is always in either local time or UTC.
+  /// If a time zone offset other than UTC is specified,
+  /// the time is converted to the equivalent UTC time.
+  ///
+  /// Examples of accepted strings:
+  ///
+  /// * `"1387-02-27"`
+  /// * `"1387-02-27 13:27:00"`
+  /// * `"1387-02-27 13:27:00.123456789z"`
+  /// * `"1387-02-27 13:27:00,123456789z"`
+  /// * `"13870227 13:27:00"`
+  /// * `"13870227T132700"`
+  /// * `"13870227"`
+  /// * `"+13870227"`
+  /// * `"1387-02-27T14Z"`
+  /// * `"1387-02-27T14+00:00"`
+  /// * `"-123450101 00:00:00 Z"`: in the year -12345.
+  /// * `"1387-02-27T14:00:00-0500"`: Same as `"1387-02-27T19:00:00Z"`
   static JDate parse(String string) {
     string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
     final date = DateTime.parse(string);
@@ -583,33 +714,15 @@ class JDate implements Comparable<JDate> {
     }
   }
 
-  /// Tries to parse the string an returns a JDate object, returns null if string is not valid.
+  /// Constructs a new [DateTime] instance based on [string].
+  ///
+  /// Works like [parse] except that this function returns `null`
+  /// where [parse] would throw a [FormatException].
   static JDate tryParse(String string) {
-    string = string.numbersToEnglish().replaceAll(RegExp(r'[/\\]'), '-');
-    final date = DateTime.tryParse(string);
-    if (date == null) return null;
-    if (date.isUtc) {
-      return JDate.utc(
-        date.year,
-        date.month,
-        date.day,
-        date.hour,
-        date.minute,
-        date.second,
-        date.millisecond,
-        date.microsecond,
-      );
-    } else {
-      return JDate(
-        date.year,
-        date.month,
-        date.day,
-        date.hour,
-        date.minute,
-        date.second,
-        date.millisecond,
-        date.microsecond,
-      );
+    try {
+      return parse(string);
+    } on FormatException {
+      return null;
     }
   }
 
@@ -865,11 +978,11 @@ class JDate implements Comparable<JDate> {
   /// The returned [Duration] will be negative if [other] occurs after [this].
   ///
   /// ```
-  /// var berlinWallFell = new DateTime.utc(1989, DateTime.november, 9);
-  /// var dDay = new DateTime.utc(1944, DateTime.june, 6);
+  /// var dayInPast = JDate.utc(1377, 3, 14);
+  /// var dayInNearFuture = JDate.utc(1405, 01, 01);
   ///
-  /// Duration difference = berlinWallFell.difference(dDay);
-  /// assert(difference.inDays == 16592);
+  /// Duration difference = dayInPast.difference(dayInNearFuture);
+  /// assert(difference.inDays == -10152);
   /// ```
   ///
   /// The difference is measured in seconds and fractions of seconds.
@@ -878,17 +991,6 @@ class JDate implements Comparable<JDate> {
   /// If the dates above had been in local time, not UTC, then the difference
   /// between two midnights may not be a multiple of 24 hours due to daylight
   /// saving differences.
-  ///
-  /// For example, in Australia, similar code using local time instead of UTC:
-  ///
-  /// ```
-  /// var berlinWallFell = new DateTime(1989, DateTime.november, 9);
-  /// var dDay = new DateTime(1944, DateTime.june, 6);
-  /// Duration difference = berlinWallFell.difference(dDay);
-  /// assert(difference.inDays == 16592);
-  /// ```
-  /// will fail because the difference is actually 16591 days and 23 hours, and
-  /// [Duration.inDays] only returns the number of whole days.
   Duration difference(JDate other) =>
       toDateTime().difference(other.toDateTime());
 
