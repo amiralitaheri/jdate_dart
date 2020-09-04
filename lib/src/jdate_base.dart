@@ -717,9 +717,22 @@ class JDate implements Comparable<JDate> {
   /// The `toString()` method provides a simply formatted string.
   ///
   /// The resulting string can be parsed back using [parse],
-  /// but it doesn't contain millisecond and microsecond.
   @override
-  String toString() => echo('Y/m/d H:i:s');
+  String toString(){
+    var y = _fourDigits(year);
+    var m = _twoDigits(month);
+    var d = _twoDigits(day);
+    var h = _twoDigits(hour);
+    var min = _twoDigits(minute);
+    var sec = _twoDigits(second);
+    var ms = _threeDigits(millisecond);
+    var us = microsecond == 0 ? '' : _threeDigits(microsecond);
+    if (isUtc) {
+      return '$y-$m-$d $h:$min:$sec.$ms${us}Z';
+    } else {
+      return '$y-$m-$d $h:$min:$sec.$ms$us';
+    }
+  }
 
   /// Converts this [JDate] to a DateTime object with gregorian date.
   DateTime toDateTime() => isJs
