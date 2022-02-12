@@ -92,7 +92,7 @@ void main() {
   });
 
   group('Parameters Setter', () {
-    JDate date;
+    late JDate date;
 
     setUp(() {
       date = JDate(1378, 05, 10, 14, 30, 15, 123, 456);
@@ -283,7 +283,7 @@ void main() {
       ['۱۳۹۹/۱۱/۰۹', 1399, 11, 09, 00, 00, 00, 0, 0],
     ].forEach((element) {
       test('Parse (${element[0]})', () {
-        final date = JDate.tryParse(element[0]);
+        final date = JDate.tryParse(element[0] as String)!;
         expect(date.year, element[1]);
         expect(date.month, element[2]);
         expect(date.day, element[3]);
@@ -294,7 +294,7 @@ void main() {
         expect(date.microsecond, element[8]);
       });
       test('Try Parse (${element[0]})', () {
-        final date = JDate.tryParse(element[0]);
+        final date = JDate.tryParse(element[0] as String)!;
         expect(date.year, element[1]);
         expect(date.month, element[2]);
         expect(date.day, element[3]);

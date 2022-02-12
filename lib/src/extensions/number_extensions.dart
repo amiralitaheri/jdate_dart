@@ -1,6 +1,6 @@
 import 'package:jdate/src/consts.dart';
 
-extension PersianIntegerHelper on int {
+extension PersianIntegerHelper on int? {
   // Convert numbers to Persian Words
   //
   // ex:
@@ -14,14 +14,17 @@ extension PersianIntegerHelper on int {
   // 919.toPersianWords(true)` == نهصد و نوزدهم
   // ```
   String toPersianWords([ordinal = false]) {
+    final _this = this;
+    if (_this == null) return 'NaN';
     if (this == 0) return 'صفر';
-    if (ordinal && isNegative) throw 'Ordinal can\'t be negative';
+    if (ordinal && _this.isNegative) throw 'Ordinal can\'t be negative';
 
-    var result = isNegative ? 'منفی ' : '';
-    var number = isNegative ? abs() : this; // make number positive
+    var result = _this.isNegative ? 'منفی ' : '';
+    final number =
+        _this.isNegative ? _this.abs() : this; // make number positive
 
     if (number.toString().length <= 3) {
-      var d12 = number % 100;
+      var d12 = number! % 100;
       var d3 = (number / 100).floor();
 
       if (d3 != 0) {
@@ -55,8 +58,9 @@ extension PersianIntegerHelper on int {
         default:
           padLen = 0;
       }
-      var numStr =
-          number.toString().padLeft(number.toString().length + padLen, '0');
+      var numStr = number
+          .toString()
+          .padLeft(number.toString().length + padLen as int, '0');
       final L = (numStr.length / 3 - 1).floor();
       int b;
       var threeZero = false;

@@ -86,20 +86,20 @@ import 'js/is_js.dart' if (dart.library.io) 'vm/is_js.dart';
 /// print(difference.inDays);
 /// ```
 class JDate implements Comparable<JDate> {
-  int _microsecondsSinceEpoch;
-  int _millisecondsSinceEpoch;
-  int _microsecond;
-  int _millisecond;
-  int _second;
-  int _minute;
-  int _hour;
-  int _day;
-  int _month;
-  int _year;
-  Duration _timeZoneOffset;
-  String _timeZoneName;
-  int _weekday;
-  bool _isUtc;
+  late int _microsecondsSinceEpoch;
+  late int _millisecondsSinceEpoch;
+  late int _microsecond;
+  late int _millisecond;
+  late int _second;
+  late int _minute;
+  late int _hour;
+  late int _day;
+  late int _month;
+  late int _year;
+  late Duration _timeZoneOffset;
+  late String _timeZoneName;
+  late int _weekday;
+  late bool _isUtc;
 
   /// The number of microseconds since
   /// the 'Unix epoch' 1970-01-01T00:00:00Z (UTC).
@@ -426,14 +426,14 @@ class JDate implements Comparable<JDate> {
   /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
   /// assert(moonLanding.weekDayName == 'یکشنبه');
   /// ```
-  String get weekdayName => jalaliDays[_weekday]['long'];
+  String get weekdayName => jalaliDays[_weekday]['long']!;
 
   /// Returns the name of month in persian.
   /// ```
   /// var moonLanding = DateTime.parse('1969-07-20 20:18:04Z').toJDate();
   /// assert(moonLanding.weekDayName == 'مرداد');
   /// ```
-  String get monthName => jalaliMonths[month]['long'];
+  String get monthName => jalaliMonths[month]['long']!;
 
   /// True if this [JDate.year] is a leap year.
   /// ```
@@ -483,11 +483,11 @@ class JDate implements Comparable<JDate> {
       greg.year,
       greg.month,
       greg.day,
-      hour ?? _hour,
-      minute ?? _minute,
-      second ?? _second,
-      millisecond ?? _millisecond,
-      microsecond ?? _microsecond,
+      hour,
+      minute,
+      second,
+      millisecond,
+      microsecond,
     );
 
     _internal(datetime);
@@ -513,11 +513,11 @@ class JDate implements Comparable<JDate> {
       greg.year,
       greg.month,
       greg.day,
-      hour ?? _hour,
-      minute ?? _minute,
-      second ?? _second,
-      millisecond ?? _millisecond,
-      microsecond ?? _microsecond,
+      hour,
+      minute,
+      second,
+      millisecond,
+      microsecond,
     );
 
     _internal(datetime);
@@ -591,14 +591,14 @@ class JDate implements Comparable<JDate> {
   }
 
   static String _threeDigits(int n) {
-    if (n >= 100) return '${n}';
-    if (n >= 10) return '0${n}';
-    return '00${n}';
+    if (n >= 100) return '$n';
+    if (n >= 10) return '0$n';
+    return '00$n';
   }
 
   static String _twoDigits(int n) {
-    if (n >= 10) return '${n}';
-    return '0${n}';
+    if (n >= 10) return '$n';
+    return '0$n';
   }
 
   bool _isLeapYear(year) => year % 33 % 4 - 1 == (year % 33 * .05).floor();
@@ -718,7 +718,7 @@ class JDate implements Comparable<JDate> {
   ///
   /// Works like [parse] except that this function returns `null`
   /// where [parse] would throw a [FormatException].
-  static JDate tryParse(String string) {
+  static JDate? tryParse(String string) {
     try {
       return parse(string);
     } on FormatException {
@@ -733,15 +733,15 @@ class JDate implements Comparable<JDate> {
   /// var specifiedDate = JDate.now().changeTo(month: 10, day: 1);
   /// ```
   JDate changeTo({
-    int year,
-    int month,
-    int day,
-    int hour,
-    int minute,
-    int second,
-    int millisecond,
-    int microsecond,
-    bool isUtc,
+    int? year,
+    int? month,
+    int? day,
+    int? hour,
+    int? minute,
+    int? second,
+    int? millisecond,
+    int? microsecond,
+    bool? isUtc,
   }) {
     final greg = jalaliToGregorian(year ?? _year, month ?? _month, day ?? _day);
     var datetime;
@@ -817,7 +817,7 @@ class JDate implements Comparable<JDate> {
         .replaceAll('d', _twoDigits(_day))
         .replaceAll(
           'f',
-          jalaliSeasons[((_month) / 3.1).floor()]['long'],
+          jalaliSeasons[((_month) / 3.1).floor()]['long']!,
         )
         .replaceAll(
           'g',
@@ -829,7 +829,7 @@ class JDate implements Comparable<JDate> {
         )
         .replaceAll('i', _twoDigits(_minute))
         .replaceAll('j', _day.toString())
-        .replaceAll('l', jalaliDays[jw]['long'])
+        .replaceAll('l', jalaliDays[jw]['long']!)
         .replaceAll('m', _twoDigits(_month))
         .replaceAll('n', (_month + 1).toString())
         .replaceAll('s', _twoDigits(_second))
@@ -844,13 +844,13 @@ class JDate implements Comparable<JDate> {
         .replaceAll('w', jw.toString())
         .replaceAll('y', jy.toString())
         .replaceAll('A', (_hour < 12) ? 'قبل از ظهر' : 'بعد از ظهر')
-        .replaceAll('D', jalaliDays[jw]['short'])
-        .replaceAll('F', jalaliMonths[_month - 1]['long'])
+        .replaceAll('D', jalaliDays[jw]['short']!)
+        .replaceAll('F', jalaliMonths[_month - 1]['long']!)
         .replaceAll('G', _hour.toString())
         .replaceAll('H', _twoDigits(_hour))
         .replaceAll('J', _day.toPersianWords())
         .replaceAll('L', leapYear.toString())
-        .replaceAll('M', jalaliMonths[_month - 1]['short'])
+        .replaceAll('M', jalaliMonths[_month - 1]['short']!)
         .replaceAll('O', jtz)
         .replaceAll('V', _year.toPersianWords())
         .replaceAll('Y', _year.toString());
@@ -863,7 +863,7 @@ class JDate implements Comparable<JDate> {
   ///
   /// The resulting string can be parsed back using [parse],
   @override
-  String toString(){
+  String toString() {
     var y = _fourDigits(year);
     var m = _twoDigits(month);
     var d = _twoDigits(day);
