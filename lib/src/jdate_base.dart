@@ -265,7 +265,7 @@ class JDate implements Comparable<JDate> {
   /// assert(moonLanding.hour == 20);
   /// ```
   set hour(int hour) {
-    if (hour >= 0 && hour < 60) {
+    if (hour >= 0 && hour < 24) {
       _microsecondsSinceEpoch += 60 * 60 * 1000000 * (-_hour + hour);
       _millisecondsSinceEpoch += 60 * 60 * 1000 * (-_hour + hour);
       _hour = hour;
