@@ -20,11 +20,10 @@ extension PersianIntegerHelper on int? {
     if (ordinal && _this.isNegative) throw 'Ordinal can\'t be negative';
 
     var result = _this.isNegative ? 'منفی ' : '';
-    final number =
-        _this.isNegative ? _this.abs() : this; // make number positive
+    final number = _this.abs();
 
     if (number.toString().length <= 3) {
-      var d12 = number! % 100;
+      var d12 = number % 100;
       var d3 = (number / 100).floor();
 
       if (d3 != 0) {
