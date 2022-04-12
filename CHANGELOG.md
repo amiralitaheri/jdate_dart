@@ -1,3 +1,8 @@
+## 0.9.0
+- Migrate to null safety
+- Changed `toString` to match DateTime style
+- More documents
+
 ## 0.8.0
 
 - Renamed Hijri Converters to Ummalqura (Arabic Hijri Qamari)
