@@ -3,11 +3,12 @@
     Powerful yet original Dart Jalali date and time for developers.
 </p>
 <p align="center">
-    <img src="https://img.shields.io/github/workflow/status/amiralitaheri/jdate_dart/Dart%20CI" alt="CI"/>
+    <img src="https://img.shields.io/github/actions/workflow/status/amiralitaheri/jdate_dart/dart.yml" alt="CI"/>
     <img src="https://img.shields.io/pub/v/jdate" alt="version"/>
     <img src="https://img.shields.io/github/issues/amiralitaheri/jdate_dart" alt="issues"/>
     <img src="https://img.shields.io/github/languages/top/amiralitaheri/jdate_dart" alt="language"/>
     <img src="https://img.shields.io/github/license/amiralitaheri/jdate_dart" alt="licence"/>
+    <img src="https://img.shields.io/github/stars/amiralitaheri/jdate_dart?style=social" alt="star"/>
 </p>
 
 ## Creat a JDate object from DateTime
